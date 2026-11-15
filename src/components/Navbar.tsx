@@ -42,22 +42,21 @@ export function Navbar() {
           : "bg-[#F5F0EA]/85"
       }`}
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-10 lg:py-4">
+      <div className="mx-auto flex max-w-[1400px] items-center justify-between px-5 py-3.5 sm:px-7 lg:px-12 lg:py-5">
         <a
           href="#top"
-          className="inline-flex min-h-[44px] items-center font-hero text-2xl font-extrabold tracking-tight text-[#3E2216]"
+          className="inline-flex min-h-[48px] items-center whitespace-nowrap font-hero text-[22px] font-extrabold tracking-tight text-[#3E2216] sm:text-[27px]"
         >
-          livion
-          <span className="ml-1 text-[#A8401B]">.</span>
+          Livion Coffee
         </a>
 
-        <div className="flex items-center gap-6 lg:gap-9">
-          <nav className="hidden items-center gap-7 md:flex" aria-label="Main">
+        <div className="flex items-center gap-4 sm:gap-7 lg:gap-10">
+          <nav className="hidden items-center gap-8 md:flex" aria-label="Main">
             {NAV_LINKS.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className="inline-flex min-h-[44px] items-center px-1 text-sm font-medium text-[#14110F]/80 transition-colors hover:text-[#A8401B]"
+                className="inline-flex min-h-[48px] items-center px-1 text-[15.5px] font-medium text-[#14110F]/80 transition-colors hover:text-[#A8401B]"
               >
                 {link.label}
               </a>
@@ -66,7 +65,7 @@ export function Navbar() {
 
           <a
             href="#beans"
-            className="inline-flex min-h-[44px] items-center justify-center rounded-full bg-[#B8421B] px-6 py-2 text-sm font-semibold text-[#FFFFFF] transition-[background-color,transform] hover:bg-[#3E2216] active:scale-[0.97]"
+            className="inline-flex min-h-[48px] items-center justify-center rounded-full bg-[#B8421B] px-7 py-2.5 text-[15.5px] font-semibold text-[#FFFFFF] transition-[background-color,transform] hover:bg-[#3E2216] active:scale-[0.97]"
           >
             Shop
           </a>
@@ -77,7 +76,7 @@ export function Navbar() {
             aria-expanded={mobileMenuOpen}
             aria-controls="mobile-nav-drawer"
             aria-label={mobileMenuOpen ? "Tutup menu navigasi" : "Buka menu navigasi"}
-            className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-full border border-[#14110F]/20 px-3 text-xs font-semibold text-[#14110F] transition-colors hover:border-[#14110F] md:hidden"
+            className="inline-flex min-h-[48px] min-w-[48px] items-center justify-center gap-1.5 rounded-full border border-[#14110F]/20 px-3.5 text-sm font-semibold text-[#14110F] transition-colors hover:border-[#14110F] md:hidden"
           >
             {mobileMenuOpen ? (
               <X className="h-4 w-4" aria-hidden="true" />
@@ -100,13 +99,13 @@ export function Navbar() {
             className="overflow-hidden border-t border-[#14110F]/10 bg-[#F5F0EA] md:hidden"
             aria-label="Mobile"
           >
-            <div className="flex flex-col px-4 py-3">
+            <div className="flex flex-col px-5 py-3.5">
               {NAV_LINKS.map((link) => (
                 <a
                   key={link.href}
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="inline-flex min-h-[44px] items-center border-b border-[#14110F]/8 text-sm font-semibold text-[#14110F] transition-colors hover:text-[#A8401B] last:border-b-0"
+                  className="inline-flex min-h-[48px] items-center border-b border-[#14110F]/8 text-[15.5px] font-semibold text-[#14110F] transition-colors hover:text-[#A8401B] last:border-b-0"
                 >
                   {link.label}
                 </a>

@@ -10,32 +10,8 @@ import {
   useSpring,
   useTransform,
 } from "motion/react";
-import { Flame, PackageCheck, Sprout, Truck } from "lucide-react";
 import { BEAN_PRODUCTS, buildBeanWhatsAppUrl } from "@/data/beans";
 import { EDITORIAL_EASE } from "./MotionPrimitives";
-
-const QUICK_STRIP = [
-  {
-    icon: Flame,
-    title: "Small-Batch Roasted",
-    detail: "Dipanggang rutin tiap minggu agar aroma tetap maksimal.",
-  },
-  {
-    icon: Sprout,
-    title: "100% Indonesian Beans",
-    detail: "Arabica dataran tinggi & Robusta pilihan Jawa.",
-  },
-  {
-    icon: PackageCheck,
-    title: "Grind to Order",
-    detail: "Bisa biji utuh atau giling sesuai alat seduhmu.",
-  },
-  {
-    icon: Truck,
-    title: "Retail & Wholesale",
-    detail: "Siap untuk seduh rumahan hingga suplai kafe.",
-  },
-];
 
 type FloatingBeanSpec = {
   src: string;
@@ -47,29 +23,29 @@ type FloatingBeanSpec = {
   blur?: boolean;
 };
 
-// Positioned across the wide hero stage to frame the typography and ribbon without covering readability
+// Positioned across the wide hero stage to create a Coffeelo-inspired bean cascade while keeping every headline, blurb, and CTA clear
 const STAGE_BEANS: FloatingBeanSpec[] = [
   {
     src: "/images/cutouts/bean-1.png",
     w: 283,
     h: 219,
-    className: "left-[4%] top-[12%] z-20 w-8 sm:w-10 lg:left-[8%] lg:top-[15%] lg:w-11",
+    className: "left-[4%] top-[12%] z-20 w-9 sm:w-11 lg:left-[8%] lg:top-[15%] lg:w-12",
     depth: 14,
     rotate: -18,
   },
   {
-    src: "/images/cutouts/bean-3.png",
-    w: 277,
-    h: 248,
-    className: "right-[4%] top-[10%] z-20 w-8 sm:w-10 lg:right-[7%] lg:top-[12%] lg:w-11",
-    depth: 20,
-    rotate: 26,
+    src: "/images/cutouts/bean-4.png",
+    w: 287,
+    h: 222,
+    className: "hidden md:block left-[20%] top-[10%] z-10 w-9 opacity-90",
+    depth: 12,
+    rotate: 34,
   },
   {
     src: "/images/cutouts/bean-2.png",
     w: 303,
     h: 152,
-    className: "hidden md:block left-[31%] top-[9%] z-0 w-10 opacity-85",
+    className: "hidden md:block left-[33%] top-[9%] z-0 w-11 opacity-85",
     depth: -10,
     rotate: -12,
     blur: true,
@@ -78,34 +54,131 @@ const STAGE_BEANS: FloatingBeanSpec[] = [
     src: "/images/cutouts/bean-6.png",
     w: 261,
     h: 261,
-    className: "hidden lg:block left-[8%] bottom-[48%] z-10 w-10",
-    depth: 22,
-    rotate: -28,
+    className: "hidden lg:block left-[39%] top-[15%] z-10 w-8 opacity-90",
+    depth: 18,
+    rotate: 52,
   },
   {
-    src: "/images/cutouts/bean-5.png",
-    w: 212,
-    h: 273,
-    className: "right-[6%] bottom-[42%] z-20 w-8 sm:w-9 lg:right-[27%] lg:bottom-[30%] lg:w-10",
-    depth: 24,
-    rotate: 16,
-  },
-  {
-    src: "/images/cutouts/bean-4.png",
-    w: 287,
-    h: 222,
-    className: "hidden lg:block right-[29%] bottom-[10%] z-20 w-11",
-    depth: 16,
-    rotate: 22,
+    src: "/images/cutouts/bean-6.png",
+    w: 261,
+    h: 261,
+    className: "hidden md:block right-[15%] top-[8%] z-10 w-9 opacity-90",
+    depth: -12,
+    rotate: -42,
   },
   {
     src: "/images/cutouts/bean-3.png",
     w: 277,
     h: 248,
-    className: "hidden lg:block right-[4%] bottom-[36%] z-10 w-9 opacity-85",
+    className: "right-[4%] top-[10%] z-20 w-9 sm:w-11 lg:right-[7%] lg:top-[12%] lg:w-12",
+    depth: 20,
+    rotate: 26,
+  },
+  {
+    src: "/images/cutouts/bean-1.png",
+    w: 283,
+    h: 219,
+    className: "hidden lg:block right-[4%] top-[27%] z-10 w-10 opacity-90",
+    depth: 16,
+    rotate: -32,
+  },
+  {
+    src: "/images/cutouts/bean-5.png",
+    w: 212,
+    h: 273,
+    className: "hidden lg:block left-[12%] top-[35%] z-20 w-9",
+    depth: 22,
+    rotate: 18,
+  },
+  {
+    src: "/images/cutouts/bean-6.png",
+    w: 261,
+    h: 261,
+    className: "hidden lg:block left-[7%] bottom-[47%] z-10 w-11",
+    depth: 22,
+    rotate: -28,
+  },
+  {
+    src: "/images/cutouts/bean-1.png",
+    w: 283,
+    h: 219,
+    className: "left-[6%] top-[44%] z-20 w-8 sm:w-9 lg:left-[36%] lg:top-auto lg:bottom-[44%] lg:w-10",
+    depth: 24,
+    rotate: -24,
+  },
+  {
+    src: "/images/cutouts/bean-3.png",
+    w: 277,
+    h: 248,
+    className: "hidden lg:block left-[33%] bottom-[35%] z-10 w-9",
+    depth: 14,
+    rotate: 40,
+  },
+  {
+    src: "/images/cutouts/bean-2.png",
+    w: 303,
+    h: 152,
+    className: "hidden lg:block right-[11%] bottom-[47%] z-0 w-10 opacity-80",
+    depth: -12,
+    rotate: 20,
+    blur: true,
+  },
+  {
+    src: "/images/cutouts/bean-5.png",
+    w: 212,
+    h: 273,
+    className: "right-[6%] bottom-[42%] z-20 w-9 sm:w-10 lg:right-[31%] lg:bottom-[36%] lg:w-11",
+    depth: 24,
+    rotate: 16,
+  },
+  {
+    src: "/images/cutouts/bean-3.png",
+    w: 277,
+    h: 248,
+    className: "hidden lg:block right-[4%] bottom-[38%] z-10 w-10 opacity-85",
     depth: -14,
     rotate: -36,
     blur: true,
+  },
+  {
+    src: "/images/cutouts/bean-1.png",
+    w: 283,
+    h: 219,
+    className: "hidden lg:block right-[14%] bottom-[31%] z-20 w-11",
+    depth: 20,
+    rotate: -15,
+  },
+  {
+    src: "/images/cutouts/bean-6.png",
+    w: 261,
+    h: 261,
+    className: "hidden lg:block right-[22%] bottom-[25%] z-20 w-10",
+    depth: 26,
+    rotate: 38,
+  },
+  {
+    src: "/images/cutouts/bean-4.png",
+    w: 287,
+    h: 222,
+    className: "hidden lg:block right-[6%] bottom-[26%] z-10 w-9 opacity-90",
+    depth: 14,
+    rotate: -48,
+  },
+  {
+    src: "/images/cutouts/bean-4.png",
+    w: 287,
+    h: 222,
+    className: "hidden lg:block right-[29%] bottom-[10%] z-20 w-12",
+    depth: 16,
+    rotate: 22,
+  },
+  {
+    src: "/images/cutouts/bean-5.png",
+    w: 212,
+    h: 273,
+    className: "hidden lg:block right-[36%] bottom-[6%] z-30 w-9",
+    depth: 28,
+    rotate: -18,
   },
 ];
 
@@ -134,7 +207,7 @@ function ParallaxBean({
         alt=""
         width={spec.w}
         height={spec.h}
-        sizes="56px"
+        sizes="64px"
         loading="eager"
         className={`h-auto w-full drop-shadow-[0_12px_14px_rgba(36,29,24,0.26)] ${
           spec.blur ? "blur-[0.8px]" : ""
@@ -160,7 +233,7 @@ function ScallopedOrderSeal({
       whileHover={{ scale: 1.06, rotate: -6 }}
       whileTap={{ scale: 0.95 }}
       transition={{ duration: 0.22, ease: EDITORIAL_EASE }}
-      className="group relative flex h-24 w-24 -rotate-12 items-center justify-center rounded-full sm:h-28 sm:w-28 lg:h-[124px] lg:w-[124px]"
+      className="group relative flex h-[106px] w-[106px] -rotate-12 items-center justify-center rounded-full sm:h-[124px] sm:w-[124px] lg:h-[136px] lg:w-[136px]"
     >
       <svg
         viewBox="0 0 120 120"
@@ -172,7 +245,7 @@ function ScallopedOrderSeal({
           className="fill-[#B8421B] transition-colors duration-200 group-hover:fill-[#3E2216]"
         />
       </svg>
-      <span className="relative z-10 flex flex-col items-center justify-center text-center font-hero text-[15px] leading-[1.02] font-extrabold tracking-tight text-[#FFFFFF] sm:text-base lg:text-lg">
+      <span className="relative z-10 flex flex-col items-center justify-center text-center font-hero text-[16.5px] leading-[1.02] font-extrabold tracking-tight text-[#FFFFFF] sm:text-[18px] lg:text-[20px]">
         <span>Order</span>
         <span>now</span>
       </span>
@@ -207,7 +280,7 @@ function HeroRibbonPath({
       d={d}
       fill="none"
       stroke="#C9734B"
-      strokeWidth={3}
+      strokeWidth={3.3}
       strokeLinecap="round"
       className={className}
       initial={
@@ -270,7 +343,7 @@ export function HeroCutoutShowcase() {
         ref={stageRef}
         onPointerMove={handlePointerMove}
         onPointerLeave={handlePointerLeave}
-        className="relative overflow-x-clip border-b border-[#14110F]/10"
+        className="relative overflow-x-clip"
       >
         {/* Subtle roast-sieve dot texture balancing the airy cream right margin */}
         <div
@@ -314,7 +387,7 @@ export function HeroCutoutShowcase() {
           />
         </svg>
 
-        <div className="relative mx-auto flex min-h-0 max-w-7xl flex-col justify-center px-4 pt-6 pb-10 sm:px-8 sm:pt-8 sm:pb-12 lg:min-h-[calc(100svh-76px)] lg:px-12 lg:pt-6 lg:pb-12">
+        <div className="relative mx-auto flex min-h-0 max-w-[1400px] flex-col justify-center px-5 pt-7 pb-11 sm:px-9 sm:pt-9 sm:pb-14 lg:min-h-[calc(100svh-84px)] lg:px-12 lg:pt-7 lg:pb-14">
           {/* Scattered Roasted Beans across wide stage */}
           {STAGE_BEANS.map((spec, idx) => (
             <ParallaxBean
@@ -331,25 +404,25 @@ export function HeroCutoutShowcase() {
             initial={reducedMotion ? false : { opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.55, ease: EDITORIAL_EASE }}
-            className="relative z-10 mx-auto max-w-5xl text-center font-hero font-extrabold tracking-[-0.04em] text-[#3E2216] select-none"
+            className="relative z-10 mx-auto max-w-[1140px] text-center font-hero font-extrabold tracking-[-0.04em] text-[#3E2216] select-none"
           >
-            <span className="flex flex-wrap items-baseline justify-center gap-x-3 sm:gap-x-5">
-              <span className="text-[clamp(1.65rem,3.8vw,3.3rem)] leading-none font-bold tracking-[-0.03em] text-[#3E2216]">
+            <span className="flex flex-wrap items-baseline justify-center gap-x-3.5 sm:gap-x-6">
+              <span className="text-[clamp(1.8rem,4.1vw,3.65rem)] leading-none font-bold tracking-[-0.03em] text-[#3E2216]">
                 Slow Roasted
               </span>
-              <span className="text-[clamp(3.6rem,11vw,9.2rem)] leading-[0.86] font-extrabold text-[#3E2216]">
+              <span className="text-[clamp(3.95rem,11.8vw,10.1rem)] leading-[0.86] font-extrabold text-[#3E2216]">
                 Coffee
               </span>
             </span>
-            <span className="mt-0.5 block whitespace-nowrap text-[clamp(3.1rem,11.6vw,9.5rem)] leading-[0.86] font-extrabold text-[#3E2216]">
+            <span className="mt-0.5 block whitespace-nowrap text-[clamp(3.15rem,12.2vw,10.45rem)] leading-[0.86] font-extrabold text-[#3E2216]">
               Experience
             </span>
           </motion.h1>
 
           {/* Overlapping Cut-Out Pouch Stage + Left Blurb (z-auto wrapper lets pouch sit behind front ribbon while seal/text sit on top) */}
-          <div className="relative -mt-1 grid grid-cols-1 items-end gap-8 sm:-mt-3 lg:-mt-16 lg:grid-cols-12 lg:gap-4 xl:-mt-18">
+          <div className="relative -mt-1 grid grid-cols-1 items-end gap-8 sm:-mt-3 lg:-mt-[70px] lg:grid-cols-12 lg:gap-5 xl:-mt-[78px]">
             {/* Left Column: Origin Blurb + Lot Switcher */}
-            <div className="relative z-30 order-2 flex flex-col items-center text-center lg:order-1 lg:col-span-4 lg:items-start lg:pb-4 lg:text-left">
+            <div className="relative z-30 order-2 flex flex-col items-center text-center lg:order-1 lg:col-span-4 lg:items-start lg:pb-5 lg:text-left">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={currentBean.id}
@@ -357,12 +430,12 @@ export function HeroCutoutShowcase() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={reducedMotion ? undefined : { opacity: 0, y: -6 }}
                   transition={{ duration: 0.28, ease: EDITORIAL_EASE }}
-                  className="max-w-xs"
+                  className="max-w-[355px]"
                 >
-                  <p className="text-base font-bold text-[#14110F]">
+                  <p className="text-[17px] font-bold text-[#14110F] sm:text-lg">
                     Single-Origin · {currentBean.origin}
                   </p>
-                  <p className="mt-1.5 text-sm leading-relaxed text-[#575049] sm:text-[15px]">
+                  <p className="mt-2 text-[15.5px] leading-relaxed text-[#575049] sm:text-[16.5px]">
                     {currentBean.tastingNotes.join(", ")}.{" "}
                     {currentBean.tagline}
                   </p>
@@ -374,7 +447,7 @@ export function HeroCutoutShowcase() {
                 role="tablist"
                 aria-label="Pilih varian kopi Livion"
                 onKeyDown={handleStageKeyDown}
-                className="mt-5 flex flex-wrap justify-center gap-2 lg:justify-start"
+                className="mt-6 flex flex-wrap justify-center gap-2.5 lg:justify-start"
               >
                 {beans.map((bean, i) => {
                   const isActive = i === activeIndex;
@@ -392,15 +465,12 @@ export function HeroCutoutShowcase() {
                       role="tab"
                       aria-selected={isActive}
                       onClick={() => setActiveIndex(i)}
-                      className={`inline-flex min-h-[44px] items-center rounded-full border px-4 py-2 text-xs font-semibold tracking-wide transition-colors ${
+                      className={`inline-flex min-h-[48px] items-center justify-center rounded-full border px-5 py-2.5 text-[13.5px] font-semibold tracking-wide transition-colors ${
                         isActive
                           ? "border-[#8F511A] bg-[#8F511A] text-[#F5F0EA] shadow-xs"
                           : "border-[#14110F]/20 bg-[#F5F0EA]/90 text-[#14110F] hover:border-[#14110F]"
                       }`}
                     >
-                      <span className="mr-1.5 font-mono text-[10px] opacity-80">
-                        {bean.index}
-                      </span>
                       {shortName}
                     </button>
                   );
@@ -410,7 +480,7 @@ export function HeroCutoutShowcase() {
 
             {/* Center Column: Tilted Cut-Out Livion Pouch + Scalloped Order Seal */}
             <div className="relative order-1 flex justify-center lg:order-2 lg:col-span-5">
-              <div className="relative flex aspect-[4/4.6] w-[260px] items-center justify-center sm:w-[310px] lg:w-[375px]">
+              <div className="relative flex aspect-[4/4.6] w-[286px] items-center justify-center sm:w-[340px] lg:w-[412px]">
                 {/* Active Transparent Pouch Cut-Out */}
                 <AnimatePresence mode="popLayout" initial={false}>
                   <motion.div
@@ -434,7 +504,7 @@ export function HeroCutoutShowcase() {
                       alt={`${currentBean.name} stand-up coffee pouch`}
                       width={currentBean.cutoutWidth}
                       height={currentBean.cutoutHeight}
-                      sizes="(max-width: 640px) 240px, (max-width: 1024px) 290px, 340px"
+                      sizes="(max-width: 640px) 264px, (max-width: 1024px) 320px, 380px"
                       loading="eager"
                       fetchPriority="high"
                       draggable={false}
@@ -454,51 +524,19 @@ export function HeroCutoutShowcase() {
             </div>
 
             {/* Right Column: Clean Airy Counterbalance Spec */}
-            <div className="relative z-30 order-3 hidden flex-col items-end pb-6 text-right lg:col-span-3 lg:flex">
-              <div className="border-t border-[#14110F]/15 pt-3">
-                <p className="font-mono text-[11px] uppercase tracking-wider text-[#575049]">
-                  LOT {currentBean.index} / 03
-                </p>
-                <p className="mt-1 font-display text-lg font-bold uppercase text-[#14110F]">
-                  {currentBean.roastLevel} Roast
-                </p>
-                <p className="mt-0.5 text-xs text-[#575049]">
-                  Best for: {currentBean.bestFor}
-                </p>
-              </div>
+            <div className="relative z-30 order-3 hidden flex-col items-end pb-7 text-right lg:col-span-3 lg:flex">
+              <p className="font-display text-xl font-bold uppercase text-[#14110F]">
+                {currentBean.roastLevel} Roast
+              </p>
+              <p className="mt-0.5 text-[13.5px] text-[#575049]">
+                Best for: {currentBean.bestFor}
+              </p>
             </div>
           </div>
 
           <p className="sr-only" aria-live="polite">
             Menampilkan {currentBean.name}, {currentBean.origin}.
           </p>
-        </div>
-      </div>
-
-      {/* Espresso Value Strip */}
-      <div className="bg-[#241D18] text-[#F5F0EA]">
-        <div className="mx-auto grid max-w-7xl gap-6 px-4 py-8 sm:grid-cols-2 sm:px-6 lg:grid-cols-4 lg:px-8">
-          {QUICK_STRIP.map((item) => {
-            const Icon = item.icon;
-            return (
-              <div key={item.title} className="flex items-start gap-3.5">
-                <div
-                  aria-hidden="true"
-                  className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center border border-[#C49B63]/40 text-[#C49B63]"
-                >
-                  <Icon className="h-4 w-4" />
-                </div>
-                <div>
-                  <h2 className="font-display text-sm font-semibold uppercase tracking-wider text-[#F5F0EA]">
-                    {item.title}
-                  </h2>
-                  <p className="mt-1 text-xs leading-relaxed text-[#F5F0EA]/75">
-                    {item.detail}
-                  </p>
-                </div>
-              </div>
-            );
-          })}
         </div>
       </div>
     </section>

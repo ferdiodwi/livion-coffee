@@ -1,10 +1,7 @@
-import { BeansCatalog } from "@/components/BeansCatalog";
-import { BrewGuide } from "@/components/BrewGuide";
+import { CraftedSection } from "@/components/CraftedSection";
 import { Footer } from "@/components/Footer";
 import { HeroCutoutShowcase } from "@/components/HeroCutoutShowcase";
 import { Navbar } from "@/components/Navbar";
-import { OriginCraft } from "@/components/OriginCraft";
-import { WholesaleSection } from "@/components/WholesaleSection";
 
 export default function Home() {
   return (
@@ -12,10 +9,7 @@ export default function Home() {
       <Navbar />
       <main id="main-content" tabIndex={-1} className="flex-1 focus:outline-none">
         <HeroCutoutShowcase />
-        <BeansCatalog />
-        <OriginCraft />
-        <BrewGuide />
-        <WholesaleSection />
+        <CraftedSection />
       </main>
       <Footer />
     </div>
