@@ -54,7 +54,7 @@ export interface BrewRecipe {
 /**
  * Ganti nomor WhatsApp ini dengan nomor resmi Livion Coffee (format internasional tanpa '+').
  */
-export const WHATSAPP_NUMBER = "6281234567890";
+export const WHATSAPP_NUMBER = "6285159506662";
 
 export const WEIGHT_OPTIONS: WeightOption[] = [
   { label: "200g", multiplier: 1 },
