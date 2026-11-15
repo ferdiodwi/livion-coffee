@@ -6,10 +6,10 @@ import { Menu, X } from "lucide-react";
 import { EDITORIAL_EASE } from "./MotionPrimitives";
 
 const NAV_LINKS = [
+  { label: "Craft", href: "#craft" },
   { label: "Beans", href: "#beans" },
   { label: "Origin", href: "#origin" },
-  { label: "Brew Guide", href: "#brew-guide" },
-  { label: "Wholesale", href: "#wholesale" },
+  { label: "Order", href: "#order-cta" },
 ];
 
 export function Navbar() {

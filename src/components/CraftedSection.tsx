@@ -18,7 +18,7 @@ export function CraftedSection() {
 
   return (
     <section
-      id="origin"
+      id="craft"
       aria-labelledby="crafted-heading"
       className="relative overflow-x-clip bg-[#F5F0EA] pt-8 pb-16 text-[#FFFFFF] sm:pt-12 sm:pb-20 lg:min-h-[640px] lg:py-20 xl:min-h-[680px]"
     >

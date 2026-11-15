@@ -3,6 +3,8 @@ import { CraftedSection } from "@/components/CraftedSection";
 import { Footer } from "@/components/Footer";
 import { HeroCutoutShowcase } from "@/components/HeroCutoutShowcase";
 import { Navbar } from "@/components/Navbar";
+import { OrderCtaSection } from "@/components/OrderCtaSection";
+import { OriginShowcaseSection } from "@/components/OriginShowcaseSection";
 
 export default function Home() {
   return (
@@ -12,6 +14,8 @@ export default function Home() {
         <HeroCutoutShowcase />
         <CraftedSection />
         <CollectionShowcaseSection />
+        <OriginShowcaseSection />
+        <OrderCtaSection />
       </main>
       <Footer />
     </div>
