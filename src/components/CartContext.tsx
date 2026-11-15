@@ -3,9 +3,9 @@
 import {
   createContext,
   useContext,
-  useEffect,
   useMemo,
   useState,
+  useSyncExternalStore,
   type ReactNode,
 } from "react";
 import {
@@ -46,39 +46,59 @@ interface CartContextValue {
 }
 
 const STORAGE_KEY = "livion_coffee_cart_v1";
+const CART_EVENT = "livion-cart-change";
+const VALID_IDS = new Set(BEAN_PRODUCTS.map((b) => b.id));
 
 const CartContext = createContext<CartContextValue | null>(null);
 
+function subscribeToCart(callback: () => void) {
+  window.addEventListener("storage", callback);
+  window.addEventListener(CART_EVENT, callback);
+  return () => {
+    window.removeEventListener("storage", callback);
+    window.removeEventListener(CART_EVENT, callback);
+  };
+}
+
+function getCartSnapshot(): string {
+  try {
+    return window.localStorage.getItem(STORAGE_KEY) ?? "[]";
+  } catch {
+    return "[]";
+  }
+}
+
+function getServerCartSnapshot(): string {
+  return "[]";
+}
+
+function parseCartItems(raw: string): CartItem[] {
+  try {
+    const parsed = JSON.parse(raw) as CartItem[];
+    if (!Array.isArray(parsed)) return [];
+    return parsed.filter((item) => VALID_IDS.has(item.productId));
+  } catch {
+    return [];
+  }
+}
+
+function writeCartItems(next: CartItem[]) {
+  try {
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+    window.dispatchEvent(new Event(CART_EVENT));
+  } catch {
+    // Ignore storage write errors in restricted contexts.
+  }
+}
+
 export function CartProvider({ children }: { children: ReactNode }) {
-  const [items, setItems] = useState<CartItem[]>([]);
+  const rawCart = useSyncExternalStore(
+    subscribeToCart,
+    getCartSnapshot,
+    getServerCartSnapshot,
+  );
+  const items = useMemo(() => parseCartItems(rawCart), [rawCart]);
   const [isOpen, setIsOpen] = useState(false);
-  const [hydrated, setHydrated] = useState(false);
-
-  useEffect(() => {
-    try {
-      const raw = window.localStorage.getItem(STORAGE_KEY);
-      if (raw) {
-        const parsed = JSON.parse(raw) as CartItem[];
-        if (Array.isArray(parsed)) {
-          const validIds = new Set(BEAN_PRODUCTS.map((b) => b.id));
-          setItems(parsed.filter((item) => validIds.has(item.productId)));
-        }
-      }
-    } catch {
-      // Ignore storage read errors in restricted contexts.
-    } finally {
-      setHydrated(true);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (!hydrated) return;
-    try {
-      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
-    } catch {
-      // Ignore storage write errors.
-    }
-  }, [items, hydrated]);
 
   const addItem = (
     product: BeanProduct,
@@ -88,50 +108,49 @@ export function CartProvider({ children }: { children: ReactNode }) {
   ) => {
     const key = `${product.id}__${weight}__${grind}`;
     const unitPrice = calculateBeanPrice(product.basePrice200g, weight);
+    const current = parseCartItems(getCartSnapshot());
+    const existing = current.find((item) => item.key === key);
 
-    setItems((prev) => {
-      const existing = prev.find((item) => item.key === key);
-      if (existing) {
-        return prev.map((item) =>
+    const next = existing
+      ? current.map((item) =>
           item.key === key
             ? { ...item, quantity: item.quantity + quantity }
             : item,
-        );
-      }
-      return [
-        ...prev,
-        {
-          key,
-          productId: product.id,
-          name: product.name,
-          image: product.image,
-          weight,
-          grind,
-          unitPrice,
-          quantity,
-        },
-      ];
-    });
+        )
+      : [
+          ...current,
+          {
+            key,
+            productId: product.id,
+            name: product.name,
+            image: product.image,
+            weight,
+            grind,
+            unitPrice,
+            quantity,
+          },
+        ];
+
+    writeCartItems(next);
     setIsOpen(true);
   };
 
   const updateQuantity = (key: string, delta: number) => {
-    setItems((prev) =>
-      prev
-        .map((item) =>
-          item.key === key
-            ? { ...item, quantity: item.quantity + delta }
-            : item,
-        )
-        .filter((item) => item.quantity > 0),
-    );
+    const current = parseCartItems(getCartSnapshot());
+    const next = current
+      .map((item) =>
+        item.key === key ? { ...item, quantity: item.quantity + delta } : item,
+      )
+      .filter((item) => item.quantity > 0);
+    writeCartItems(next);
   };
 
   const removeItem = (key: string) => {
-    setItems((prev) => prev.filter((item) => item.key !== key));
+    const current = parseCartItems(getCartSnapshot());
+    writeCartItems(current.filter((item) => item.key !== key));
   };
 
-  const clearCart = () => setItems([]);
+  const clearCart = () => writeCartItems([]);
 
   const totalItems = useMemo(
     () => items.reduce((sum, item) => sum + item.quantity, 0),
