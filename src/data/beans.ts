@@ -15,6 +15,11 @@ export interface BeanProduct {
   id: string;
   index: string;
   name: string;
+  eyebrow: string;
+  titleLine1: string;
+  titleLine2: string;
+  accent: string;
+  accentText: string;
   category: BeanCategory;
   origin: string;
   altitude: string;
@@ -25,6 +30,9 @@ export interface BeanProduct {
   cuppingScore: string;
   basePrice200g: number;
   image: string;
+  cutoutImage: string;
+  cutoutWidth: number;
+  cutoutHeight: number;
   tagline: string;
   description: string;
   featured?: boolean;
@@ -66,6 +74,11 @@ export const BEAN_PRODUCTS: BeanProduct[] = [
     id: "arabica-signature",
     index: "01",
     name: "Livion Arabica Selection",
+    eyebrow: "#01 Signature Highlands Lot",
+    titleLine1: "Indonesian",
+    titleLine2: "Arabica",
+    accent: "#2C4C3B",
+    accentText: "#F5F0EA",
     category: "arabica",
     origin: "Indonesian Highlands",
     altitude: "1,400–1,700 MASL",
@@ -76,6 +89,9 @@ export const BEAN_PRODUCTS: BeanProduct[] = [
     cuppingScore: "86.5",
     basePrice200g: 85000,
     image: "/images/Arabica.jpeg",
+    cutoutImage: "/images/cutouts/arabica-pouch.png",
+    cutoutWidth: 513,
+    cutoutHeight: 822,
     tagline: "Balanced sweetness with clean citrus brightness.",
     description:
       "Dipilih dari panen dataran tinggi dengan karakter rasa bersih, manis karamel yang lembut, dan sentuhan akhir cokelat hitam yang nyaman diminum setiap hari.",
@@ -85,6 +101,11 @@ export const BEAN_PRODUCTS: BeanProduct[] = [
     id: "robusta-argopuro",
     index: "02",
     name: "Robusta Argopuro",
+    eyebrow: "#02 East Java Bold Lot",
+    titleLine1: "Argopuro",
+    titleLine2: "Robusta",
+    accent: "#8F511A",
+    accentText: "#F5F0EA",
     category: "robusta",
     origin: "Mount Argopuro, East Java",
     altitude: "900–1,200 MASL",
@@ -95,6 +116,9 @@ export const BEAN_PRODUCTS: BeanProduct[] = [
     cuppingScore: "83.0",
     basePrice200g: 65000,
     image: "/images/Robusta_Argopuro.jpeg",
+    cutoutImage: "/images/cutouts/argopuro-pouch.png",
+    cutoutWidth: 444,
+    cutoutHeight: 768,
     tagline: "Thick crema, nutty sweetness, and bold body.",
     description:
       "Robusta lereng Argopuro yang diproses rapi untuk menghasilkan body tebal, aroma kacang panggang, dan crema pekat yang ideal untuk racikan espresso maupun kopi susu.",
@@ -103,6 +127,11 @@ export const BEAN_PRODUCTS: BeanProduct[] = [
     id: "robusta-temanggung",
     index: "03",
     name: "Robusta Temanggung",
+    eyebrow: "#03 Central Java Classic",
+    titleLine1: "Temanggung",
+    titleLine2: "Robusta",
+    accent: "#274772",
+    accentText: "#F5F0EA",
     category: "robusta",
     origin: "Temanggung, Central Java",
     altitude: "800–1,100 MASL",
@@ -113,6 +142,9 @@ export const BEAN_PRODUCTS: BeanProduct[] = [
     cuppingScore: "82.5",
     basePrice200g: 62000,
     image: "/images/Robusta_Temanggung.jpeg",
+    cutoutImage: "/images/cutouts/temanggung-pouch.png",
+    cutoutWidth: 461,
+    cutoutHeight: 771,
     tagline: "Earthy complexity with classic Javanese intensity.",
     description:
       "Karakter khas Temanggung dengan aroma rempah halus, rasa gula aren yang kuat, dan aftertaste panjang. Cocok untuk penikmat kopi hitam pekat maupun base blend kafe.",
@@ -188,4 +220,27 @@ export function formatIDR(amount: number): string {
     currency: "IDR",
     maximumFractionDigits: 0,
   }).format(amount);
+}
+
+export function buildBeanWhatsAppUrl(
+  product: BeanProduct,
+  weight: WeightOption["label"],
+  grind: GrindOption,
+  quantity = 1,
+): string {
+  const unitPrice = calculateBeanPrice(product.basePrice200g, weight);
+  const total = unitPrice * quantity;
+  const message = [
+    "Halo Livion Coffee! Saya mau pesan biji kopi:",
+    "",
+    `Produk: ${product.name}`,
+    `Berat: ${weight}`,
+    `Gilingan: ${grind}`,
+    `Jumlah: ${quantity}x`,
+    `Total: ${formatIDR(total)}`,
+    "",
+    "Mohon info ketersediaan dan ongkirnya ya. Terima kasih!",
+  ].join("\n");
+
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 }

@@ -1,12 +1,23 @@
 import type { Metadata } from "next";
-import { JetBrains_Mono, Oswald, Plus_Jakarta_Sans } from "next/font/google";
+import {
+  Bricolage_Grotesque,
+  JetBrains_Mono,
+  Oswald,
+  Plus_Jakarta_Sans,
+} from "next/font/google";
 import "./globals.css";
-import { CartProvider } from "@/components/CartContext";
+import { MotionRoot } from "@/components/MotionPrimitives";
+
+const bricolage = Bricolage_Grotesque({
+  variable: "--font-bricolage",
+  subsets: ["latin"],
+  weight: ["700", "800"],
+});
 
 const oswald = Oswald({
   variable: "--font-oswald",
   subsets: ["latin"],
-  weight: ["500", "600", "700"],
+  weight: ["300", "400", "500", "600", "700"],
 });
 
 const plusJakarta = Plus_Jakarta_Sans({
@@ -22,7 +33,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "LIVION COFFEE — Freshly Roasted Indonesian Specialty Beans",
+  title: "LIVION COFFEE | Freshly Roasted Indonesian Specialty Beans",
   description:
     "Biji kopi Arabica & Robusta pilihan dari dataran tinggi Indonesia. Dipanggang segar setiap minggu untuk manual brew, espresso, hingga kebutuhan kafe.",
 };
@@ -31,10 +42,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="id"
-      className={`${oswald.variable} ${plusJakarta.variable} ${jetbrainsMono.variable} h-full scroll-smooth antialiased`}
+      className={`${bricolage.variable} ${oswald.variable} ${plusJakarta.variable} ${jetbrainsMono.variable} h-full scroll-smooth antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-[#F5F0EA] text-[#14110F] font-sans selection:bg-[#C4552D] selection:text-[#F5F0EA]">
-        <CartProvider>{children}</CartProvider>
+      <body className="min-h-full flex flex-col bg-[#F5F0EA] text-[#14110F] font-sans selection:bg-[#B8421B] selection:text-[#F5F0EA]">
+        <a href="#main-content" className="skip-link">
+          Lewati ke konten utama
+        </a>
+        <MotionRoot>{children}</MotionRoot>
       </body>
     </html>
   );

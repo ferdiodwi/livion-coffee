@@ -1,4 +1,8 @@
+"use client";
+
 import Image from "next/image";
+import { motion } from "motion/react";
+import { EDITORIAL_EASE, FadeUp } from "./MotionPrimitives";
 
 const CRAFT_STEPS = [
   {
@@ -29,17 +33,12 @@ const CRAFT_STEPS = [
 
 export function OriginCraft() {
   return (
-    <section id="origin" className="bg-[#241D18] py-14 text-[#F5F0EA] lg:py-20">
+    <section id="origin" className="bg-[#241D18] py-16 text-[#F5F0EA] lg:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between border-b border-[#F5F0EA]/15 pb-3 font-mono text-[11px] uppercase tracking-widest text-[#F5F0EA]/70">
-          <span>ORIGIN &amp; CRAFT / 004</span>
-          <span className="text-[#C49B63]">EAST JAVA · CENTRAL JAVA</span>
-        </div>
-
-        <div className="mt-10 grid items-center gap-10 lg:grid-cols-12 lg:gap-12">
-          <div className="lg:col-span-6">
-            <p className="font-mono text-xs uppercase tracking-widest text-[#C49B63]">
-              PRECISION IN EVERY ROAST
+        <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-14">
+          <FadeUp className="lg:col-span-6">
+            <p className="font-mono text-xs uppercase tracking-[0.2em] text-[#C49B63]">
+              02 : ORIGIN &amp; CRAFT
             </p>
             <h2 className="mt-2 font-display text-4xl font-bold uppercase leading-[0.98] tracking-tight sm:text-5xl">
               FROM JAVANESE SLOPES TO YOUR MORNING CUP.
@@ -51,12 +50,12 @@ export function OriginCraft() {
               sortasi hingga pengemasan.
             </p>
 
-            <div className="mt-8 grid grid-cols-3 gap-4 border-t border-[#F5F0EA]/15 pt-6">
+            <div className="mt-8 grid grid-cols-3 gap-4 border-t border-[#F5F0EA]/12 pt-6">
               <div>
                 <p className="font-display text-3xl font-bold text-[#C49B63]">
                   03
                 </p>
-                <p className="mt-1 font-mono text-[10px] uppercase tracking-wider text-[#F5F0EA]/70">
+                <p className="mt-1 font-mono text-[10px] uppercase tracking-wider text-[#F5F0EA]/75">
                   CORE LOTS
                 </p>
               </div>
@@ -64,7 +63,7 @@ export function OriginCraft() {
                 <p className="font-display text-3xl font-bold text-[#C49B63]">
                   52×
                 </p>
-                <p className="mt-1 font-mono text-[10px] uppercase tracking-wider text-[#F5F0EA]/70">
+                <p className="mt-1 font-mono text-[10px] uppercase tracking-wider text-[#F5F0EA]/75">
                   WEEKLY ROASTS
                 </p>
               </div>
@@ -72,45 +71,55 @@ export function OriginCraft() {
                 <p className="font-display text-3xl font-bold text-[#C49B63]">
                   100%
                 </p>
-                <p className="mt-1 font-mono text-[10px] uppercase tracking-wider text-[#F5F0EA]/70">
+                <p className="mt-1 font-mono text-[10px] uppercase tracking-wider text-[#F5F0EA]/75">
                   INDONESIAN
                 </p>
               </div>
             </div>
-          </div>
+          </FadeUp>
 
-          <div className="grid grid-cols-2 gap-4 lg:col-span-6">
-            <div className="relative aspect-[3/4] overflow-hidden border border-[#F5F0EA]/15">
+          <FadeUp delay={0.12} className="grid grid-cols-2 gap-4 lg:col-span-6">
+            <div className="group relative aspect-[3/4] overflow-hidden border border-[#F5F0EA]/15">
               <Image
                 src="/images/Robusta_Argopuro.jpeg"
                 alt="Robusta Argopuro"
                 fill
                 sizes="(max-width: 1024px) 50vw, 25vw"
-                className="object-cover"
+                className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
               />
               <span className="absolute right-0 bottom-0 left-0 bg-[#14110F]/85 px-3 py-2 font-mono text-[10px] uppercase tracking-wider text-[#F5F0EA]">
-                ARGOPURO — EAST JAVA
+                ARGOPURO, EAST JAVA
               </span>
             </div>
-            <div className="relative mt-6 aspect-[3/4] overflow-hidden border border-[#F5F0EA]/15">
+            <div className="group relative mt-6 aspect-[3/4] overflow-hidden border border-[#F5F0EA]/15">
               <Image
                 src="/images/Robusta_Temanggung.jpeg"
                 alt="Robusta Temanggung"
                 fill
                 sizes="(max-width: 1024px) 50vw, 25vw"
-                className="object-cover"
+                className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
               />
               <span className="absolute right-0 bottom-0 left-0 bg-[#14110F]/85 px-3 py-2 font-mono text-[10px] uppercase tracking-wider text-[#F5F0EA]">
-                TEMANGGUNG — CENTRAL JAVA
+                TEMANGGUNG, CENTRAL JAVA
               </span>
             </div>
-          </div>
+          </FadeUp>
         </div>
 
-        <div className="mt-14 grid gap-6 border-t border-[#F5F0EA]/15 pt-10 sm:grid-cols-2 lg:grid-cols-4">
-          {CRAFT_STEPS.map((step) => (
-            <div key={step.index}>
-              <span className="font-mono text-xs font-semibold text-[#C4552D]">
+        <div className="mt-16 grid gap-8 border-t border-[#F5F0EA]/12 pt-10 sm:grid-cols-2 lg:grid-cols-4">
+          {CRAFT_STEPS.map((step, idx) => (
+            <motion.div
+              key={step.index}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{
+                duration: 0.55,
+                delay: idx * 0.08,
+                ease: EDITORIAL_EASE,
+              }}
+            >
+              <span className="font-mono text-xs font-semibold text-[#C49B63]">
                 {step.index}
               </span>
               <h3 className="mt-1.5 font-display text-xl font-bold uppercase tracking-wide text-[#F5F0EA]">
@@ -119,7 +128,7 @@ export function OriginCraft() {
               <p className="mt-2 text-sm leading-relaxed text-[#F5F0EA]/75">
                 {step.detail}
               </p>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

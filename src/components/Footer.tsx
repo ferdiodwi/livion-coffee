@@ -15,13 +15,13 @@ export function Footer() {
           </div>
 
           <div>
-            <p className="font-mono text-[11px] uppercase tracking-widest text-[#F5F0EA]/55">
+            <p className="font-mono text-[11px] uppercase tracking-widest text-[#F5F0EA]/70">
               NAVIGATE
             </p>
             <ul className="mt-3 space-y-2 text-sm text-[#F5F0EA]/85">
               <li>
-                <a href="#signature" className="hover:text-[#C49B63]">
-                  Signature Lot
+                <a href="#top" className="hover:text-[#C49B63]">
+                  Home
                 </a>
               </li>
               <li>
@@ -48,11 +48,11 @@ export function Footer() {
           </div>
 
           <div>
-            <p className="font-mono text-[11px] uppercase tracking-widest text-[#F5F0EA]/55">
+            <p className="font-mono text-[11px] uppercase tracking-widest text-[#F5F0EA]/70">
               ROASTERY HOURS
             </p>
             <ul className="mt-3 space-y-2 font-mono text-xs text-[#F5F0EA]/80">
-              <li>SENIN – SABTU: 08:00 – 17:00 WIB</li>
+              <li>SENIN - SABTU: 08:00 - 17:00 WIB</li>
               <li>ROASTING DAY: SELASA &amp; JUMAT</li>
               <li>PENGIRIMAN: SELURUH INDONESIA</li>
             </ul>
@@ -61,11 +61,11 @@ export function Footer() {
 
         <div className="mt-10 overflow-hidden">
           <p className="font-display text-[clamp(3.25rem,13vw,10.5rem)] leading-[0.86] font-bold uppercase tracking-tight text-[#F5F0EA]/95 select-none">
-            LIVION <span className="text-[#C4552D]">/ COFFEE</span>
+            LIVION <span className="text-[#C49B63]">/ COFFEE</span>
           </p>
         </div>
 
-        <div className="mt-8 flex flex-wrap items-center justify-between gap-2 border-t border-[#F5F0EA]/10 pt-5 font-mono text-[11px] uppercase tracking-widest text-[#F5F0EA]/55">
+        <div className="mt-8 flex flex-wrap items-center justify-between gap-2 border-t border-[#F5F0EA]/10 pt-5 font-mono text-[11px] uppercase tracking-widest text-[#F5F0EA]/70">
           <span>© 2026 LIVION COFFEE</span>
           <span>INDONESIAN SPECIALTY BEANS</span>
         </div>

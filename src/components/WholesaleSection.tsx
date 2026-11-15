@@ -3,6 +3,7 @@
 import { useState, type FormEvent } from "react";
 import { ArrowRight } from "lucide-react";
 import { WHATSAPP_NUMBER } from "@/data/beans";
+import { FadeUp } from "./MotionPrimitives";
 
 export function WholesaleSection() {
   const [name, setName] = useState("");
@@ -32,40 +33,41 @@ export function WholesaleSection() {
   return (
     <section
       id="wholesale"
-      className="border-b border-[#14110F]/15 bg-[#F5F0EA] py-14 lg:py-20"
+      className="border-b border-[#14110F]/12 bg-[#F5F0EA] py-16 lg:py-24"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between border-b border-[#14110F]/15 pb-3 font-mono text-[11px] uppercase tracking-widest text-[#6E675F]">
-          <span>WHOLESALE &amp; SAMPLE / 006</span>
-          <span className="text-[#C4552D]">FOR CAFÉS &amp; OFFICES</span>
-        </div>
-
-        <div className="mt-10 grid gap-10 lg:grid-cols-12 lg:gap-12">
-          <div className="lg:col-span-5">
-            <p className="font-mono text-xs uppercase tracking-widest text-[#C4552D]">
-              PARTNER WITH LIVION
+        <div className="grid gap-10 lg:grid-cols-12 lg:gap-14">
+          <FadeUp className="lg:col-span-5">
+            <p className="font-mono text-xs uppercase tracking-[0.2em] text-[#A8401B]">
+              04 : WHOLESALE &amp; SAMPLE
             </p>
             <h2 className="mt-2 font-display text-4xl font-bold uppercase leading-[0.98] tracking-tight text-[#14110F] sm:text-5xl">
               SUPPLY FOR YOUR CAFÉ OR OFFICE.
             </h2>
-            <p className="mt-4 text-base leading-relaxed text-[#6E675F]">
+            <p className="mt-4 text-base leading-relaxed text-[#575049]">
               Butuh suplai rutin Arabica atau Robusta untuk kedai kopi,
               restoran, atau pantry kantor? Kami menyediakan harga grosir,
               custom roast profile, dan paket sample untuk uji rasa.
             </p>
 
-            <ul className="mt-6 space-y-2.5 border-t border-[#14110F]/15 pt-5 font-mono text-xs text-[#14110F]">
+            <ul className="mt-7 space-y-2.5 border-t border-[#14110F]/12 pt-5 font-mono text-xs text-[#14110F]">
               <li>· MINIMUM ORDER WHOLESALE MULAI 5 KG</li>
               <li>· TERSEDIA KEMASAN 1 KG VALVE BAG</li>
               <li>· BISA REQUEST SAMPLE PACK SEBELUM KONTRAK</li>
             </ul>
-          </div>
+          </FadeUp>
 
-          <div className="border border-[#14110F]/15 bg-[#241D18] p-6 text-[#F5F0EA] sm:p-8 lg:col-span-7">
+          <FadeUp
+            delay={0.1}
+            className="border border-[#14110F]/15 bg-[#241D18] p-6 text-[#F5F0EA] sm:p-8 lg:col-span-7"
+          >
             <h3 className="font-display text-2xl font-bold uppercase tracking-wide text-[#C49B63]">
               Request Sample / Penawaran Harga
             </h3>
-            <form onSubmit={handleSubmit} className="mt-6 grid gap-4 sm:grid-cols-2">
+            <form
+              onSubmit={handleSubmit}
+              className="mt-6 grid gap-4 sm:grid-cols-2"
+            >
               <div>
                 <label
                   htmlFor="ws-name"
@@ -80,7 +82,7 @@ export function WholesaleSection() {
                   placeholder="Contoh: Raka Pratama"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="mt-1.5 w-full border border-[#F5F0EA]/20 bg-[#14110F] px-3.5 py-2.5 text-sm text-[#F5F0EA] placeholder:text-[#F5F0EA]/40 focus:border-[#C49B63] focus:outline-none"
+                  className="mt-1.5 w-full border border-[#F5F0EA]/20 bg-[#14110F] px-3.5 py-2.5 text-sm text-[#F5F0EA] placeholder:text-[#F5F0EA]/55 focus:border-[#C49B63] focus:ring-1 focus:ring-[#C49B63]"
                 />
               </div>
 
@@ -98,7 +100,7 @@ export function WholesaleSection() {
                   placeholder="Contoh: Seduh Ruang Coffee"
                   value={business}
                   onChange={(e) => setBusiness(e.target.value)}
-                  className="mt-1.5 w-full border border-[#F5F0EA]/20 bg-[#14110F] px-3.5 py-2.5 text-sm text-[#F5F0EA] placeholder:text-[#F5F0EA]/40 focus:border-[#C49B63] focus:outline-none"
+                  className="mt-1.5 w-full border border-[#F5F0EA]/20 bg-[#14110F] px-3.5 py-2.5 text-sm text-[#F5F0EA] placeholder:text-[#F5F0EA]/55 focus:border-[#C49B63] focus:ring-1 focus:ring-[#C49B63]"
                 />
               </div>
 
@@ -113,7 +115,7 @@ export function WholesaleSection() {
                   id="ws-volume"
                   value={volume}
                   onChange={(e) => setVolume(e.target.value)}
-                  className="mt-1.5 w-full border border-[#F5F0EA]/20 bg-[#14110F] px-3.5 py-2.5 text-sm text-[#F5F0EA] focus:border-[#C49B63] focus:outline-none"
+                  className="mt-1.5 min-h-[44px] w-full border border-[#F5F0EA]/20 bg-[#14110F] px-3.5 py-2.5 text-sm text-[#F5F0EA] focus:border-[#C49B63] focus:ring-1 focus:ring-[#C49B63]"
                 >
                   <option value="Sample Pack (< 5 kg)">
                     Sample Pack (&lt; 5 kg)
@@ -135,7 +137,7 @@ export function WholesaleSection() {
                   id="ws-interest"
                   value={interest}
                   onChange={(e) => setInterest(e.target.value)}
-                  className="mt-1.5 w-full border border-[#F5F0EA]/20 bg-[#14110F] px-3.5 py-2.5 text-sm text-[#F5F0EA] focus:border-[#C49B63] focus:outline-none"
+                  className="mt-1.5 min-h-[44px] w-full border border-[#F5F0EA]/20 bg-[#14110F] px-3.5 py-2.5 text-sm text-[#F5F0EA] focus:border-[#C49B63] focus:ring-1 focus:ring-[#C49B63]"
                 >
                   <option value="Arabica & Robusta Blend">
                     Arabica &amp; Robusta Blend
@@ -161,21 +163,21 @@ export function WholesaleSection() {
                   placeholder="Misal: untuk menu kopi susu gula aren, butuh profil medium-dark..."
                   value={note}
                   onChange={(e) => setNote(e.target.value)}
-                  className="mt-1.5 w-full border border-[#F5F0EA]/20 bg-[#14110F] px-3.5 py-2.5 text-sm text-[#F5F0EA] placeholder:text-[#F5F0EA]/40 focus:border-[#C49B63] focus:outline-none"
+                  className="mt-1.5 w-full border border-[#F5F0EA]/20 bg-[#14110F] px-3.5 py-2.5 text-sm text-[#F5F0EA] placeholder:text-[#F5F0EA]/55 focus:border-[#C49B63] focus:ring-1 focus:ring-[#C49B63]"
                 />
               </div>
 
               <div className="sm:col-span-2">
                 <button
                   type="submit"
-                  className="inline-flex w-full items-center justify-center gap-2 bg-[#C49B63] px-6 py-3.5 text-xs font-bold uppercase tracking-widest text-[#14110F] transition-colors hover:bg-[#F5F0EA]"
+                  className="inline-flex w-full items-center justify-center gap-2 bg-[#C49B63] px-6 py-3.5 text-xs font-bold uppercase tracking-widest text-[#14110F] transition-[background-color,transform] hover:bg-[#F5F0EA] active:scale-[0.99]"
                 >
                   Kirim Inquiry via WhatsApp
                   <ArrowRight className="h-4 w-4" />
                 </button>
               </div>
             </form>
-          </div>
+          </FadeUp>
         </div>
       </div>
     </section>
