@@ -33,9 +33,9 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "LIVION COFFEE | Freshly Roasted Indonesian Specialty Beans",
+  title: "LIVION COFFEE | Biji Kopi Nusantara Fresh Roast",
   description:
-    "Biji kopi Arabica & Robusta pilihan dari dataran tinggi Indonesia. Dipanggang segar setiap minggu untuk manual brew, espresso, hingga kebutuhan kafe.",
+    "Biji kopi Arabica & Robusta pilihan dari dataran tinggi Indonesia. Disangrai segar tiap minggu buat seduh rumahan, espresso, sampai stok kafe.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

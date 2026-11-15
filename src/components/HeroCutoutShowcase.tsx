@@ -10,7 +10,7 @@ import {
   useSpring,
   useTransform,
 } from "motion/react";
-import { BEAN_PRODUCTS, buildBeanWhatsAppUrl } from "@/data/beans";
+import { BEAN_PRODUCTS, DEFAULT_GRIND, buildBeanWhatsAppUrl } from "@/data/beans";
 import { EDITORIAL_EASE } from "./MotionPrimitives";
 import { ScallopedOrderSeal } from "./ScallopedOrderSeal";
 
@@ -274,7 +274,7 @@ export function HeroCutoutShowcase() {
   const whatsappUrl = buildBeanWhatsAppUrl(
     currentBean,
     "200g",
-    "Whole Bean (Biji Utuh)",
+    DEFAULT_GRIND,
     1,
   );
 
@@ -373,14 +373,14 @@ export function HeroCutoutShowcase() {
           >
             <span className="flex flex-wrap items-baseline justify-center gap-x-3.5 sm:gap-x-6">
               <span className="text-[clamp(1.8rem,4.1vw,3.65rem)] leading-none font-bold tracking-[-0.03em] text-[#3E2216]">
-                Slow Roasted
+                Sangrai Pelan
               </span>
               <span className="text-[clamp(3.95rem,11.8vw,10.1rem)] leading-[0.86] font-extrabold text-[#3E2216]">
-                Coffee
+                Kopi
               </span>
             </span>
             <span className="mt-0.5 block whitespace-nowrap text-[clamp(3.15rem,12.2vw,10.45rem)] leading-[0.86] font-extrabold text-[#3E2216]">
-              Experience
+              Nusantara
             </span>
           </motion.h1>
 
@@ -398,7 +398,7 @@ export function HeroCutoutShowcase() {
                   className="max-w-[355px]"
                 >
                   <p className="text-[17px] font-bold text-[#14110F] sm:text-lg">
-                    Single-Origin · {currentBean.origin}
+                    Asal Kebun · {currentBean.origin}
                   </p>
                   <p className="mt-2 text-[15.5px] leading-relaxed text-[#575049] sm:text-[16.5px]">
                     {currentBean.tastingNotes.join(", ")}.{" "}
@@ -466,7 +466,7 @@ export function HeroCutoutShowcase() {
                   >
                     <Image
                       src={currentBean.cutoutImage}
-                      alt={`${currentBean.name} stand-up coffee pouch`}
+                      alt={`Kemasan biji kopi ${currentBean.name}`}
                       width={currentBean.cutoutWidth}
                       height={currentBean.cutoutHeight}
                       sizes="(max-width: 640px) 264px, (max-width: 1024px) 320px, 380px"
@@ -491,10 +491,10 @@ export function HeroCutoutShowcase() {
             {/* Right Column: Clean Airy Counterbalance Spec */}
             <div className="relative z-30 order-3 hidden flex-col items-end pb-7 text-right lg:col-span-3 lg:flex">
               <p className="font-display text-xl font-bold uppercase text-[#14110F]">
-                {currentBean.roastLevel} Roast
+                Sangrai {currentBean.roastLevel}
               </p>
               <p className="mt-0.5 text-[13.5px] text-[#575049]">
-                Best for: {currentBean.bestFor}
+                Cocok buat: {currentBean.bestFor}
               </p>
             </div>
           </div>

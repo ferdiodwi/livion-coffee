@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion, useReducedMotion } from "motion/react";
-import { BEAN_PRODUCTS, buildBeanWhatsAppUrl } from "@/data/beans";
+import { BEAN_PRODUCTS, DEFAULT_GRIND, buildBeanWhatsAppUrl } from "@/data/beans";
 import { EDITORIAL_EASE } from "./MotionPrimitives";
 import { ScallopedOrderSeal } from "./ScallopedOrderSeal";
 
@@ -16,7 +16,7 @@ export function OrderCtaSection() {
   const orderHref = buildBeanWhatsAppUrl(
     featuredBean,
     "200g",
-    "Whole Bean (Biji Utuh)",
+    DEFAULT_GRIND,
     1,
   );
 
@@ -61,9 +61,9 @@ export function OrderCtaSection() {
               transition={{ duration: 0.58, ease: EDITORIAL_EASE }}
               className="font-hero text-[clamp(2.65rem,5.7vw,5.2rem)] leading-[0.98] font-extrabold tracking-[-0.03em] text-[#3E2216]"
             >
-              <span className="block">Find Your</span>
-              <span className="block">Signature</span>
-              <span className="block">Roast Now</span>
+              <span className="block">Temukan</span>
+              <span className="block">Kopi Pas</span>
+              <span className="block">Untukmu</span>
             </motion.h2>
 
             {/* Scalloped Order Seal paired beside line 3 on desktop, clean spacing on mobile */}

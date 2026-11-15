@@ -6,10 +6,10 @@ import { Menu, X } from "lucide-react";
 import { EDITORIAL_EASE } from "./MotionPrimitives";
 
 const NAV_LINKS = [
-  { label: "Craft", href: "#craft" },
-  { label: "Beans", href: "#beans" },
-  { label: "Origin", href: "#origin" },
-  { label: "Order", href: "#order-cta" },
+  { label: "Proses", href: "#craft" },
+  { label: "Biji Kopi", href: "#beans" },
+  { label: "Asal Biji", href: "#origin" },
+  { label: "Pesan", href: "#order-cta" },
 ];
 
 export function Navbar() {
@@ -51,7 +51,7 @@ export function Navbar() {
         </a>
 
         <div className="flex items-center gap-4 sm:gap-7 lg:gap-10">
-          <nav className="hidden items-center gap-8 md:flex" aria-label="Main">
+          <nav className="hidden items-center gap-8 md:flex" aria-label="Navigasi utama">
             {NAV_LINKS.map((link) => (
               <a
                 key={link.href}
@@ -67,7 +67,7 @@ export function Navbar() {
             href="#beans"
             className="inline-flex min-h-[48px] items-center justify-center rounded-full bg-[#B8421B] px-7 py-2.5 text-[15.5px] font-semibold text-[#FFFFFF] transition-[background-color,transform] hover:bg-[#3E2216] active:scale-[0.97]"
           >
-            Shop
+            Belanja
           </a>
 
           <button

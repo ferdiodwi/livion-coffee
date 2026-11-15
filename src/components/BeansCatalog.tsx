@@ -6,6 +6,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { ArrowRight, SlidersHorizontal } from "lucide-react";
 import {
   BEAN_PRODUCTS,
+  DEFAULT_GRIND,
   buildBeanWhatsAppUrl,
   formatIDR,
   type BeanCategory,
@@ -34,7 +35,7 @@ function BeanCard({
   const quickOrderUrl = buildBeanWhatsAppUrl(
     product,
     "200g",
-    "Whole Bean (Biji Utuh)",
+    DEFAULT_GRIND,
     1,
   );
 

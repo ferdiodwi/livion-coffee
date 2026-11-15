@@ -1,24 +1,25 @@
 import {
   BEAN_PRODUCTS,
+  DEFAULT_GRIND,
   WHATSAPP_NUMBER,
   buildBeanWhatsAppUrl,
 } from "@/data/beans";
 
 const FOOTER_COL_LEFT = [
-  { label: "Home", href: "#top" },
-  { label: "Craft", href: "#craft" },
-  { label: "Collection", href: "#beans" },
-  { label: "Origin", href: "#origin" },
+  { label: "Beranda", href: "#top" },
+  { label: "Proses", href: "#craft" },
+  { label: "Katalog", href: "#beans" },
+  { label: "Asal Biji", href: "#origin" },
 ];
 
 const WHOLESALE_WA_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-  "Halo Livion Coffee! Saya tertarik menanyakan suplai wholesale & sample pack biji kopi.",
+  "Halo Livion Coffee! Mau tanya-tanya soal suplai grosir & sample pack biji kopinya nih.",
 )}`;
 
 const DEFAULT_ORDER_WA_URL = buildBeanWhatsAppUrl(
   BEAN_PRODUCTS[0],
   "200g",
-  "Whole Bean (Biji Utuh)",
+  DEFAULT_GRIND,
   1,
 );
 
@@ -140,7 +141,7 @@ export function Footer() {
                     rel="noopener noreferrer"
                     className="inline-flex min-h-[44px] items-center text-[15px] text-[#D7C9BE] transition-colors hover:text-[#F5F0EA] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F5F0EA]"
                   >
-                    Order Beans
+                    Pesan Biji
                   </a>
                 </li>
                 <li>
@@ -150,7 +151,7 @@ export function Footer() {
                     rel="noopener noreferrer"
                     className="inline-flex min-h-[44px] items-center text-[15px] text-[#D7C9BE] transition-colors hover:text-[#F5F0EA] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F5F0EA]"
                   >
-                    Wholesale &amp; Sample
+                    Grosir &amp; Sample
                   </a>
                 </li>
               </ul>
@@ -159,7 +160,7 @@ export function Footer() {
             {/* Right copyright + stacked coffee-bean oval links */}
             <div className="flex flex-col justify-between gap-8 md:col-span-6 lg:col-span-6 lg:items-end">
               <p className="text-[14px] text-[#D7C9BE] md:text-right">
-                © 2026 Livion Coffee. All rights reserved.
+                © 2026 Livion Coffee. Seluruh hak cipta dilindungi.
               </p>
 
               <div

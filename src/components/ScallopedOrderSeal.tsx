@@ -38,8 +38,8 @@ export function ScallopedOrderSeal({
         />
       </svg>
       <span className="relative z-10 flex flex-col items-center justify-center text-center font-hero text-[16.5px] leading-[1.02] font-extrabold tracking-tight text-[#FFFFFF] sm:text-[18px] lg:text-[20px]">
-        <span>Order</span>
-        <span>now</span>
+        <span>Pesan</span>
+        <span>yuk</span>
       </span>
     </motion.a>
   );

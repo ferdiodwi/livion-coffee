@@ -6,10 +6,10 @@ export type WeightOption = {
 };
 
 export type GrindOption =
-  | "Whole Bean (Biji Utuh)"
-  | "Fine (Espresso)"
-  | "Medium (V60 / Pour Over)"
-  | "Coarse (French Press / Tubruk)";
+  | "Biji Utuh (Whole Bean)"
+  | "Halus (Espresso)"
+  | "Sedang (V60 / Pour Over)"
+  | "Kasar (French Press / Tubruk)";
 
 export interface BeanProduct {
   id: string;
@@ -62,29 +62,31 @@ export const WEIGHT_OPTIONS: WeightOption[] = [
   { label: "1kg", multiplier: 4.5 },
 ];
 
+export const DEFAULT_GRIND: GrindOption = "Biji Utuh (Whole Bean)";
+
 export const GRIND_OPTIONS: GrindOption[] = [
-  "Whole Bean (Biji Utuh)",
-  "Fine (Espresso)",
-  "Medium (V60 / Pour Over)",
-  "Coarse (French Press / Tubruk)",
+  "Biji Utuh (Whole Bean)",
+  "Halus (Espresso)",
+  "Sedang (V60 / Pour Over)",
+  "Kasar (French Press / Tubruk)",
 ];
 
 export const BEAN_PRODUCTS: BeanProduct[] = [
   {
     id: "arabica-signature",
     index: "01",
-    name: "Livion Arabica Selection",
+    name: "Livion Arabica Pilihan",
     eyebrow: "#01 Signature Highlands Lot",
-    titleLine1: "Indonesian",
-    titleLine2: "Arabica",
+    titleLine1: "Arabica",
+    titleLine2: "Pilihan",
     accent: "#2C4C3B",
     accentText: "#F5F0EA",
     category: "arabica",
-    origin: "Indonesian Highlands",
-    altitude: "1,400–1,700 MASL",
+    origin: "Dataran Tinggi Nusantara",
+    altitude: "1.400 - 1.700 mdpl",
     process: "Washed / Semi-Washed",
     roastLevel: "Medium",
-    tastingNotes: ["Caramel", "Citrus", "Dark Cocoa"],
+    tastingNotes: ["Karamel", "Sitrus Segar", "Cokelat Hitam"],
     bestFor: "V60, Pour Over, Filter, Espresso",
     cuppingScore: "86.5",
     basePrice200g: 85000,
@@ -92,9 +94,9 @@ export const BEAN_PRODUCTS: BeanProduct[] = [
     cutoutImage: "/images/cutouts/arabica-pouch.png",
     cutoutWidth: 513,
     cutoutHeight: 822,
-    tagline: "Balanced sweetness with clean citrus brightness.",
+    tagline: "Manisnya pas dengan sentuhan sitrus yang segar dan bersih.",
     description:
-      "Dipilih dari panen dataran tinggi dengan karakter rasa bersih, manis karamel yang lembut, dan sentuhan akhir cokelat hitam yang nyaman diminum setiap hari.",
+      "Dipilih dari panen dataran tinggi dengan karakter rasa bersih, manis karamel lembut, dan sentuhan cokelat hitam yang nyaman banget diminum tiap hari.",
     featured: true,
   },
   {
@@ -102,52 +104,52 @@ export const BEAN_PRODUCTS: BeanProduct[] = [
     index: "02",
     name: "Robusta Argopuro",
     eyebrow: "#02 East Java Bold Lot",
-    titleLine1: "Argopuro",
-    titleLine2: "Robusta",
+    titleLine1: "Robusta",
+    titleLine2: "Argopuro",
     accent: "#8F511A",
     accentText: "#F5F0EA",
     category: "robusta",
-    origin: "Mount Argopuro, East Java",
-    altitude: "900–1,200 MASL",
+    origin: "Gunung Argopuro, Jawa Timur",
+    altitude: "900 - 1.200 mdpl",
     process: "Natural / Honey",
     roastLevel: "Medium-Dark",
-    tastingNotes: ["Dark Chocolate", "Roasted Almond", "Brown Sugar"],
-    bestFor: "Espresso, Milk-Based, Kopi Susu",
+    tastingNotes: ["Cokelat Hitam", "Almond Panggang", "Gula Merah"],
+    bestFor: "Espresso, Kopi Susu, Susu Dingin",
     cuppingScore: "83.0",
     basePrice200g: 65000,
     image: "/images/Robusta_Argopuro.jpeg",
     cutoutImage: "/images/cutouts/argopuro-pouch.png",
     cutoutWidth: 444,
     cutoutHeight: 768,
-    tagline: "Thick crema, nutty sweetness, and bold body.",
+    tagline: "Crema tebal, manis kacang panggang, dan body yang mantap.",
     description:
-      "Robusta lereng Argopuro yang diproses rapi untuk menghasilkan body tebal, aroma kacang panggang, dan crema pekat yang ideal untuk racikan espresso maupun kopi susu.",
+      "Robusta lereng Argopuro yang diproses rapi buat hasilin body tebal, aroma kacang panggang, dan crema pekat yang pas untuk racikan espresso maupun kopi susu.",
   },
   {
     id: "robusta-temanggung",
     index: "03",
     name: "Robusta Temanggung",
     eyebrow: "#03 Central Java Classic",
-    titleLine1: "Temanggung",
-    titleLine2: "Robusta",
+    titleLine1: "Robusta",
+    titleLine2: "Temanggung",
     accent: "#274772",
     accentText: "#F5F0EA",
     category: "robusta",
-    origin: "Temanggung, Central Java",
-    altitude: "800–1,100 MASL",
+    origin: "Temanggung, Jawa Tengah",
+    altitude: "800 - 1.100 mdpl",
     process: "Natural",
     roastLevel: "Medium-Dark",
-    tastingNotes: ["Tobacco Spice", "Molasses", "Cocoa"],
-    bestFor: "Tubruk, Moka Pot, Espresso Blend",
+    tastingNotes: ["Rempah Halus", "Molases", "Kakao"],
+    bestFor: "Tubruk, Moka Pot, Campuran Espresso",
     cuppingScore: "82.5",
     basePrice200g: 62000,
     image: "/images/Robusta_Temanggung.jpeg",
     cutoutImage: "/images/cutouts/temanggung-pouch.png",
     cutoutWidth: 461,
     cutoutHeight: 771,
-    tagline: "Earthy complexity with classic Javanese intensity.",
+    tagline: "Aroma rempah khas Jawa dengan rasa pekat yang awet di lidah.",
     description:
-      "Karakter khas Temanggung dengan aroma rempah halus, rasa gula aren yang kuat, dan aftertaste panjang. Cocok untuk penikmat kopi hitam pekat maupun base blend kafe.",
+      "Karakter klasik Temanggung dengan wangi rempah halus, manis gula aren yang kuat, dan aftertaste panjang. Pas buat kopi hitam mantap maupun base andalan kafe.",
   },
 ];
 

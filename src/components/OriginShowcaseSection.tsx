@@ -19,10 +19,10 @@ const ORIGIN_PILLARS: OriginPillar[] = [
   {
     id: "direct-source",
     step: "01",
-    title: "Direct Source",
+    title: "Panen Langsung",
     meta: "Argopuro & Temanggung",
     description:
-      "Selectively harvested with highland Arabica growers and Javanese Robusta farmers across East and Central Java.",
+      "Dipetik bareng petani kopi Arabica dataran tinggi dan kebun Robusta pilihan dari Jawa Timur dan Jawa Tengah.",
     desktopClass:
       "lg:left-[3.5%] lg:top-[218px] lg:w-[295px] xl:left-[7%] xl:top-[225px] xl:w-[340px]",
     delay: 0.08,
@@ -30,10 +30,10 @@ const ORIGIN_PILLARS: OriginPillar[] = [
   {
     id: "roast-profile",
     step: "02",
-    title: "Roast Profile",
-    meta: "Profiled Per Lot",
+    title: "Profil Sangrai",
+    meta: "Diuji Tiap Lot",
     description:
-      "Every lot is heat-curved and cupped to highlight natural sweetness, balanced crema, and clean finish without harsh scorch.",
+      "Setiap batch dicari profil panasnya biar manis alami dan crema tebalnya keluar maksimal tanpa rasa gosong.",
     desktopClass:
       "lg:left-[1.5%] lg:bottom-[92px] lg:w-[310px] xl:left-[4%] xl:bottom-[104px] xl:w-[365px]",
     delay: 0.16,
@@ -41,10 +41,10 @@ const ORIGIN_PILLARS: OriginPillar[] = [
   {
     id: "small-batch",
     step: "03",
-    title: "Small Batch",
-    meta: "Roasted Weekly",
+    title: "Batch Kecil",
+    meta: "Sangrai Mingguan",
     description:
-      "Roasted in disciplined small batches every week so beans leave our roastery fresh and arrive near peak aroma.",
+      "Disangrai rutin tiap minggu dalam jumlah terjaga supaya biji yang sampai ke rumahmu masih wangi maksimal.",
     desktopClass:
       "lg:right-[2.5%] lg:top-[238px] lg:w-[298px] xl:right-[5.5%] xl:top-[246px] xl:w-[345px]",
     delay: 0.12,
@@ -52,10 +52,10 @@ const ORIGIN_PILLARS: OriginPillar[] = [
   {
     id: "grind-ship",
     step: "04",
-    title: "Grind & Ship",
-    meta: "One-Way Valve Bag",
+    title: "Giling & Kirim",
+    meta: "Kemasan Katup Udara",
     description:
-      "Sealed in degassing valve pouches as whole bean or custom ground for V60 pour-over, espresso, and kopi tubruk.",
+      "Dikemas rapi pakai valve satu arah, bebas pilih biji utuh atau gilingan sesuai alat V60, espresso, maupun tubruk.",
     desktopClass:
       "lg:right-[5%] lg:bottom-[54px] lg:w-[278px] xl:right-[9%] xl:bottom-[58px] xl:w-[312px]",
     delay: 0.22,
@@ -130,9 +130,9 @@ export function OriginShowcaseSection() {
             transition={{ duration: 0.55, ease: EDITORIAL_EASE }}
             className="relative z-20 mx-auto max-w-[740px] text-center font-hero text-[clamp(2.2rem,4.4vw,4.15rem)] leading-[1.03] font-extrabold tracking-[-0.03em] text-[#3E2216]"
           >
-            From Javanese Slopes
+            Dari Lereng Jawa
             <br />
-            to Your Daily Cup
+            ke Gelasmu Tiap Hari
           </motion.h2>
 
           {/* Desktop staggered orbital composition */}
@@ -146,7 +146,7 @@ export function OriginShowcaseSection() {
             >
               <Image
                 src="/images/cutouts/argopuro-pouch.png"
-                alt="Livion Coffee Robusta Argopuro 200g craft pouch"
+                alt="Kemasan biji kopi Livion Coffee Robusta Argopuro 200g"
                 width={444}
                 height={768}
                 sizes="320px"
@@ -185,7 +185,7 @@ export function OriginShowcaseSection() {
             >
               <Image
                 src="/images/cutouts/argopuro-pouch.png"
-                alt="Livion Coffee Robusta Argopuro 200g craft pouch"
+                alt="Kemasan biji kopi Livion Coffee Robusta Argopuro 200g"
                 width={444}
                 height={768}
                 sizes="(max-width: 640px) 220px, 260px"

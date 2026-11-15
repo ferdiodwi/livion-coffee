@@ -5,6 +5,7 @@ import Image from "next/image";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { Minus, Plus, X } from "lucide-react";
 import {
+  DEFAULT_GRIND,
   buildBeanWhatsAppUrl,
   calculateBeanPrice,
   formatIDR,
@@ -24,15 +25,15 @@ interface BeanDetailModalProps {
 const MODAL_TEXTURES: Record<string, { src: string; alt: string }> = {
   "arabica-signature": {
     src: "/images/textures/arabica-crema.jpg",
-    alt: "Macro golden espresso crema texture",
+    alt: "Tekstur crema espresso keemasan yang halus",
   },
   "robusta-argopuro": {
     src: "/images/textures/argopuro-crema.jpg",
-    alt: "Macro bronze tiger-stripe espresso crema texture",
+    alt: "Tekstur crema espresso gelap pekat bergaris halus",
   },
   "robusta-temanggung": {
     src: "/images/textures/temanggung-foam.jpg",
-    alt: "Macro silky espresso microfoam swirl texture",
+    alt: "Tekstur microfoam kopi yang lembut dan creamy",
   },
 };
 
@@ -44,7 +45,7 @@ function ModalContent({
   onClose: () => void;
 }) {
   const [weight, setWeight] = useState<WeightOption["label"]>("200g");
-  const [grind, setGrind] = useState<GrindOption>("Whole Bean (Biji Utuh)");
+  const [grind, setGrind] = useState<GrindOption>(DEFAULT_GRIND);
   const [quantity, setQuantity] = useState(1);
   const closeBtnRef = useRef<HTMLButtonElement>(null);
   const reducedMotion = useReducedMotion() ?? false;
@@ -56,10 +57,10 @@ function ModalContent({
     MODAL_TEXTURES[product.id] ?? MODAL_TEXTURES["arabica-signature"];
 
   const specItems = [
-    { label: "Altitude", value: product.altitude },
-    { label: "Process", value: product.process },
-    { label: "Roast", value: product.roastLevel },
-    { label: "Best For", value: product.bestFor },
+    { label: "Ketinggian", value: product.altitude },
+    { label: "Proses", value: product.process },
+    { label: "Sangrai", value: product.roastLevel },
+    { label: "Cocok Buat", value: product.bestFor },
   ];
 
   useEffect(() => {
@@ -151,7 +152,7 @@ function ModalContent({
               <div className="pointer-events-none relative z-20 select-none">
                 <Image
                   src={product.cutoutImage}
-                  alt={`${product.name} craft pouch`}
+                  alt={`Kemasan biji kopi ${product.name}`}
                   width={product.cutoutWidth}
                   height={product.cutoutHeight}
                   sizes="(max-width: 768px) 150px, 230px"

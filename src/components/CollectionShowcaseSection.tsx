@@ -31,9 +31,9 @@ const CARD_CONFIGS: CardVisualConfig[] = [
     productId: "arabica-signature",
     variant: "corner-badge",
     titleTop: "Arabica",
-    titleBottom: "Selection",
+    titleBottom: "Pilihan",
     textureSrc: "/images/textures/arabica-crema.jpg",
-    textureAlt: "Macro velvety golden espresso crema texture",
+    textureAlt: "Tekstur crema espresso keemasan yang halus",
     accentBeans: [
       {
         src: "/images/cutouts/bean-2.png",
@@ -57,7 +57,7 @@ const CARD_CONFIGS: CardVisualConfig[] = [
     titleTop: "Robusta",
     titleBottom: "Argopuro",
     textureSrc: "/images/textures/argopuro-crema.jpg",
-    textureAlt: "Macro dark bronze tiger-stripe espresso crema texture",
+    textureAlt: "Tekstur crema espresso gelap pekat bergaris halus",
     accentBeans: [
       {
         src: "/images/cutouts/bean-1.png",
@@ -88,7 +88,7 @@ const CARD_CONFIGS: CardVisualConfig[] = [
     titleTop: "Robusta",
     titleBottom: "Temanggung",
     textureSrc: "/images/textures/temanggung-foam.jpg",
-    textureAlt: "Macro creamy steamed microfoam swirl texture",
+    textureAlt: "Tekstur microfoam kopi yang lembut dan creamy",
     accentBeans: [
       {
         src: "/images/cutouts/bean-5.png",
@@ -266,8 +266,8 @@ export function CollectionShowcaseSection() {
             transition={{ duration: 0.52, ease: EDITORIAL_EASE }}
             className="max-w-[360px] text-[15.5px] leading-[1.65] text-[#575049] sm:text-[17px] lg:col-span-5"
           >
-            Small-batch single-origin beans roasted weekly in Indonesia for
-            balanced sweetness, rich crema, and clean daily brews.
+            Biji kopi pilihan yang disangrai fresh tiap minggu dalam porsi kecil.
+            Manisnya pas, cremanya tebal, dan nyaman diseduh tiap hari.
           </motion.p>
 
           <motion.h2
@@ -278,8 +278,8 @@ export function CollectionShowcaseSection() {
             transition={{ duration: 0.56, ease: EDITORIAL_EASE }}
             className="font-hero text-[clamp(2.35rem,4.5vw,4.25rem)] leading-[1.02] font-extrabold tracking-[-0.03em] text-[#3E2216] lg:col-span-7 lg:text-right"
           >
-            <span className="block">Curated for</span>
-            <span className="block">Refined Palates</span>
+            <span className="block">Pilihan Pas</span>
+            <span className="block">Buat Seleramu</span>
           </motion.h2>
         </div>
 

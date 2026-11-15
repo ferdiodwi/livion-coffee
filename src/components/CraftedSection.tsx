@@ -59,7 +59,7 @@ export function CraftedSection() {
       >
         <Image
           src="/images/cutouts/crafted-open-hand-beans.png"
-          alt="Open hand holding roasted coffee beans"
+          alt="Telapak tangan terbuka memegang biji kopi sangrai"
           width={978}
           height={548}
           sizes="(max-width: 1024px) 90vw, 590px"
@@ -78,8 +78,8 @@ export function CraftedSection() {
               transition={{ duration: 0.58, ease: EDITORIAL_EASE }}
               className="font-hero text-[clamp(2.45rem,4.9vw,4.45rem)] leading-[1.04] font-extrabold tracking-[-0.03em] text-[#FFFFFF]"
             >
-              <span className="block">Crafted Beyond</span>
-              <span className="block">the Ordinary</span>
+              <span className="block">Bukan Sekadar</span>
+              <span className="block">Kopi Biasa</span>
             </motion.h2>
 
             <motion.p
@@ -89,9 +89,10 @@ export function CraftedSection() {
               transition={{ duration: 0.62, delay: 0.08, ease: EDITORIAL_EASE }}
               className="mt-7 max-w-[460px] text-[16.5px] leading-[1.68] text-[#FFFFFF]/92 sm:text-[18px] lg:mt-16 lg:mr-6 lg:ml-auto"
             >
-              From Indonesian highlands to Javanese slopes in Argopuro and
-              Temanggung, every lot is small-batch roasted weekly for balanced
-              sweetness, thick crema, and honest daily brews.
+              Dari kebun dataran tinggi sampai lereng Argopuro dan Temanggung,
+              tiap batch kami sangrai porsi kecil setiap minggu. Biar manis
+              alaminya keluar, cremanya tebal, dan nyaman nemenin ngopi
+              harianmu.
             </motion.p>
           </div>
         </div>
