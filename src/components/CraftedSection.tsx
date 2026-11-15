@@ -58,7 +58,7 @@ export function CraftedSection() {
         className="pointer-events-none relative z-20 mb-5 w-[90%] max-w-[430px] select-none sm:max-w-[470px] lg:absolute lg:top-[17%] lg:left-0 lg:mb-0 lg:w-[39vw] lg:max-w-[590px] lg:min-w-[375px]"
       >
         <Image
-          src="/images/cutouts/crafted-hand-beans.png"
+          src="/images/cutouts/crafted-open-hand-beans.png"
           alt="Open hand holding roasted coffee beans"
           width={978}
           height={548}
