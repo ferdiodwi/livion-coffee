@@ -1,3 +1,4 @@
+import { CollectionShowcaseSection } from "@/components/CollectionShowcaseSection";
 import { CraftedSection } from "@/components/CraftedSection";
 import { Footer } from "@/components/Footer";
 import { HeroCutoutShowcase } from "@/components/HeroCutoutShowcase";
@@ -10,6 +11,7 @@ export default function Home() {
       <main id="main-content" tabIndex={-1} className="flex-1 focus:outline-none">
         <HeroCutoutShowcase />
         <CraftedSection />
+        <CollectionShowcaseSection />
       </main>
       <Footer />
     </div>
