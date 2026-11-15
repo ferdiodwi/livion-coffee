@@ -66,7 +66,7 @@ export function Footer() {
         </div>
 
         <div className="mt-8 flex flex-wrap items-center justify-between gap-2 border-t border-[#F5F0EA]/10 pt-5 font-mono text-[11px] uppercase tracking-widest text-[#F5F0EA]/55">
-          <span>© {new Date().getFullYear()} LIVION COFFEE</span>
+          <span>© 2026 LIVION COFFEE</span>
           <span>INDONESIAN SPECIALTY BEANS</span>
         </div>
       </div>
