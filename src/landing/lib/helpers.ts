@@ -360,6 +360,22 @@ export function readCollectionProduct(block: LandingBlock, index: number) {
   };
 }
 
+export function readComingSoonMeta(block: LandingBlock) {
+  const ex = block.extra;
+  return {
+    sectionId: strVal(ex, "section_id", "coming-soon"),
+    headingId: "coming-soon-heading",
+    imageAlt: strVal(
+      ex,
+      "image_alt",
+      "Kemasan kopi putih Livion dengan simbol tanda tanya untuk varian yang segera hadir",
+    ),
+    textureAlt: strVal(ex, "texture_alt", "Tekstur crema espresso kopi sangrai"),
+    beanAUrl: "assets/cutouts/bean-1.png",
+    beanBUrl: "assets/cutouts/bean-5.png",
+  };
+}
+
 export function readOriginMeta(block: LandingBlock) {
   const ex = block.extra;
   return {

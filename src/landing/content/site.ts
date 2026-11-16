@@ -261,8 +261,51 @@ export const site = {
           ],
         },
         {
-          type: "OriginShowcase",
+          type: "ComingSoon",
           order: 4,
+          is_active: true,
+          blocks: [
+            {
+              order: 0,
+              title: "Varian Baru",
+              subtitle: "Sedang Disiapkan",
+              description:
+                "Kami lagi menguji profil sangrai untuk lot panen berikutnya dari kebun mitra. Begitu hasilnya pas di gelas, detail lengkap dan harganya langsung dibuka di katalog.",
+              image_url: "assets/cutouts/coming-soon-pouch.png",
+              extra: {
+                section_id: "coming-soon",
+                status_badge: "Segera Hadir",
+                eyebrow: "Rilis Berikutnya",
+                texture_url: "assets/textures/argopuro-crema.jpg",
+                texture_alt: "Tekstur crema espresso kopi sangrai",
+                image_alt: "Kemasan kopi putih Livion dengan simbol tanda tanya untuk varian yang segera hadir",
+              },
+              items: [
+                {
+                  order: 0,
+                  icon: "Asal & Proses",
+                  title: "Panen Terpilih",
+                  description: "Seleksi panen terbaru langsung dari kebun mitra.",
+                },
+                {
+                  order: 1,
+                  icon: "Status",
+                  title: "Uji Sangrai",
+                  description: "Mencari profil manis alami dan crema terbaik.",
+                },
+                {
+                  order: 2,
+                  icon: "Notifikasi",
+                  title: "Langsung via WA",
+                  description: "Dapat kabar pertama pas stok batch dibuka.",
+                },
+              ],
+            },
+          ],
+        },
+        {
+          type: "OriginShowcase",
+          order: 5,
           is_active: true,
           blocks: [
             {
@@ -309,7 +352,7 @@ export const site = {
         },
         {
           type: "About",
-          order: 5,
+          order: 6,
           is_active: true,
           blocks: [
             {
@@ -362,7 +405,7 @@ export const site = {
         },
         {
           type: "OrderCta",
-          order: 6,
+          order: 7,
           is_active: true,
           blocks: [
             {
@@ -388,7 +431,7 @@ export const site = {
         },
         {
           type: "Contact",
-          order: 7,
+          order: 8,
           is_active: true,
           blocks: [
             {
@@ -461,7 +504,7 @@ export const site = {
         },
         {
           type: "Footer",
-          order: 8,
+          order: 9,
           is_active: true,
           blocks: [
             {

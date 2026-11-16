@@ -4,6 +4,7 @@ import { useRef, type ComponentType } from "react";
 import "./styles.css";
 import { About } from "./components/About";
 import { Collection } from "./components/Collection";
+import { ComingSoon } from "./components/ComingSoon";
 import { Contact } from "./components/Contact";
 import { Crafted } from "./components/Crafted";
 import { Footer } from "./components/Footer";
@@ -24,6 +25,7 @@ const views: Record<string, ComponentType<SectionComponentProps>> = {
   Hero,
   Crafted,
   Collection,
+  ComingSoon,
   OriginShowcase,
   About,
   OrderCta,
