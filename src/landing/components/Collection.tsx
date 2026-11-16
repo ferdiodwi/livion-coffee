@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { Minus, Plus, X } from "lucide-react";
 import { bind } from "../lib/bind";
 import { useLocale } from "../lib/i18n";
+import { MarketplaceLogo, WhatsAppLogo } from "../ui/BrandLogos";
 import {
   activeElementRef,
   ariaLabelAttr,
@@ -25,6 +26,7 @@ import {
   labelledByAttr,
   linkTargetProps,
   lockDocumentScroll,
+  marketplaceOptions,
   modalSelectVal,
   pressedAttr,
   qtyWeightText,
@@ -188,6 +190,12 @@ function BeanDetailModal({
     quantity,
     totalPrice,
     locale,
+  );
+  const marketplaces = marketplaceOptions(
+    prod.shopeeUrl || cfg.shopeeUrl,
+    cfg.shopeeLabel,
+    prod.tokopediaUrl || cfg.tokopediaUrl,
+    cfg.tokopediaLabel,
   );
 
   useEffect(() => {
@@ -438,11 +446,33 @@ function BeanDetailModal({
                 href={whatsappHref}
                 {...linkTargetProps(true)}
                 onClick={onClose}
-                className="inline-flex min-h-[52px] items-center justify-center rounded-full bg-[#B8421B] px-7 py-3 font-hero text-[15.5px] font-extrabold tracking-[-0.01em] text-[#FFFFFF] shadow-[0_10px_24px_rgba(184,66,27,0.24)] transition-[background-color,transform] hover:bg-[#3E2216] focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[#3E2216] active:scale-[0.97]"
+                className="inline-flex min-h-[52px] items-center justify-center gap-2.5 rounded-full bg-[#168341] px-7 py-3 font-hero text-[15.5px] font-extrabold tracking-[-0.01em] text-[#FFFFFF] shadow-[0_10px_24px_rgba(22,131,65,0.26)] transition-[background-color,transform] hover:bg-[#147339] focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[#168341] active:scale-[0.97]"
               >
-                {cfg.ctaLabel}
+                <WhatsAppLogo className="h-5 w-5 shrink-0" />
+                <span>{cfg.ctaLabel}</span>
               </a>
             </div>
+
+            {marketplaces.length > 0 && (
+              <div className="mt-4 border-t border-[#3E2216]/10 pt-4">
+                <p className="text-[12.5px] font-semibold tracking-wide text-[#5E4336]">
+                  {cfg.marketplaceNote}
+                </p>
+                <div className="mt-2.5 flex flex-wrap gap-2.5">
+                  {marketplaces.map((item, mIdx) => (
+                    <a
+                      key={mIdx}
+                      href={item.href}
+                      {...linkTargetProps(true)}
+                      className={item.buttonClass}
+                    >
+                      <MarketplaceLogo isShopee={item.isShopee} />
+                      <span>{item.label}</span>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

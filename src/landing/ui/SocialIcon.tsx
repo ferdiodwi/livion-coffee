@@ -29,8 +29,7 @@ export function SocialIcon({ item }: { item: LandingItem }) {
       fill="none"
       stroke="currentColor"
       strokeWidth="1.9"
-      strokeLinecap="round"
-      strokeLinejoin="round"
+      {...spec.igSvgProps}
       aria-hidden="true"
       className="h-[18px] w-[18px] shrink-0"
     >
