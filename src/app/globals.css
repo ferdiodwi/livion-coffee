@@ -1,59 +1,9 @@
 @import "tailwindcss";
 
-@theme inline {
-  --color-cream: #f5f0ea;
-  --color-sand: #e7e0d6;
-  --color-espresso: #241d18;
-  --color-roast: #3e2216;
-  --color-ink: #14110f;
-  --color-muted: #575049;
-  --color-terracotta: #b8421b;
-  --color-terracotta-text: #a8401b;
-  --color-gold: #c49b63;
-
-  --font-hero: var(--font-bricolage), sans-serif;
-  --font-display: var(--font-oswald), sans-serif;
-  --font-sans: var(--font-jakarta), sans-serif;
-  --font-mono: var(--font-jetbrains), monospace;
-}
-
 @layer base {
   body {
     background-color: #f5f0ea;
     color: #14110f;
-  }
-
-  a[href],
-  button,
-  summary,
-  select,
-  label[for],
-  label:has(> input[type="checkbox"], > input[type="radio"]),
-  [role="button"],
-  [role="link"],
-  [role="tab"],
-  [role="menuitem"],
-  [role="option"],
-  [role="switch"],
-  input[type="checkbox"],
-  input[type="radio"],
-  input[type="file"],
-  input[type="submit"],
-  input[type="button"],
-  input[type="reset"],
-  input[type="range"],
-  input[type="color"] {
-    cursor: pointer;
-  }
-
-  :disabled,
-  [aria-disabled="true"] {
-    cursor: not-allowed;
-  }
-
-  :focus-visible {
-    outline: 2px solid #b8421b;
-    outline-offset: 3px;
   }
 }
 
@@ -72,18 +22,4 @@
 
 .skip-link:focus {
   top: 0.75rem;
-}
-
-/* Subtle roast-sieve dot texture on right edge of hero canvas */
-.hero-dot-field {
-  background-image: radial-gradient(rgba(62, 34, 22, 0.14) 1.25px, transparent 1.25px);
-  background-size: 20px 20px;
-  mask-image: linear-gradient(to left, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.35) 38%, transparent 72%);
-  -webkit-mask-image: linear-gradient(to left, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.35) 38%, transparent 72%);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
 }

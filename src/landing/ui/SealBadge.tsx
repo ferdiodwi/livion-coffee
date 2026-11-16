@@ -1,31 +1,32 @@
 "use client";
 
-import { motion } from "motion/react";
-import { EDITORIAL_EASE } from "./MotionPrimitives";
+import type { ReactNode } from "react";
+import { ariaLabelAttr, linkTargetProps, sealRootClass } from "../lib/helpers";
 
-type ScallopedOrderSealProps = {
+type SealBadgeProps = {
   href: string;
   label: string;
   external?: boolean;
-  className?: string;
+  className: string;
+  topSlot: ReactNode;
+  bottomSlot: ReactNode;
 };
 
-/** Signature scalloped terracotta seal CTA shared across hero and closing showcase sections. */
-export function ScallopedOrderSeal({
+/** Signature scalloped terracotta stamp CTA shared across Hero and OrderCta sections. */
+export function SealBadge({
   href,
   label,
   external = true,
-  className = "h-[106px] w-[106px] -rotate-12 sm:h-[124px] sm:w-[124px] lg:h-[136px] lg:w-[136px]",
-}: ScallopedOrderSealProps) {
+  className,
+  topSlot,
+  bottomSlot,
+}: SealBadgeProps) {
   return (
-    <motion.a
+    <a
       href={href}
-      {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-      aria-label={label}
-      whileHover={{ scale: 1.06, rotate: -6 }}
-      whileTap={{ scale: 0.95 }}
-      transition={{ duration: 0.22, ease: EDITORIAL_EASE }}
-      className={`group relative flex items-center justify-center rounded-full focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#3E2216] ${className}`}
+      {...linkTargetProps(external)}
+      {...ariaLabelAttr(label)}
+      className={sealRootClass(className)}
     >
       <svg
         viewBox="0 0 120 120"
@@ -38,9 +39,9 @@ export function ScallopedOrderSeal({
         />
       </svg>
       <span className="relative z-10 flex flex-col items-center justify-center text-center font-hero text-[16.5px] leading-[1.02] font-extrabold tracking-tight text-[#FFFFFF] sm:text-[18px] lg:text-[20px]">
-        <span>Pesan</span>
-        <span>yuk</span>
+        <span>{topSlot}</span>
+        <span>{bottomSlot}</span>
       </span>
-    </motion.a>
+    </a>
   );
 }

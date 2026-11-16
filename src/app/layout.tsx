@@ -6,7 +6,6 @@ import {
   Plus_Jakarta_Sans,
 } from "next/font/google";
 import "./globals.css";
-import { MotionRoot } from "@/components/MotionPrimitives";
 
 const bricolage = Bricolage_Grotesque({
   variable: "--font-bricolage",
@@ -48,7 +47,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <a href="#main-content" className="skip-link">
           Lewati ke konten utama
         </a>
-        <MotionRoot>{children}</MotionRoot>
+        {children}
       </body>
     </html>
   );

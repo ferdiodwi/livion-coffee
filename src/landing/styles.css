@@ -1,0 +1,131 @@
+@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&family=Oswald:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap");
+
+.livion-landing {
+  --livion-cream: #f5f0ea;
+  --livion-sand: #e7e0d6;
+  --livion-espresso: #241d18;
+  --livion-roast: #3e2216;
+  --livion-ink: #14110f;
+  --livion-muted: #575049;
+  --livion-terracotta: #b8421b;
+  --livion-font-hero: var(--font-bricolage, "Bricolage Grotesque"), sans-serif;
+  --livion-font-display: var(--font-oswald, "Oswald"), sans-serif;
+  --livion-font-sans: var(--font-jakarta, "Plus Jakarta Sans"), sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--livion-cream);
+  color: var(--livion-ink);
+  font-family: var(--livion-font-sans);
+  scroll-behavior: smooth;
+}
+
+.livion-landing .font-hero {
+  font-family: var(--livion-font-hero);
+}
+
+.livion-landing .font-display {
+  font-family: var(--livion-font-display);
+}
+
+.livion-landing .font-sans {
+  font-family: var(--livion-font-sans);
+}
+
+.livion-landing a[href],
+.livion-landing button,
+.livion-landing summary,
+.livion-landing select,
+.livion-landing label[for],
+.livion-landing [role="button"],
+.livion-landing [role="link"],
+.livion-landing [role="tab"] {
+  cursor: pointer;
+}
+
+.livion-landing :disabled,
+.livion-landing [aria-disabled="true"] {
+  cursor: not-allowed;
+}
+
+.livion-landing :focus-visible {
+  outline: 2px solid #b8421b;
+  outline-offset: 3px;
+}
+
+.livion-landing .hero-dot-field {
+  background-image: radial-gradient(
+    rgba(62, 34, 22, 0.14) 1.25px,
+    transparent 1.25px
+  );
+  background-size: 20px 20px;
+  mask-image: linear-gradient(
+    to left,
+    rgba(0, 0, 0, 0.9) 0%,
+    rgba(0, 0, 0, 0.35) 38%,
+    transparent 72%
+  );
+  -webkit-mask-image: linear-gradient(
+    to left,
+    rgba(0, 0, 0, 0.9) 0%,
+    rgba(0, 0, 0, 0.35) 38%,
+    transparent 72%
+  );
+}
+
+@keyframes livionSwapUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes livionPouchSwap {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.94) rotate(-10deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotate(-6deg);
+  }
+}
+
+@keyframes livionDialogIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.livion-landing .livion-swap-copy {
+  animation: livionSwapUp 0.28s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.livion-landing .livion-swap-pouch {
+  animation: livionPouchSwap 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.livion-landing .livion-dialog-in {
+  animation: livionDialogIn 0.28s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .livion-landing {
+    scroll-behavior: auto;
+  }
+
+  .livion-landing .livion-swap-copy,
+  .livion-landing .livion-swap-pouch,
+  .livion-landing .livion-dialog-in {
+    animation: none;
+  }
+}
