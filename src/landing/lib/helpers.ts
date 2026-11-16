@@ -485,6 +485,10 @@ export function tabButtonClass(active: boolean): string {
   }`;
 }
 
+export function beanWrapperClass(spec: HeroBeanSpec): string {
+  return `pointer-events-none absolute select-none ${spec.className}`;
+}
+
 export function beanImageClass(spec: HeroBeanSpec): string {
   return `h-auto w-full drop-shadow-[0_12px_14px_rgba(36,29,24,0.26)] ${spec.blur ? "blur-[0.8px]" : ""}`;
 }

@@ -5,6 +5,7 @@ import { bind } from "../lib/bind";
 import {
   beanImageClass,
   beanParallaxAttr,
+  beanWrapperClass,
   buildBeanWhatsAppUrl,
   childBlocks,
   heroEnterAttr,
@@ -198,8 +199,7 @@ export function Hero({ section, block }: SectionComponentProps) {
               key={idx}
               aria-hidden="true"
               {...beanParallaxAttr(spec.depth)}
-              className={spec.className}
-              style={rotateStyle(spec.rotate)}
+              className={beanWrapperClass(spec)}
             >
               <img
                 src={spec.src}
@@ -207,6 +207,7 @@ export function Hero({ section, block }: SectionComponentProps) {
                 width={spec.width}
                 height={spec.height}
                 {...imgPerfProps()}
+                style={rotateStyle(spec.rotate)}
                 className={beanImageClass(spec)}
               />
             </div>

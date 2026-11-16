@@ -8,6 +8,7 @@ import {
   ariaLabelAttr,
   ariaModalAttrs,
   attachKeydown,
+  beanWrapperClass,
   buildBeanWhatsAppUrl,
   calculateBeanPrice,
   childBlocks,
@@ -88,7 +89,7 @@ function CollectionCard({
           key={bIdx}
           aria-hidden="true"
           style={rotateStyle(bean.rotate)}
-          className={bean.className}
+          className={beanWrapperClass(bean)}
         >
           <img
             src={bean.src}
