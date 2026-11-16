@@ -401,7 +401,7 @@ export function readCollectionConfig(block: LandingBlock, locale: Locale = "id")
     ),
     shopeeUrl: strVal(ex, "shopee_url", "https://id.shp.ee/Lagtfovg").trim(),
     shopeeLabel: tr(strVal(ex, "shopee_label", "Beli di Shopee"), locale),
-    tokopediaUrl: strVal(ex, "tokopedia_url", "").trim(),
+    tokopediaUrl: strVal(ex, "tokopedia_url", "https://www.tokopedia.com/livioncoffee").trim(),
     tokopediaLabel: tr(strVal(ex, "tokopedia_label", "Beli di Tokopedia"), locale),
     closeAria: tr(strVal(ex, "close_aria", "Tutup detail produk"), locale),
     lotPrefix: tr(strVal(ex, "lot_prefix", "Lot"), locale),
@@ -816,10 +816,12 @@ export function readFooterMeta(block: LandingBlock, locale: Locale = "id") {
         isWa: false,
         isShopee: false,
         channelName: tr(strVal(ex, "action_tokopedia_label", "Tokopedia Official"), locale),
-        href: strVal(ex, "action_tokopedia_href", "").trim(),
-        available: Boolean(strVal(ex, "action_tokopedia_href", "").trim()),
+        href: strVal(ex, "action_tokopedia_href", "https://www.tokopedia.com/livioncoffee").trim(),
+        available: Boolean(
+          strVal(ex, "action_tokopedia_href", "https://www.tokopedia.com/livioncoffee").trim(),
+        ),
         badgeText: tr(strVal(ex, "floating_soon_badge", "Segera Hadir"), locale),
-        rowClass: strVal(ex, "action_tokopedia_href", "").trim()
+        rowClass: strVal(ex, "action_tokopedia_href", "https://www.tokopedia.com/livioncoffee").trim()
           ? "flex min-h-[48px] items-center justify-between gap-3 rounded-[14px] border border-[#3E2216]/12 bg-[#FFFFFF] px-3 py-2.5 text-left transition-[border-color,background-color,transform] hover:border-[#028A0C]/55 hover:bg-[#F1FBF3] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#028A0C] active:scale-[0.98]"
           : "flex min-h-[48px] items-center justify-between gap-3 rounded-[14px] border border-[#3E2216]/10 bg-[#F7F3EE] px-3 py-2.5 text-left",
         badgeBoxClass: "flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#EAF8ED]",
@@ -842,7 +844,7 @@ export function readFooterMeta(block: LandingBlock, locale: Locale = "id") {
     enActionShopee: tr(strVal(ex, "action_shopee_label", "Shopee Official"), locale),
     enActionTokopedia: tr(strVal(ex, "action_tokopedia_label", "Tokopedia Official"), locale),
     shopeeHref: strVal(ex, "action_shopee_href", "https://id.shp.ee/Lagtfovg").trim(),
-    tokopediaHref: strVal(ex, "action_tokopedia_href", "").trim(),
+    tokopediaHref: strVal(ex, "action_tokopedia_href", "https://www.tokopedia.com/livioncoffee").trim(),
     enFloatingLabel: tr(strVal(ex, "floating_cta_label", "Pesan Sekarang"), locale),
     orderWaHref: buildBeanWhatsAppUrl(phone, productName, weight, grind, 1, unitPrice, locale),
     wholesaleWaHref: buildTextWhatsAppUrl(phone, wholesaleText),
