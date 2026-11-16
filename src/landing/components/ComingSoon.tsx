@@ -20,11 +20,11 @@ export function ComingSoon({ block }: SectionComponentProps) {
     <section
       id={meta.sectionId}
       {...labelledByAttr(meta.headingId)}
-      className="relative overflow-x-clip bg-[#F5F0EA] pt-12 pb-14 text-[#14110F] sm:pt-14 sm:pb-18 lg:pt-16 lg:pb-24"
+      className="relative overflow-x-clip bg-[#F5F0EA] pt-9 pb-14 text-[#14110F] sm:pt-14 sm:pb-18 lg:pt-16 lg:pb-24"
     >
       <div className="mx-auto max-w-[1400px] px-5 sm:px-7 lg:px-12">
         <div className="relative rounded-[28px] bg-[#2C1810] p-6 shadow-[0_26px_54px_rgba(36,29,24,0.18)] sm:rounded-[34px] sm:p-9 lg:rounded-[40px] lg:p-12">
-          <span className="pointer-events-none absolute -top-4 -left-3.5 z-30 inline-block -rotate-18 rounded-2xl bg-[#B8421B] px-5 py-2.5 font-hero text-[22px] leading-none font-extrabold tracking-tight whitespace-nowrap text-[#FFFFFF] shadow-[0_16px_30px_rgba(184,66,27,0.36)] sm:-top-[18px] sm:-left-6 sm:px-7 sm:py-3 sm:text-[28px] lg:-top-[22px] lg:-left-10 lg:px-8 lg:py-3.5 lg:text-[34px]">
+          <span className="pointer-events-none absolute -top-5 left-4 z-30 inline-block -rotate-3 rounded-2xl bg-[#B8421B] px-6 py-2.5 font-hero text-[24px] leading-none font-extrabold tracking-tight whitespace-nowrap text-[#FFFFFF] shadow-[0_12px_24px_rgba(184,66,27,0.32)] sm:-top-[18px] sm:-left-6 sm:-rotate-18 sm:px-7 sm:py-3 sm:text-[28px] sm:shadow-[0_16px_30px_rgba(184,66,27,0.36)] lg:-top-[22px] lg:-left-10 lg:px-8 lg:py-3.5 lg:text-[34px]">
             <span>{bind(block, "extra.status_badge")}</span>
           </span>
 
