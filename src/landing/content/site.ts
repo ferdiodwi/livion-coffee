@@ -667,15 +667,33 @@ export const site = {
               items: [
                 {
                   order: 0,
+                  title: "WhatsApp",
+                  icon: "wa",
+                  description: "Pesan kopi Livion lewat WhatsApp",
+                },
+                {
+                  order: 1,
                   title: "Instagram",
                   icon: "https://www.instagram.com/livioncoffee",
                   description: "Ikuti Instagram @livioncoffee",
                 },
                 {
-                  order: 1,
+                  order: 2,
                   title: "TikTok",
                   icon: "https://www.tiktok.com/@livioncoffee",
                   description: "Ikuti TikTok @livioncoffee",
+                },
+                {
+                  order: 3,
+                  title: "Shopee",
+                  icon: "https://id.shp.ee/Lagtfovg",
+                  description: "Beli kopi Livion di Shopee",
+                },
+                {
+                  order: 4,
+                  title: "Tokopedia",
+                  icon: "https://www.tokopedia.com/livioncoffee",
+                  description: "Beli kopi Livion di Tokopedia",
                 },
               ],
             },

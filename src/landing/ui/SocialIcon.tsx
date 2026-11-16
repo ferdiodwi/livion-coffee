@@ -1,10 +1,25 @@
 "use client";
 
 import { socialItemMeta, type LandingItem } from "../lib/helpers";
+import { MarketplaceLogo, WhatsAppLogo } from "./BrandLogos";
 
-/** Clean monochrome social icon for Footer social pills (Instagram & TikTok). */
+/** Clean monochrome social & channel icon for Footer pills. */
 export function SocialIcon({ item }: { item: LandingItem }) {
   const spec = socialItemMeta(item);
+
+  if (spec.isWa) {
+    return <WhatsAppLogo className="h-[18px] w-[18px] shrink-0" />;
+  }
+
+  if (spec.isShopee || spec.isTokopedia) {
+    return (
+      <MarketplaceLogo
+        isShopee={spec.isShopee}
+        monochrome
+        compact
+      />
+    );
+  }
 
   if (spec.isTikTok) {
     return (

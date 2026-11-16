@@ -151,56 +151,41 @@ export function Footer({ block }: SectionComponentProps) {
                     {meta.isEn ? <span>{meta.enActionWholesale}</span> : <span>{bind(block, "extra.action_wholesale_label")}</span>}
                   </a>
                 </li>
-                {meta.shopeeHref && (
-                  <li>
-                    <a
-                      href={meta.shopeeHref}
-                      {...linkTargetProps(true)}
-                      className="inline-flex min-h-[44px] items-center text-[15px] text-[#D7C9BE] transition-colors hover:text-[#F5F0EA] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F5F0EA]"
-                    >
-                      {meta.isEn ? <span>{meta.enActionShopee}</span> : <span>{bind(block, "extra.action_shopee_label")}</span>}
-                    </a>
-                  </li>
-                )}
-                {meta.tokopediaHref && (
-                  <li>
-                    <a
-                      href={meta.tokopediaHref}
-                      {...linkTargetProps(true)}
-                      className="inline-flex min-h-[44px] items-center text-[15px] text-[#D7C9BE] transition-colors hover:text-[#F5F0EA] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F5F0EA]"
-                    >
-                      {meta.isEn ? <span>{meta.enActionTokopedia}</span> : <span>{bind(block, "extra.action_tokopedia_label")}</span>}
-                    </a>
-                  </li>
-                )}
               </ul>
             </div>
 
-            <div className="flex flex-col justify-between gap-8 md:col-span-6 lg:col-span-6 lg:items-end">
-              <p className="text-[14px] text-[#D7C9BE] md:text-right">
-                {copy.isEn ? <span>{copy.bodyCopy}</span> : <span>{bind(block, "description")}</span>}
-              </p>
-
+            <div className="flex flex-col justify-start md:col-span-6 lg:col-span-6 lg:items-end">
               <div
                 {...ariaLabelAttr(meta.shortcutsAria)}
-                className="flex flex-wrap items-center gap-3 pt-2 md:justify-end"
+                className="flex flex-col items-start gap-2.5 sm:gap-3 md:items-end"
               >
-                {meta.socialItems.map((item, idx) => {
-                  const itemCopy = readItemCopy(item, locale);
-                  return (
-                    <a
-                      key={idx}
-                      {...footerPillLinkProps(item, meta.phone, meta.orderWaHref, locale)}
-                      className={footerPillClass()}
-                    >
-                      <SocialIcon item={item} />
-                      {itemCopy.isEn ? <span>{itemCopy.labelText}</span> : <span>{bind(item, "title")}</span>}
-                    </a>
-                  );
-                })}
+                {meta.socialRows.map((row, rowIdx) => (
+                  <div
+                    key={rowIdx}
+                    className="flex flex-wrap items-center gap-2.5 sm:gap-3 md:justify-end"
+                  >
+                    {row.map((item, idx) => {
+                      const itemCopy = readItemCopy(item, locale);
+                      return (
+                        <a
+                          key={idx}
+                          {...footerPillLinkProps(item, meta.phone, meta.orderWaHref, locale)}
+                          className={footerPillClass()}
+                        >
+                          <SocialIcon item={item} />
+                          {itemCopy.isEn ? <span>{itemCopy.labelText}</span> : <span>{bind(item, "title")}</span>}
+                        </a>
+                      );
+                    })}
+                  </div>
+                ))}
               </div>
             </div>
           </div>
+
+          <p className="mt-10 border-t border-[#F5F0EA]/12 pt-6 text-center text-[13.5px] text-[#D7C9BE]">
+            {copy.isEn ? <span>{copy.bodyCopy}</span> : <span>{bind(block, "description")}</span>}
+          </p>
         </div>
       </div>
     </footer>

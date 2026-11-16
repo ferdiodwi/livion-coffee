@@ -1,6 +1,6 @@
 "use client";
 
-import { brandLogoSpecs } from "../lib/helpers";
+import { brandLogoSpecs, marketplacePalette } from "../lib/helpers";
 
 /** Official WhatsApp speech-bubble + receiver glyph shared by product CTA and floating FAB. */
 export function WhatsAppLogo({ className }: { className: string }) {
@@ -19,9 +19,18 @@ export function WhatsAppLogo({ className }: { className: string }) {
   );
 }
 
-/** Authentic Shopee / Tokopedia bag emblem for marketplace purchase buttons. */
-export function MarketplaceLogo({ isShopee }: { isShopee: boolean }) {
+/** Authentic Shopee / Tokopedia bag emblem for marketplace buttons & footer pills. */
+export function MarketplaceLogo({
+  isShopee,
+  monochrome = false,
+  compact = false,
+}: {
+  isShopee: boolean;
+  monochrome?: boolean;
+  compact?: boolean;
+}) {
   const spec = brandLogoSpecs();
+  const colors = marketplacePalette(isShopee, monochrome, compact);
 
   if (isShopee) {
     return (
@@ -30,20 +39,20 @@ export function MarketplaceLogo({ isShopee }: { isShopee: boolean }) {
         width={20}
         height={20}
         aria-hidden="true"
-        className="h-5 w-5 shrink-0"
+        className={colors.iconClass}
       >
         <path
           d={spec.bagHandlePath}
           fill="none"
-          stroke="#D13816"
+          stroke={colors.bagColor}
           strokeWidth="1.9"
           {...spec.roundStrokeProps}
         />
-        <path d={spec.bagBodyPath} fill="#D13816" />
+        <path d={spec.bagBodyPath} fill={colors.bagColor} />
         <path
           d={spec.shopeeSPath}
           fill="none"
-          stroke="#FFFFFF"
+          stroke={colors.cutoutColor}
           strokeWidth="1.95"
           {...spec.roundStrokeProps}
         />
@@ -57,21 +66,21 @@ export function MarketplaceLogo({ isShopee }: { isShopee: boolean }) {
       width={20}
       height={20}
       aria-hidden="true"
-      className="h-5 w-5 shrink-0"
+      className={colors.iconClass}
     >
       <path
         d={spec.bagHandlePath}
         fill="none"
-        stroke="#028A0C"
+        stroke={colors.bagColor}
         strokeWidth="1.9"
         {...spec.roundStrokeProps}
       />
-      <path d={spec.bagBodyPath} fill="#028A0C" />
-      <circle cx="9.6" cy="13.2" r="2.1" fill="#FFFFFF" />
-      <circle cx="14.4" cy="13.2" r="2.1" fill="#FFFFFF" />
-      <circle cx="9.8" cy="13.2" r="0.9" fill="#028A0C" />
-      <circle cx="14.2" cy="13.2" r="0.9" fill="#028A0C" />
-      <path d="M10.9 15.8L12 17.2L13.1 15.8Z" fill="#FFFFFF" />
+      <path d={spec.bagBodyPath} fill={colors.bagColor} />
+      <circle cx="9.6" cy="13.2" r="2.1" fill={colors.cutoutColor} />
+      <circle cx="14.4" cy="13.2" r="2.1" fill={colors.cutoutColor} />
+      <circle cx="9.8" cy="13.2" r="0.9" fill={colors.bagColor} />
+      <circle cx="14.2" cy="13.2" r="0.9" fill={colors.bagColor} />
+      <path d="M10.9 15.8L12 17.2L13.1 15.8Z" fill={colors.cutoutColor} />
     </svg>
   );
 }

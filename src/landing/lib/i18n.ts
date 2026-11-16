@@ -368,8 +368,13 @@ const EN_MAP: Record<string, string> = {
   "Pilih Metode Pesan": "Choose Order Channel",
   "Instagram": "Instagram",
   "TikTok": "TikTok",
+  "Shopee": "Shopee",
+  "Tokopedia": "Tokopedia",
   "Ikuti Instagram @livioncoffee": "Follow @livioncoffee on Instagram",
   "Ikuti TikTok @livioncoffee": "Follow @livioncoffee on TikTok",
+  "Beli kopi Livion di Shopee": "Buy Livion Coffee on Shopee",
+  "Beli kopi Livion di Tokopedia": "Buy Livion Coffee on Tokopedia",
+  "Pesan kopi Livion lewat WhatsApp": "Order Livion Coffee via WhatsApp",
 };
 
 export function tr(raw: string | null | undefined, locale: Locale): string {

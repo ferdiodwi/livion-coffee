@@ -841,14 +841,10 @@ export function readFooterMeta(block: LandingBlock, locale: Locale = "id") {
     enColNav4: tr(strVal(ex, "col_nav_4_label", "Kontak"), locale),
     enActionOrder: tr(strVal(ex, "action_order_label", "Pesan Biji"), locale),
     enActionWholesale: tr(strVal(ex, "action_wholesale_label", "Grosir & Sample"), locale),
-    enActionShopee: tr(strVal(ex, "action_shopee_label", "Shopee Official"), locale),
-    enActionTokopedia: tr(strVal(ex, "action_tokopedia_label", "Tokopedia Official"), locale),
-    shopeeHref: strVal(ex, "action_shopee_href", "https://id.shp.ee/Lagtfovg").trim(),
-    tokopediaHref: strVal(ex, "action_tokopedia_href", "https://www.tokopedia.com/livioncoffee").trim(),
     enFloatingLabel: tr(strVal(ex, "floating_cta_label", "Pesan Sekarang"), locale),
     orderWaHref: buildBeanWhatsAppUrl(phone, productName, weight, grind, 1, unitPrice, locale),
     wholesaleWaHref: buildTextWhatsAppUrl(phone, wholesaleText),
-    socialItems: allItems,
+    socialRows: [allItems.slice(0, 3), allItems.slice(3)].filter((row) => row.length > 0),
     phone,
   };
 }
@@ -859,8 +855,16 @@ export function socialItemMeta(item: LandingItem) {
   const titleLower = (item.title ?? "").toLowerCase();
   const iconLower = (item.icon ?? "").toLowerCase();
   const isTikTok = titleLower.includes("tiktok") || iconLower.includes("tiktok.com");
+  const isShopee =
+    titleLower.includes("shopee") || iconLower.includes("shp.ee") || iconLower.includes("shopee");
+  const isTokopedia = titleLower.includes("tokopedia") || iconLower.includes("tokopedia.com");
+  const isWa =
+    iconLower === "wa" || titleLower.includes("whatsapp") || iconLower.includes("wa.me");
   return {
     isTikTok,
+    isShopee,
+    isTokopedia,
+    isWa,
     tiktokPath:
       "M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z",
     igSvgProps: {
@@ -868,6 +872,16 @@ export function socialItemMeta(item: LandingItem) {
       strokeLinejoin: "round" as const,
     },
   };
+}
+
+export function marketplacePalette(isShopee: boolean, monochrome = false, compact = false) {
+  const iconClass = compact ? "h-[18px] w-[18px] shrink-0" : "h-5 w-5 shrink-0";
+  if (monochrome) {
+    return { bagColor: "currentColor", cutoutColor: "#2C1810", iconClass };
+  }
+  return isShopee
+    ? { bagColor: "#D13816", cutoutColor: "#FFFFFF", iconClass }
+    : { bagColor: "#028A0C", cutoutColor: "#FFFFFF", iconClass };
 }
 
 export type MarketplaceOption = {
