@@ -2,7 +2,9 @@
 
 import { useRef, type ComponentType } from "react";
 import "./styles.css";
+import { About } from "./components/About";
 import { Collection } from "./components/Collection";
+import { Contact } from "./components/Contact";
 import { Crafted } from "./components/Crafted";
 import { Footer } from "./components/Footer";
 import { Hero } from "./components/Hero";
@@ -23,7 +25,9 @@ const views: Record<string, ComponentType<SectionComponentProps>> = {
   Crafted,
   Collection,
   OriginShowcase,
+  About,
   OrderCta,
+  Contact,
   Footer,
 };
 

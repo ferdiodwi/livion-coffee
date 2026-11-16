@@ -73,6 +73,14 @@ export function Footer({ block }: SectionComponentProps) {
                     <span>{bind(block, "extra.col_nav_3_label")}</span>
                   </a>
                 </li>
+                <li>
+                  <a
+                    href={meta.colNav4Href}
+                    className="inline-flex min-h-[44px] items-center text-[15px] text-[#D7C9BE] transition-colors hover:text-[#F5F0EA] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F5F0EA]"
+                  >
+                    <span>{bind(block, "extra.col_nav_4_label")}</span>
+                  </a>
+                </li>
               </ul>
             </nav>
 

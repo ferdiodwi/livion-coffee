@@ -73,6 +73,14 @@
   );
 }
 
+.livion-landing .about-dot-field {
+  background-image: radial-gradient(
+    rgba(245, 240, 234, 0.2) 1.25px,
+    transparent 1.25px
+  );
+  background-size: 20px 20px;
+}
+
 @keyframes livionSwapUp {
   from {
     opacity: 0;

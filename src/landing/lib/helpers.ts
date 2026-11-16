@@ -192,6 +192,26 @@ export function buildTextWhatsAppUrl(phone: string, text: string): string {
   return `https://wa.me/${sanitizePhone(phone)}?text=${encodeURIComponent(text)}`;
 }
 
+export function buildContactWhatsAppUrl(
+  phone: string,
+  fullName: string,
+  contactInfo: string,
+  senderPhone: string,
+  detailMessage: string,
+): string {
+  const lines = [
+    "Halo Livion Coffee! Saya mau menghubungi lewat form website:",
+    "",
+    `Nama: ${fullName}`,
+    contactInfo ? `Email / Usaha: ${contactInfo}` : null,
+    senderPhone ? `WhatsApp: +62 ${senderPhone}` : null,
+    `Pesan: ${detailMessage}`,
+  ]
+    .filter((line) => line !== null)
+    .join("\n");
+  return `https://wa.me/${sanitizePhone(phone)}?text=${encodeURIComponent(lines)}`;
+}
+
 export function readNavbarMeta(block: LandingBlock) {
   const ex = block.extra;
   return {
@@ -351,6 +371,20 @@ export function readOriginMeta(block: LandingBlock) {
   };
 }
 
+export function readAboutMeta(block: LandingBlock) {
+  const ex = block.extra;
+  return {
+    sectionId: strVal(ex, "section_id", "about"),
+    headingId: "about-heading",
+    imageAlt: strVal(ex, "image_alt", "Kemasan biji kopi Robusta Temanggung Livion"),
+    secondaryAlt: strVal(ex, "secondary_pouch_alt", "Kemasan biji kopi Arabica Pilihan Livion"),
+    tertiaryAlt: strVal(ex, "tertiary_pouch_alt", "Kemasan biji kopi Robusta Argopuro Livion"),
+    textureAlt: strVal(ex, "texture_alt", "Tekstur crema espresso cokelat keemasan"),
+    beanAUrl: "assets/cutouts/bean-3.png",
+    beanBUrl: "assets/cutouts/bean-5.png",
+  };
+}
+
 export function readOrderCtaMeta(block: LandingBlock) {
   const ex = block.extra;
   const productName = strVal(ex, "product_name", "Livion Arabica Pilihan");
@@ -365,6 +399,46 @@ export function readOrderCtaMeta(block: LandingBlock) {
     imageAlt: strVal(ex, "image_alt", "Tangan memegang kemasan biji kopi Livion Arabica"),
     ctaAria: strVal(ex, "cta_aria", `Pesan ${productName} ${weight} lewat WhatsApp`),
     orderHref: buildBeanWhatsAppUrl(phone, productName, weight, grind, 1, unitPrice),
+  };
+}
+
+export function readContactMeta(block: LandingBlock) {
+  const ex = block.extra;
+  const phone = strVal(ex, "whatsapp_number", "6285159506662");
+  const directText = strVal(
+    ex,
+    "wa_direct_text",
+    "Halo Livion Coffee! Mau tanya-tanya soal biji kopi dan layanan roastery.",
+  );
+  return {
+    sectionId: strVal(ex, "section_id", "contact"),
+    headingId: "contact-heading",
+    feedbackId: "contact-feedback",
+    whatsappPhone: phone,
+    copyValue: strVal(ex, "copy_phone_value", "+6285159506662"),
+    waDirectHref: buildTextWhatsAppUrl(phone, directText),
+    mapEmbedUrl: strVal(
+      ex,
+      "map_embed_url",
+      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d343.82002475613507!2d113.79277103946625!3d-7.986094103135859!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd6c333566273c7%3A0xdf5aa653fd10c38!2sToko%20HendiPutra%20%26%20HendiPutra%20CarRental!5e0!3m2!1sid!2sid!4v1794835622980!5m2!1sid!2sid",
+    ),
+    mapExternalUrl: strVal(
+      ex,
+      "map_external_url",
+      "https://maps.google.com/?q=-7.986094103135859,113.79277103946625",
+    ),
+    mapTitle: strVal(ex, "map_title", "Peta Lokasi Livion Coffee"),
+    firstNamePlaceholder: strVal(ex, "first_name_placeholder", "Nama depan"),
+    lastNamePlaceholder: strVal(ex, "last_name_placeholder", "Nama belakang"),
+    emailPlaceholder: strVal(ex, "email_placeholder", "nama@usaha.com atau nama kedai"),
+    phonePlaceholder: strVal(ex, "phone_placeholder", "812 3456 7890"),
+    messagePlaceholder: strVal(
+      ex,
+      "message_placeholder",
+      "Tulis pertanyaan, permintaan sample, atau pesananmu di sini...",
+    ),
+    copyAria: strVal(ex, "copy_aria", "Salin nomor WhatsApp Livion Coffee"),
+    countryPrefix: "+62",
   };
 }
 
@@ -390,6 +464,7 @@ export function readFooterMeta(block: LandingBlock) {
     colNav1Href: strVal(ex, "col_nav_1_href", "#craft"),
     colNav2Href: strVal(ex, "col_nav_2_href", "#beans"),
     colNav3Href: strVal(ex, "col_nav_3_href", "#origin"),
+    colNav4Href: strVal(ex, "col_nav_4_href", "#contact"),
     orderWaHref: buildBeanWhatsAppUrl(phone, productName, weight, grind, 1, unitPrice),
     wholesaleWaHref: buildTextWhatsAppUrl(phone, wholesaleText),
     topPills: allItems.slice(0, 2),
@@ -668,4 +743,51 @@ export function activeElementRef(): HTMLElement | null {
 
 export function joinTastingNotes(notes: string[], fallbackDesc: string): string {
   return notes.length > 0 ? `${notes.join(" · ")}. ${fallbackDesc}` : fallbackDesc;
+}
+
+export function contactFieldClass(invalid = false): string {
+  return `mt-1.5 min-h-[46px] w-full rounded-[10px] border bg-[#FFFFFF] px-3.5 py-2.5 text-[16px] text-[#14110F] placeholder:text-[#6B5F58] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 sm:text-[15px] ${
+    invalid
+      ? "border-[#B8421B] focus-visible:outline-[#B8421B]"
+      : "border-[#9E8E82] hover:border-[#3E2216] focus:border-[#B8421B] focus-visible:outline-[#B8421B]"
+  }`;
+}
+
+export function contactPhoneGroupClass(): string {
+  return "mt-1.5 flex min-h-[46px] items-stretch overflow-hidden rounded-[10px] border border-[#9E8E82] bg-[#FFFFFF] transition-colors hover:border-[#3E2216] focus-within:border-[#B8421B] focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-[#B8421B]";
+}
+
+export function iframeMapAttrs(meta: { mapEmbedUrl: string; mapTitle: string }) {
+  return {
+    src: meta.mapEmbedUrl,
+    title: meta.mapTitle,
+    referrerPolicy: "strict-origin-when-cross-origin" as const,
+  };
+}
+
+export function ariaInvalidAttrs(invalid: boolean, describedById: string): Record<string, unknown> {
+  return invalid
+    ? { "aria-invalid": true, "aria-describedby": describedById }
+    : {};
+}
+
+export function inputChangeValue(e: { target: { value: string } }): string {
+  return e.target.value;
+}
+
+export function openExternalUrl(url: string): void {
+  if (typeof window === "undefined") return;
+  window.open(url, "_blank", "noopener,noreferrer");
+}
+
+export async function copyTextToClipboard(text: string): Promise<boolean> {
+  if (typeof navigator === "undefined" || !navigator.clipboard?.writeText) {
+    return false;
+  }
+  try {
+    await navigator.clipboard.writeText(text);
+    return true;
+  } catch {
+    return false;
+  }
 }

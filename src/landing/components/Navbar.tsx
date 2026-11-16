@@ -45,13 +45,13 @@ export function Navbar({ block }: SectionComponentProps) {
           <span>{bind(block, "title")}</span>
         </a>
 
-        <div className="flex items-center gap-4 sm:gap-7 lg:gap-10">
-          <nav className="hidden items-center gap-8 md:flex" {...labelledByAttr(meta.navAria)}>
+        <div className="flex items-center gap-4 sm:gap-6 lg:gap-9">
+          <nav className="hidden items-center gap-5 md:flex lg:gap-7 xl:gap-8" {...labelledByAttr(meta.navAria)}>
             {links.map((item, idx) => (
               <a
                 key={idx}
                 href={navItemHref(item)}
-                className="inline-flex min-h-[48px] items-center px-1 text-[15.5px] font-medium text-[#14110F]/80 transition-colors hover:text-[#A8401B]"
+                className="inline-flex min-h-[48px] items-center whitespace-nowrap px-1 text-[14.5px] font-medium text-[#14110F]/80 transition-colors hover:text-[#A8401B] lg:text-[15.5px]"
               >
                 <span>{bind(item, "title")}</span>
               </a>

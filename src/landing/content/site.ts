@@ -35,7 +35,9 @@ export const site = {
                 { order: 0, title: "Proses", icon: "#craft" },
                 { order: 1, title: "Biji Kopi", icon: "#beans" },
                 { order: 2, title: "Asal Biji", icon: "#origin" },
-                { order: 3, title: "Pesan", icon: "#order-cta" },
+                { order: 3, title: "Tentang", icon: "#about" },
+                { order: 4, title: "Pesan", icon: "#order-cta" },
+                { order: 5, title: "Kontak", icon: "#contact" },
               ],
             },
           ],
@@ -306,8 +308,61 @@ export const site = {
           ],
         },
         {
-          type: "OrderCta",
+          type: "About",
           order: 5,
+          is_active: true,
+          blocks: [
+            {
+              order: 0,
+              title: "Kopi Jujur dari Kebun",
+              subtitle: "Buat Meja Ngopimu",
+              description:
+                "Livion Coffee berangkat dari hal sederhana: pengen bikin kopi harian yang wanginya masih seger pas kemasan dibuka, manis alaminya keluar, dan harganya tetap ramah buat stok di rumah maupun kedai.",
+              image_url: "assets/cutouts/temanggung-pouch.png",
+              extra: {
+                section_id: "about",
+                badge_label: "Tentang Kami",
+                story_secondary:
+                  "Kami ambil biji pilihan dari petani dataran tinggi Nusantara, lereng Gunung Argopuro, dan Temanggung. Tiap minggu kami sangrai rutin dalam jumlah terjaga dan baru giling saat pesanan masuk biar rasanya tetap fresh sampai gelasmu.",
+                card_caption:
+                  "Disiapkan segar untuk manual brew, espresso harian, hingga suplai rutin kafe dan kantor.",
+                secondary_pouch_url: "assets/cutouts/arabica-pouch.png",
+                tertiary_pouch_url: "assets/cutouts/argopuro-pouch.png",
+                texture_url: "assets/textures/argopuro-crema.jpg",
+                image_alt: "Kemasan biji kopi Robusta Temanggung Livion",
+                secondary_pouch_alt: "Kemasan biji kopi Arabica Pilihan Livion",
+                tertiary_pouch_alt: "Kemasan biji kopi Robusta Argopuro Livion",
+                texture_alt: "Tekstur crema espresso cokelat keemasan",
+              },
+              items: [
+                {
+                  order: 0,
+                  title: "Jadwal Sangrai",
+                  icon: "Selasa & Jumat",
+                  description:
+                    "Disangrai rutin dua kali seminggu supaya stok selalu dalam kondisi fresh.",
+                },
+                {
+                  order: 1,
+                  title: "Giling Sesuai Alat",
+                  icon: "Grind to Order",
+                  description:
+                    "Tersedia biji utuh atau gilingan halus, sedang, dan kasar sesuai alat seduh.",
+                },
+                {
+                  order: 2,
+                  title: "Rumahan & Kafe",
+                  icon: "200g sampai 1kg",
+                  description:
+                    "Dikemas pakai valve satu arah, siap buat stok rumah maupun grosir kedai.",
+                },
+              ],
+            },
+          ],
+        },
+        {
+          type: "OrderCta",
+          order: 6,
           is_active: true,
           blocks: [
             {
@@ -332,8 +387,80 @@ export const site = {
           ],
         },
         {
+          type: "Contact",
+          order: 7,
+          is_active: true,
+          blocks: [
+            {
+              order: 0,
+              title: "Ngobrol Soal Kopi",
+              subtitle: "Atau Suplai Kedai",
+              description:
+                "Butuh rekomendasi gilingan untuk alat seduh di rumah, tanya jadwal sangrai terbaru, atau minta sample pack kafe dan kantor? Hubungi tim roastery langsung.",
+              extra: {
+                section_id: "contact",
+                whatsapp_number: "6285159506662",
+                copy_phone_value: "+6285159506662",
+                wa_direct_text:
+                  "Halo Livion Coffee! Mau tanya-tanya soal biji kopi dan layanan roastery.",
+                direct_wa_label: "Chat WhatsApp",
+                copy_label: "Salin Nomor",
+                copied_label: "Nomor Tersalin",
+                copy_fallback_label: "Salin manual nomor di atas",
+                copy_aria: "Salin nomor WhatsApp Livion Coffee",
+                form_badge: "Catatan Roastery",
+                form_title: "Tulis Kebutuhan Kopimu",
+                form_subtitle:
+                  "Pilih topik dan isi pesan singkat, lalu detailmu langsung siap dikirim ke WhatsApp tim sangrai.",
+                topic_label: "Topik",
+                topic_0: "Tanya Seduh & Produk",
+                topic_1: "Order Eceran / Kantor",
+                topic_2: "Grosir & Sample Kafe",
+                name_label: "Nama Kamu",
+                name_placeholder: "Tulis nama panggilan atau lengkap",
+                company_label: "Kedai, Kantor, atau Rumahan",
+                company_placeholder: "Opsional: misal kedai kopi atau pantry kantor",
+                message_label: "Ceritakan Kebutuhanmu",
+                message_placeholder:
+                  "Tulis varian yang dicari, jenis gilingan, atau estimasi stok per bulan.",
+                error_text:
+                  "Isi nama dan ceritakan kebutuhanmu dulu sebelum mengirim ke WhatsApp.",
+                success_text:
+                  "Pesan WhatsApp siap dikirim. Jika tab WhatsApp belum terbuka, klik tombol di bawah.",
+                open_wa_fallback_label: "Buka WhatsApp",
+                reset_label: "Tulis Ulang",
+                form_note: "Balasan dikirim lewat WhatsApp roastery pada jam layanan.",
+                submit_label: "Kirim ke WhatsApp",
+              },
+              items: [
+                {
+                  order: 0,
+                  icon: "WhatsApp Roastery",
+                  title: "+62 851-5950-6662",
+                  description:
+                    "Jalur utama untuk order biji 200g sampai 1kg, konsultasi seduh, dan kerjasama grosir.",
+                },
+                {
+                  order: 1,
+                  icon: "Jam Layanan & Sangrai",
+                  title: "Senin - Sabtu, 08:00 - 17:00 WIB",
+                  description:
+                    "Batch sangrai rutin tiap Selasa & Jumat, pengiriman ke seluruh Indonesia.",
+                },
+                {
+                  order: 2,
+                  icon: "Format Pesanan",
+                  title: "Kemasan 200g, 500g, 1kg",
+                  description:
+                    "Tersedia biji utuh (whole bean), giling halus, sedang, maupun kasar sesuai pesanan.",
+                },
+              ],
+            },
+          ],
+        },
+        {
           type: "Footer",
-          order: 6,
+          order: 8,
           is_active: true,
           blocks: [
             {
@@ -352,12 +479,14 @@ export const site = {
                 action_wholesale_label: "Grosir & Sample",
                 col_nav_0_label: "Beranda",
                 col_nav_0_href: "#top",
-                col_nav_1_label: "Proses",
-                col_nav_1_href: "#craft",
-                col_nav_2_label: "Katalog",
-                col_nav_2_href: "#beans",
-                col_nav_3_label: "Asal Biji",
-                col_nav_3_href: "#origin",
+                col_nav_1_label: "Katalog",
+                col_nav_1_href: "#beans",
+                col_nav_2_label: "Asal Biji",
+                col_nav_2_href: "#origin",
+                col_nav_3_label: "Tentang Kami",
+                col_nav_3_href: "#about",
+                col_nav_4_label: "Kontak",
+                col_nav_4_href: "#contact",
               },
               items: [
                 {
