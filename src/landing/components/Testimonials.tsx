@@ -87,7 +87,7 @@ function TestimonialCard({
             />
           ) : (
             <div aria-hidden="true" className={testimonialAvatarClass(card.featured)}>
-              <span>{bind(block, "extra.initials")}</span>
+              <span>{card.avatarInitials}</span>
             </div>
           )}
 

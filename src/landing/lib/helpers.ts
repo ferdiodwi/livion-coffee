@@ -634,6 +634,7 @@ export function readTestimonialCard(
   const featuredFlag = ex && ex.featured === true;
   const avatarUrl = typeof block.image_url === "string" ? block.image_url.trim() : "";
   const ratingScore = typeof block.icon === "string" ? block.icon.trim() : "";
+  const rawAuthor = typeof block.title === "string" ? block.title : "";
   return {
     isEn: locale === "en",
     featured: featuredFlag || index === 0,
@@ -642,13 +643,13 @@ export function readTestimonialCard(
       strVal(
         ex,
         "image_alt",
-        typeof block.title === "string" ? block.title : "Pelanggan Livion Coffee",
+        rawAuthor || "Pelanggan Livion Coffee",
       ),
       locale,
     ),
+    avatarInitials: initialsFromName(rawAuthor),
     hasRating: ratingScore.length > 0,
     enRatingLabel: tr(strVal(ex, "rating_label", "Rating"), locale),
-    enInitials: strVal(ex, "initials", ""),
   };
 }
 

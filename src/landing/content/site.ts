@@ -454,7 +454,7 @@ export const site = {
             },
             {
               order: 1,
-              title: "Hendra Kusuma",
+              title: "Hendra Angkringan Pojok",
               subtitle: "Jember, Kota",
               description:
                 "Awalnya iseng nyoba robusta argopuro buat es kopi susu, eh malah keterusan stok tiap minggu. begitu pouch dibuka aromanya langsung keluar, gik anget habis sangrai selasa-jumat. cakancah yang biasa ngopi malam di kedai langsung bilang nyaman ongghu cak",
@@ -462,13 +462,13 @@ export const site = {
               image_url: null,
               extra: {
                 featured: true,
-                initials: "HK",
+                initials: "HP",
                 rating_label: "Rating",
               },
             },
             {
               order: 2,
-              title: "Fajar Hidayat",
+              title: "Andi ndut",
               subtitle: "Bondowoso Kota",
               description:
                 "pesan arabica argopuro sortir grade 4 gilingan sedang buat v60 pagi, manis karamel sama sitrusnya bersih pol. gak bikin sepet di tenggorokan",
@@ -476,13 +476,13 @@ export const site = {
               image_url: null,
               extra: {
                 featured: false,
-                initials: "FH",
+                initials: "AN",
                 rating_label: "Rating",
               },
             },
             {
               order: 3,
-              title: "Dian Kartika",
+              title: "Selpi",
               subtitle: "Curahdami, Bondowoso",
               description:
                 "Buat yang doyan kopi pait tanpa gula, robusta argopuro ini cek nyamanna. cremanya tebel buat moka pot, dicampur susu dingin juga tetep kerasa cokelatnya. tanya takaran gilingan lewat wa juga langsung dibantu santai",
@@ -490,7 +490,7 @@ export const site = {
               image_url: null,
               extra: {
                 featured: false,
-                initials: "DK",
+                initials: "SE",
                 rating_label: "Rating",
               },
             },
@@ -510,7 +510,7 @@ export const site = {
             },
             {
               order: 5,
-              title: "Bagas Prasetyo",
+              title: "Bagas",
               subtitle: "Jember",
               description:
                 "Kirim ke jember cepet, kemasan valve aman. stok andalan pas lagi lembur malam, rasanya mantap tenan rek",
@@ -518,7 +518,7 @@ export const site = {
               image_url: null,
               extra: {
                 featured: false,
-                initials: "BP",
+                initials: "BA",
                 rating_label: "Rating",
               },
             },
