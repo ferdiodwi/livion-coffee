@@ -451,7 +451,7 @@ export const site = {
               title: "Hendra Kusuma",
               subtitle: "Jember, Kota",
               description:
-                "Awalnya iseng nyoba Robusta Argopuro buat es kopi susu, eh malah keterusan stok tiap minggu. Begitu pouch dibuka aromanya langsung keluar, gik anget habis sangrai Selasa-Jumat. Kancah-kancah yang biasa ngopi malam di kedai langsung bilang nyaman ongghu, Cak.",
+                "Awalnya iseng nyoba robusta argopuro buat es kopi susu, eh malah keterusan stok tiap minggu. begitu pouch dibuka aromanya langsung keluar, gik anget habis sangrai selasa-jumat. cakancah yang biasa ngopi malam di kedai langsung bilang nyaman ongghu cak",
               icon: "5.0",
               image_url: null,
               extra: {
@@ -465,7 +465,7 @@ export const site = {
               title: "Fajar Hidayat",
               subtitle: "Bondowoso Kota",
               description:
-                "Pesan Arabica Pilihan gilingan sedang buat V60 pagi, manis karamel sama sitrusnya bersih pol. Gak bikin sepet di tenggorokan.",
+                "pesan arabica pilihan gilingan sedang buat v60 pagi, manis karamel sama sitrusnya bersih pol. gak bikin sepet di tenggorokan",
               icon: "4.9",
               image_url: null,
               extra: {
@@ -479,7 +479,7 @@ export const site = {
               title: "Dian Kartika",
               subtitle: "Curahdami, Bondowoso",
               description:
-                "Buat yang doyan kopi pait tanpa gula, Robusta Argopuro ini cek nyamanna. Cremanya tebel buat moka pot, dicampur susu dingin juga tetep kerasa cokelatnya. Tanya takaran gilingan lewat WA juga langsung dibantu santai.",
+                "Buat yang doyan kopi pait tanpa gula, robusta argopuro ini cek nyamanna. cremanya tebel buat moka pot, dicampur susu dingin juga tetep kerasa cokelatnya. tanya takaran gilingan lewat wa juga langsung dibantu santai",
               icon: "5.0",
               image_url: null,
               extra: {
@@ -493,7 +493,7 @@ export const site = {
               title: "Rizky Maulana",
               subtitle: "Tamanan, Bondowoso",
               description:
-                "Biasa nyeduh tubruk pas baru mole kerja biar kepala enteng lagi. Robusta Temanggung yang 200g ini wanginya rempah kakao, sampe anak kantor sering minta dibikinin bareng pas jam istirahat, Tretan.",
+                "Biasa nyeduh tubruk pas baru mole kerja biar kepala enteng lagi. robusta temanggung yang 200g ini wanginya rempah kakao, sampe anak kantor sering minta dibikinin bareng pas jam istirahat tretan",
               icon: "4.9",
               image_url: null,
               extra: {
@@ -507,7 +507,7 @@ export const site = {
               title: "Bagas Prasetyo",
               subtitle: "Jember",
               description:
-                "Kirim ke Jember cepet, kemasan valve aman. Stok andalan pas lagi lembur malam, rasanya mantap tenan, Rek.",
+                "Kirim ke jember cepet, kemasan valve aman. stok andalan pas lagi lembur malam, rasanya mantap tenan rek",
               icon: "4.8",
               image_url: null,
               extra: {
