@@ -104,10 +104,17 @@ function CollectionCard({
 
       {prod.featured ? (
         <div className="relative z-10 flex min-h-[104px] items-center justify-between gap-3 px-2 pt-5 pb-1">
-          <h3 className="font-hero text-[24px] leading-[1.08] font-extrabold tracking-tight text-[#14110F] sm:text-[26px] lg:text-[28px]">
-            <span className="block">{bind(block, "extra.title_top")}</span>
-            <span className="block">{bind(block, "extra.title_bottom")}</span>
-          </h3>
+          <div>
+            <h3 className="font-hero text-[24px] leading-[1.08] font-extrabold tracking-tight text-[#14110F] sm:text-[26px] lg:text-[28px]">
+              <span className="block">{bind(block, "extra.title_top")}</span>
+              <span className="block">{bind(block, "extra.title_bottom")}</span>
+            </h3>
+            {prod.cardNote && (
+              <p className="mt-1 text-[13px] font-semibold leading-snug text-[#575049] sm:text-[13.5px]">
+                <span>{bind(block, "extra.card_note")}</span>
+              </p>
+            )}
+          </div>
 
           <span className="inline-block -rotate-2 rounded-xl bg-[#B8421B] px-4 py-1.5 font-hero text-[16px] font-bold tracking-tight whitespace-nowrap text-[#FFFFFF] shadow-[0_10px_20px_rgba(184,66,27,0.24)] tabular-nums sm:text-[17px]">
             {bind(block, "extra.price_display")}
@@ -119,6 +126,11 @@ function CollectionCard({
             <span className="block">{bind(block, "extra.title_top")}</span>
             <span className="block">{bind(block, "extra.title_bottom")}</span>
           </h3>
+          {prod.cardNote && (
+            <p className="mt-1 text-[13px] font-semibold leading-snug text-[#575049] sm:text-[13.5px]">
+              <span>{bind(block, "extra.card_note")}</span>
+            </p>
+          )}
         </div>
       )}
 

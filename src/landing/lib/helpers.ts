@@ -349,6 +349,7 @@ export function readCollectionProduct(block: LandingBlock, index: number) {
     origin,
     desc,
     category: strVal(ex, "category", "kopi"),
+    cardNote: strVal(ex, "card_note", ""),
     indexLabel: strVal(ex, "index_label", twoDigitStep(block.order, index)),
     price200g,
     priceDisplay: strVal(ex, "price_display", formatIDR(price200g)),
@@ -403,7 +404,7 @@ export function readAboutMeta(block: LandingBlock) {
     sectionId: strVal(ex, "section_id", "about"),
     headingId: "about-heading",
     imageAlt: strVal(ex, "image_alt", "Kemasan biji kopi Robusta Temanggung Livion"),
-    secondaryAlt: strVal(ex, "secondary_pouch_alt", "Kemasan biji kopi Arabica Pilihan Livion"),
+    secondaryAlt: strVal(ex, "secondary_pouch_alt", "Kemasan biji kopi Arabica Argopuro Livion"),
     tertiaryAlt: strVal(ex, "tertiary_pouch_alt", "Kemasan biji kopi Robusta Argopuro Livion"),
     textureAlt: strVal(ex, "texture_alt", "Tekstur crema espresso cokelat keemasan"),
     beanAUrl: "assets/cutouts/bean-3.png",
@@ -493,7 +494,7 @@ export function readTestimonialCard(block: LandingBlock, index: number) {
 
 export function readOrderCtaMeta(block: LandingBlock) {
   const ex = block.extra;
-  const productName = strVal(ex, "product_name", "Livion Arabica Pilihan");
+  const productName = strVal(ex, "product_name", "Arabica Argopuro (Sortir Grade 4)");
   const unitPrice = numVal(ex, "unit_price", 25000);
   const weight = strVal(ex, "weight", "200g");
   const grind = strVal(ex, "grind", "Biji Utuh (Whole Bean)");
@@ -502,7 +503,7 @@ export function readOrderCtaMeta(block: LandingBlock) {
     sectionId: strVal(ex, "section_id", "order-cta"),
     headingId: "order-cta-heading",
     ribbonPath: "M -20 135 C 235 8, 635 12, 920 128 C 1105 204, 1285 215, 1460 155",
-    imageAlt: strVal(ex, "image_alt", "Tangan memegang kemasan biji kopi Livion Arabica"),
+    imageAlt: strVal(ex, "image_alt", "Tangan memegang kemasan biji kopi Livion Arabica Argopuro"),
     ctaAria: strVal(ex, "cta_aria", `Pesan ${productName} ${weight} lewat WhatsApp`),
     orderHref: buildBeanWhatsAppUrl(phone, productName, weight, grind, 1, unitPrice),
   };
@@ -551,7 +552,7 @@ export function readContactMeta(block: LandingBlock) {
 export function readFooterMeta(block: LandingBlock) {
   const ex = block.extra;
   const phone = strVal(ex, "whatsapp_number", "6285159506662");
-  const productName = strVal(ex, "default_product", "Livion Arabica Pilihan");
+  const productName = strVal(ex, "default_product", "Arabica Argopuro (Sortir Grade 4)");
   const unitPrice = numVal(ex, "default_price", 25000);
   const weight = strVal(ex, "default_weight", "200g");
   const grind = strVal(ex, "default_grind", "Biji Utuh (Whole Bean)");
