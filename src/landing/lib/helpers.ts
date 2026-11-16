@@ -779,9 +779,52 @@ export function readFooterMeta(block: LandingBlock, locale: Locale = "id") {
       ? "Livion Coffee social media"
       : "Media sosial Livion Coffee",
     floatingWaAria: tr(
-      strVal(ex, "floating_cta_aria", "Pesan kopi Livion lewat WhatsApp"),
+      strVal(ex, "floating_cta_aria", "Buka pilihan pesan kopi Livion"),
       locale,
     ),
+    floatingCloseAria: tr(
+      strVal(ex, "floating_close_aria", "Tutup pilihan pesan kopi Livion"),
+      locale,
+    ),
+    popoverHead: tr(strVal(ex, "floating_menu_title", "Pilih Metode Pesan"), locale),
+    floatingMenuId: "floating-order-popover",
+    floatingOrderChannels: [
+      {
+        isWa: true,
+        isShopee: false,
+        channelName: strVal(ex, "floating_wa_title", "WhatsApp"),
+        href: buildTextWhatsAppUrl(phone, floatingText),
+        available: true,
+        badgeText: "",
+        rowClass:
+          "flex min-h-[48px] items-center justify-between gap-3 rounded-[14px] border border-[#3E2216]/12 bg-[#FFFFFF] px-3 py-2.5 text-left transition-[border-color,background-color,transform] hover:border-[#168341]/55 hover:bg-[#F3FBF5] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#168341] active:scale-[0.98]",
+        badgeBoxClass:
+          "flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#EAF8ED] text-[#147339]",
+      },
+      {
+        isWa: false,
+        isShopee: true,
+        channelName: tr(strVal(ex, "action_shopee_label", "Shopee Official"), locale),
+        href: strVal(ex, "action_shopee_href", "https://id.shp.ee/Lagtfovg").trim(),
+        available: Boolean(strVal(ex, "action_shopee_href", "https://id.shp.ee/Lagtfovg").trim()),
+        badgeText: tr(strVal(ex, "floating_soon_badge", "Segera Hadir"), locale),
+        rowClass:
+          "flex min-h-[48px] items-center justify-between gap-3 rounded-[14px] border border-[#3E2216]/12 bg-[#FFFFFF] px-3 py-2.5 text-left transition-[border-color,background-color,transform] hover:border-[#D13816]/55 hover:bg-[#FFF6F3] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D13816] active:scale-[0.98]",
+        badgeBoxClass: "flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#FFF3F0]",
+      },
+      {
+        isWa: false,
+        isShopee: false,
+        channelName: tr(strVal(ex, "action_tokopedia_label", "Tokopedia Official"), locale),
+        href: strVal(ex, "action_tokopedia_href", "").trim(),
+        available: Boolean(strVal(ex, "action_tokopedia_href", "").trim()),
+        badgeText: tr(strVal(ex, "floating_soon_badge", "Segera Hadir"), locale),
+        rowClass: strVal(ex, "action_tokopedia_href", "").trim()
+          ? "flex min-h-[48px] items-center justify-between gap-3 rounded-[14px] border border-[#3E2216]/12 bg-[#FFFFFF] px-3 py-2.5 text-left transition-[border-color,background-color,transform] hover:border-[#028A0C]/55 hover:bg-[#F1FBF3] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#028A0C] active:scale-[0.98]"
+          : "flex min-h-[48px] items-center justify-between gap-3 rounded-[14px] border border-[#3E2216]/10 bg-[#F7F3EE] px-3 py-2.5 text-left",
+        badgeBoxClass: "flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#EAF8ED]",
+      },
+    ],
     wavePath:
       "M 0 84 C 155 18, 340 -8, 550 56 C 745 115, 965 112, 1175 44 C 1285 10, 1375 2, 1440 8 L 1440 122 L 0 122 Z",
     colNav0Href: strVal(ex, "col_nav_0_href", "#top"),
@@ -803,11 +846,12 @@ export function readFooterMeta(block: LandingBlock, locale: Locale = "id") {
     enFloatingLabel: tr(strVal(ex, "floating_cta_label", "Pesan Sekarang"), locale),
     orderWaHref: buildBeanWhatsAppUrl(phone, productName, weight, grind, 1, unitPrice, locale),
     wholesaleWaHref: buildTextWhatsAppUrl(phone, wholesaleText),
-    floatingWaHref: buildTextWhatsAppUrl(phone, floatingText),
     socialItems: allItems,
     phone,
   };
 }
+
+export type FloatingOrderChannel = ReturnType<typeof readFooterMeta>["floatingOrderChannels"][number];
 
 export function socialItemMeta(item: LandingItem) {
   const titleLower = (item.title ?? "").toLowerCase();
@@ -1149,6 +1193,58 @@ export function menuBtnA11y(open: boolean, openLabel: string, closeLabel: string
     "aria-controls": drawerId,
     "aria-label": open ? closeLabel : openLabel,
   };
+}
+
+export function orderMenuBtnA11y(
+  open: boolean,
+  openLabel: string,
+  closeLabel: string,
+  menuId: string,
+): Record<string, unknown> {
+  return {
+    "aria-expanded": open,
+    "aria-controls": menuId,
+    "aria-haspopup": "dialog",
+    "aria-label": open ? closeLabel : openLabel,
+  };
+}
+
+export function attachOutsidePointerDown(
+  container: HTMLElement | null,
+  onOutside: () => void,
+): () => void {
+  if (!container || typeof document === "undefined") return () => {};
+  const onPointerDown = (e: PointerEvent) => {
+    if (e.target instanceof Node && !container.contains(e.target)) {
+      onOutside();
+    }
+  };
+  document.addEventListener("pointerdown", onPointerDown);
+  return () => document.removeEventListener("pointerdown", onPointerDown);
+}
+
+export function floatingFabClass(open: boolean): string {
+  return `group inline-flex h-14 min-w-14 items-center justify-center rounded-full px-3.5 text-[#FFFFFF] shadow-[0_14px_30px_rgba(62,34,22,0.28)] transition-[background-color,box-shadow,transform] duration-300 ease-out focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[#3E2216] active:scale-[0.97] motion-reduce:transition-none ${
+    open
+      ? "bg-[#3E2216] hover:bg-[#2C1810]"
+      : "bg-[#B8421B] hover:bg-[#3E2216]"
+  }`;
+}
+
+export function floatingExpandGridClass(open: boolean): string {
+  return `grid transition-[grid-template-columns] duration-300 ease-out motion-reduce:transition-none ${
+    open
+      ? "grid-cols-[0fr]"
+      : "grid-cols-[0fr] group-hover:grid-cols-[1fr] group-focus-visible:grid-cols-[1fr]"
+  }`;
+}
+
+export function floatingExpandTextClass(open: boolean): string {
+  return `inline-block font-sans text-[15px] font-bold tracking-tight whitespace-nowrap transition-opacity duration-200 motion-reduce:transition-none ${
+    open
+      ? "opacity-0"
+      : "pr-2 pl-2.5 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100"
+  }`;
 }
 
 export function imgPerfProps(): Record<string, unknown> {

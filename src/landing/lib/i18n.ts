@@ -361,9 +361,11 @@ const EN_MAP: Record<string, string> = {
   "Beranda": "Home",
   "Katalog": "Catalog",
   "Pesan Sekarang": "Order Now",
-  "Pesan kopi Livion lewat WhatsApp": "Order Livion Coffee via WhatsApp",
+  "Buka pilihan pesan kopi Livion": "Open Livion Coffee order options",
+  "Tutup pilihan pesan kopi Livion": "Close Livion Coffee order options",
   "Halo Livion Coffee! Saya mau pesan biji kopinya.":
     "Hello Livion Coffee! I'd like to order your coffee beans.",
+  "Pilih Metode Pesan": "Choose Order Channel",
   "Instagram": "Instagram",
   "TikTok": "TikTok",
   "Ikuti Instagram @livioncoffee": "Follow @livioncoffee on Instagram",

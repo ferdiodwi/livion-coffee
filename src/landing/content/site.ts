@@ -657,8 +657,12 @@ export const site = {
                 col_nav_4_label: "Kontak",
                 col_nav_4_href: "#contact",
                 floating_cta_label: "Pesan Sekarang",
-                floating_cta_aria: "Pesan kopi Livion lewat WhatsApp",
+                floating_cta_aria: "Buka pilihan pesan kopi Livion",
+                floating_close_aria: "Tutup pilihan pesan kopi Livion",
                 floating_cta_text: "Halo Livion Coffee! Saya mau pesan biji kopinya.",
+                floating_menu_title: "Pilih Metode Pesan",
+                floating_wa_title: "WhatsApp",
+                floating_soon_badge: "Segera Hadir",
               },
               items: [
                 {

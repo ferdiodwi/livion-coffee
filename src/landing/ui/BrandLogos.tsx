@@ -75,3 +75,11 @@ export function MarketplaceLogo({ isShopee }: { isShopee: boolean }) {
     </svg>
   );
 }
+
+/** Unified channel emblem inside the floating Pesan Sekarang popover. */
+export function OrderChannelLogo({ isWa, isShopee }: { isWa: boolean; isShopee: boolean }) {
+  if (isWa) {
+    return <WhatsAppLogo className="h-5 w-5 shrink-0" />;
+  }
+  return <MarketplaceLogo isShopee={isShopee} />;
+}

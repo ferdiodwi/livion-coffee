@@ -1,25 +1,64 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
+import { ShoppingBag, X } from "lucide-react";
 import { bind } from "../lib/bind";
 import { useLocale } from "../lib/i18n";
-import { WhatsAppLogo } from "../ui/BrandLogos";
+import { OrderChannelLogo } from "../ui/BrandLogos";
 import { SocialIcon } from "../ui/SocialIcon";
 import {
   ariaLabelAttr,
+  attachKeydown,
+  attachOutsidePointerDown,
+  floatingExpandGridClass,
+  floatingExpandTextClass,
+  floatingFabClass,
   footerPillClass,
   footerPillLinkProps,
+  isEscapeKey,
   linkTargetProps,
+  orderMenuBtnA11y,
   readBlockCopy,
   readFooterMeta,
   readItemCopy,
   svgPreserveAttr,
+  type FloatingOrderChannel,
   type SectionComponentProps,
 } from "../lib/helpers";
 
+function ChannelRowContent({ ch }: { ch: FloatingOrderChannel }) {
+  return (
+    <span className="flex items-center gap-3">
+      <span className={ch.badgeBoxClass} aria-hidden="true">
+        <OrderChannelLogo isWa={ch.isWa} isShopee={ch.isShopee} />
+      </span>
+      <span className="font-sans text-[14.5px] leading-tight font-bold text-[#3E2216]">
+        {ch.channelName}
+      </span>
+    </span>
+  );
+}
+
 export function Footer({ block }: SectionComponentProps) {
+  const [orderMenuOpen, setOrderMenuOpen] = useState(false);
+  const menuWrapRef = useRef<HTMLDivElement>(null);
   const locale = useLocale();
   const meta = readFooterMeta(block, locale);
   const copy = readBlockCopy(block, locale);
+
+  useEffect(() => {
+    if (!orderMenuOpen) return;
+    const detachKeys = attachKeydown((key) => {
+      if (isEscapeKey(key)) setOrderMenuOpen(false);
+    });
+    const detachOutside = attachOutsidePointerDown(menuWrapRef.current, () => {
+      setOrderMenuOpen(false);
+    });
+    return () => {
+      detachKeys();
+      detachOutside();
+    };
+  }, [orderMenuOpen]);
 
   return (
     <>
@@ -166,22 +205,71 @@ export function Footer({ block }: SectionComponentProps) {
       </div>
     </footer>
 
-      <a
-        href={meta.floatingWaHref}
-        {...linkTargetProps(true)}
-        {...ariaLabelAttr(meta.floatingWaAria)}
-        className="group fixed right-5 bottom-5 z-40 inline-flex h-14 min-w-14 items-center rounded-full bg-[#168341] px-3.5 text-[#FFFFFF] shadow-[0_12px_28px_rgba(22,131,65,0.34)] transition-[background-color,box-shadow,transform] duration-300 ease-out hover:bg-[#147339] hover:shadow-[0_16px_34px_rgba(22,131,65,0.42)] focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[#168341] active:scale-[0.97] sm:right-7 sm:bottom-7 motion-reduce:transition-none"
+      <div
+        ref={menuWrapRef}
+        className="fixed right-5 bottom-5 z-40 flex flex-col items-end gap-3 sm:right-7 sm:bottom-7"
       >
-        <WhatsAppLogo className="h-7 w-7 shrink-0" />
+        {orderMenuOpen && (
+          <div
+            id={meta.floatingMenuId}
+            {...ariaLabelAttr(meta.popoverHead)}
+            className="w-[min(86vw,272px)] rounded-[22px] border border-[#3E2216]/14 bg-[#FBF8F4] p-3.5 text-[#14110F] shadow-[0_22px_50px_rgba(36,29,24,0.22)]"
+          >
+            <p className="mb-2.5 px-1 font-hero text-[15.5px] leading-tight font-extrabold tracking-[-0.015em] text-[#3E2216]">
+              {meta.popoverHead}
+            </p>
 
-        <span className="grid grid-cols-[0fr] transition-[grid-template-columns] duration-300 ease-out group-hover:grid-cols-[1fr] group-focus-visible:grid-cols-[1fr] motion-reduce:transition-none">
-          <span className="overflow-hidden">
-            <span className="inline-block pr-2 pl-2.5 font-sans text-[15px] font-bold tracking-tight whitespace-nowrap opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100 motion-reduce:transition-none">
-              {meta.isEn ? <span>{meta.enFloatingLabel}</span> : <span>{bind(block, "extra.floating_cta_label")}</span>}
+            <div className="flex flex-col gap-2">
+              {meta.floatingOrderChannels.map((ch, idx) =>
+                ch.available ? (
+                  <a
+                    key={idx}
+                    href={ch.href}
+                    {...linkTargetProps(true)}
+                    onClick={() => setOrderMenuOpen(false)}
+                    className={ch.rowClass}
+                  >
+                    <ChannelRowContent ch={ch} />
+                  </a>
+                ) : (
+                  <div key={idx} className={ch.rowClass}>
+                    <ChannelRowContent ch={ch} />
+                    <span className="shrink-0 rounded-full bg-[#EFE7DE] px-2.5 py-1 text-[11px] font-bold whitespace-nowrap text-[#575049]">
+                      {ch.badgeText}
+                    </span>
+                  </div>
+                ),
+              )}
+            </div>
+          </div>
+        )}
+
+        <button
+          type="button"
+          onClick={() => setOrderMenuOpen((prev) => !prev)}
+          {...orderMenuBtnA11y(
+            orderMenuOpen,
+            meta.floatingWaAria,
+            meta.floatingCloseAria,
+            meta.floatingMenuId,
+          )}
+          className={floatingFabClass(orderMenuOpen)}
+        >
+          {orderMenuOpen ? (
+            <X className="h-6 w-6 shrink-0" aria-hidden="true" />
+          ) : (
+            <ShoppingBag className="h-6 w-6 shrink-0" aria-hidden="true" />
+          )}
+
+          <span className={floatingExpandGridClass(orderMenuOpen)}>
+            <span className="overflow-hidden">
+              <span className={floatingExpandTextClass(orderMenuOpen)}>
+                {meta.isEn ? <span>{meta.enFloatingLabel}</span> : <span>{bind(block, "extra.floating_cta_label")}</span>}
+              </span>
             </span>
           </span>
-        </span>
-      </a>
+        </button>
+      </div>
     </>
   );
 }
