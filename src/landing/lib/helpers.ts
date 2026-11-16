@@ -264,7 +264,7 @@ export function readHeroLot(block: LandingBlock | undefined) {
   const ex = block?.extra;
   const name = typeof block?.title === "string" ? block.title : "Livion Coffee";
   const origin = typeof block?.subtitle === "string" ? block.subtitle : "";
-  const price200g = numVal(ex, "price_200g", 85000);
+  const price200g = numVal(ex, "price_200g", 25000);
   return {
     name,
     origin,
@@ -341,7 +341,7 @@ export function readCollectionProduct(block: LandingBlock, index: number) {
   const title = typeof block.title === "string" ? block.title : "";
   const origin = typeof block.subtitle === "string" ? block.subtitle : "";
   const desc = typeof block.description === "string" ? block.description : "";
-  const price200g = numVal(ex, "price_200g", 65000);
+  const price200g = numVal(ex, "price_200g", 35000);
   const beanSet = COLLECTION_BEAN_SETS[index % COLLECTION_BEAN_SETS.length] ?? COLLECTION_BEAN_SETS[0];
   return {
     featured: variant === "center-featured",
@@ -494,7 +494,7 @@ export function readTestimonialCard(block: LandingBlock, index: number) {
 export function readOrderCtaMeta(block: LandingBlock) {
   const ex = block.extra;
   const productName = strVal(ex, "product_name", "Livion Arabica Pilihan");
-  const unitPrice = numVal(ex, "unit_price", 85000);
+  const unitPrice = numVal(ex, "unit_price", 25000);
   const weight = strVal(ex, "weight", "200g");
   const grind = strVal(ex, "grind", "Biji Utuh (Whole Bean)");
   const phone = strVal(ex, "whatsapp_number", "6285159506662");
@@ -552,7 +552,7 @@ export function readFooterMeta(block: LandingBlock) {
   const ex = block.extra;
   const phone = strVal(ex, "whatsapp_number", "6285159506662");
   const productName = strVal(ex, "default_product", "Livion Arabica Pilihan");
-  const unitPrice = numVal(ex, "default_price", 85000);
+  const unitPrice = numVal(ex, "default_price", 25000);
   const weight = strVal(ex, "default_weight", "200g");
   const grind = strVal(ex, "default_grind", "Biji Utuh (Whole Bean)");
   const wholesaleText = strVal(
@@ -560,10 +560,16 @@ export function readFooterMeta(block: LandingBlock) {
     "wholesale_text",
     "Halo Livion Coffee! Mau tanya-tanya soal suplai grosir & sample pack biji kopinya nih.",
   );
+  const floatingText = strVal(
+    ex,
+    "floating_cta_text",
+    "Halo Livion Coffee! Saya mau pesan biji kopinya.",
+  );
   const allItems = sortedItems(block.items);
   return {
     footerNavAria: "Navigasi footer",
     shortcutsAria: "Shortcut katalog dan pemesanan Livion Coffee",
+    floatingWaAria: strVal(ex, "floating_cta_aria", "Pesan kopi Livion lewat WhatsApp"),
     wavePath:
       "M 0 84 C 155 18, 340 -8, 550 56 C 745 115, 965 112, 1175 44 C 1285 10, 1375 2, 1440 8 L 1440 122 L 0 122 Z",
     colNav0Href: strVal(ex, "col_nav_0_href", "#top"),
@@ -573,6 +579,7 @@ export function readFooterMeta(block: LandingBlock) {
     colNav4Href: strVal(ex, "col_nav_4_href", "#contact"),
     orderWaHref: buildBeanWhatsAppUrl(phone, productName, weight, grind, 1, unitPrice),
     wholesaleWaHref: buildTextWhatsAppUrl(phone, wholesaleText),
+    floatingWaHref: buildTextWhatsAppUrl(phone, floatingText),
     topPills: allItems.slice(0, 2),
     bottomPills: allItems.slice(2),
     phone,
