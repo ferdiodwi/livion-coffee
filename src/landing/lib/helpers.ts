@@ -67,8 +67,6 @@ export type HeroBeanSpec = {
 export const STAGE_BEAN_SPECS: HeroBeanSpec[] = [
   { src: "assets/cutouts/bean-1.png", width: 283, height: 219, className: "left-[4%] top-[12%] z-20 w-9 sm:w-11 lg:left-[8%] lg:top-[15%] lg:w-12", depth: 14, rotate: -18 },
   { src: "assets/cutouts/bean-4.png", width: 287, height: 222, className: "hidden md:block left-[20%] top-[10%] z-10 w-9 opacity-90", depth: 12, rotate: 34 },
-  { src: "assets/cutouts/bean-2.png", width: 303, height: 152, className: "hidden md:block left-[33%] top-[9%] z-0 w-11 opacity-85", depth: -10, rotate: -12, blur: true },
-  { src: "assets/cutouts/bean-6.png", width: 261, height: 261, className: "hidden lg:block left-[39%] top-[15%] z-10 w-8 opacity-90", depth: 18, rotate: 52 },
   { src: "assets/cutouts/bean-6.png", width: 261, height: 261, className: "hidden md:block right-[15%] top-[8%] z-10 w-9 opacity-90", depth: -12, rotate: -42 },
   { src: "assets/cutouts/bean-3.png", width: 277, height: 248, className: "right-[4%] top-[10%] z-20 w-9 sm:w-11 lg:right-[7%] lg:top-[12%] lg:w-12", depth: 20, rotate: 26 },
   { src: "assets/cutouts/bean-1.png", width: 283, height: 219, className: "hidden lg:block right-[4%] top-[27%] z-10 w-10 opacity-90", depth: 16, rotate: -32 },
@@ -553,7 +551,7 @@ export function mobileDrawerClass(open: boolean): string {
 }
 
 export function tabButtonClass(active: boolean): string {
-  return `inline-flex min-h-[48px] items-center justify-center rounded-full border px-5 py-2.5 text-[13.5px] font-semibold tracking-wide transition-colors ${
+  return `inline-flex min-h-[48px] items-center justify-center whitespace-nowrap rounded-full border px-4 py-2.5 text-[13px] font-semibold tracking-wide transition-colors sm:px-5 sm:text-[13.5px] ${
     active
       ? "border-[#8F511A] bg-[#8F511A] text-[#F5F0EA] shadow-xs"
       : "border-[#14110F]/20 bg-[#F5F0EA]/90 text-[#14110F] hover:border-[#14110F]"

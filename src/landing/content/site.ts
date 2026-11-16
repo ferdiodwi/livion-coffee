@@ -49,9 +49,9 @@ export const site = {
           blocks: [
             {
               order: 0,
-              title: "Sangrai Pelan",
-              subtitle: "Kopi",
-              description: "Nusantara",
+              title: "Kopi Asli Lereng",
+              subtitle: "Argopuro",
+              description: "Bondowoso",
               extra: {
                 section_id: "top",
                 origin_prefix: "Asal Kebun",
@@ -73,7 +73,7 @@ export const site = {
                 "Karamel, Sitrus Segar, Cokelat Hitam. Manisnya pas dengan sentuhan sitrus yang segar dan bersih.",
               image_url: "assets/cutouts/arabica-pouch.png",
               extra: {
-                short_label: "Arabica",
+                short_label: "Arabica Argopuro",
                 roast_level: "Medium",
                 best_for: "V60, Pour Over, Filter, Espresso",
                 price_200g: 85000,
@@ -90,7 +90,7 @@ export const site = {
                 "Cokelat Hitam, Almond Panggang, Gula Merah. Crema tebal, manis kacang panggang, dan body yang mantap.",
               image_url: "assets/cutouts/argopuro-pouch.png",
               extra: {
-                short_label: "Argopuro",
+                short_label: "Robusta Argopuro",
                 roast_level: "Medium-Dark",
                 best_for: "Espresso, Kopi Susu, Susu Dingin",
                 price_200g: 65000,
@@ -107,7 +107,7 @@ export const site = {
                 "Rempah Halus, Molases, Kakao. Aroma rempah khas Jawa dengan rasa pekat yang awet di lidah.",
               image_url: "assets/cutouts/temanggung-pouch.png",
               extra: {
-                short_label: "Temanggung",
+                short_label: "Robusta Temanggung",
                 roast_level: "Medium-Dark",
                 best_for: "Tubruk, Moka Pot, Campuran Espresso",
                 price_200g: 62000,

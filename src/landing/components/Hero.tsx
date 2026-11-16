@@ -216,22 +216,22 @@ export function Hero({ section, block }: SectionComponentProps) {
           {/* Monumental Display Headline */}
           <h1
             {...heroEnterAttr()}
-            className="relative z-10 mx-auto max-w-[1140px] text-center font-hero font-extrabold tracking-[-0.04em] text-[#3E2216] select-none"
+            className="pointer-events-none relative z-10 mx-auto max-w-[1220px] text-center font-hero font-extrabold tracking-[-0.04em] text-[#3E2216] select-none"
           >
-            <span className="flex flex-wrap items-baseline justify-center gap-x-3.5 sm:gap-x-6">
-              <span className="text-[clamp(1.8rem,4.1vw,3.65rem)] leading-none font-bold tracking-[-0.03em] text-[#3E2216]">
+            <span className="flex flex-wrap items-baseline justify-center gap-x-3 sm:gap-x-5">
+              <span className="text-[clamp(1.35rem,3.1vw,2.75rem)] leading-none font-bold tracking-[-0.03em] text-[#3E2216]">
                 {bind(block, "title")}
               </span>
-              <span className="text-[clamp(3.95rem,11.8vw,10.1rem)] leading-[0.86] font-extrabold text-[#3E2216]">
+              <span className="text-[clamp(2.85rem,8.6vw,7.65rem)] leading-[0.88] font-extrabold text-[#3E2216]">
                 {bind(block, "subtitle")}
               </span>
             </span>
-            <span className="mt-0.5 block whitespace-nowrap text-[clamp(3.15rem,12.2vw,10.45rem)] leading-[0.86] font-extrabold text-[#3E2216]">
+            <span className="mt-0.5 block whitespace-nowrap text-[clamp(3.05rem,11.8vw,10.2rem)] leading-[0.86] font-extrabold text-[#3E2216]">
               {bind(block, "description")}
             </span>
           </h1>
 
-          <div className="relative -mt-1 grid grid-cols-1 items-end gap-8 sm:-mt-3 lg:-mt-[70px] lg:grid-cols-12 lg:gap-5 xl:-mt-[78px]">
+          <div className="relative -mt-0.5 grid grid-cols-1 items-end gap-8 sm:-mt-2 lg:-mt-[54px] lg:grid-cols-12 lg:gap-5 xl:-mt-[60px]">
             <div className="relative z-30 order-2 flex flex-col items-center text-center lg:order-1 lg:col-span-4 lg:items-start lg:pb-5 lg:text-left">
               <HeroActiveCopy
                 section={section}
