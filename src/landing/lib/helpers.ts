@@ -54,6 +54,18 @@ export type WeightPreset = {
   multiplier: number;
 };
 
+export type SubmittedReview = {
+  id: string;
+  author: string;
+  role: string;
+  rating: number;
+  ratingDisplay: string;
+  initials: string;
+  quote: string;
+};
+
+export type SubmittedReviewDraft = Omit<SubmittedReview, "id">;
+
 export type HeroBeanSpec = {
   src: string;
   width: number;
@@ -399,12 +411,70 @@ export function readAboutMeta(block: LandingBlock) {
   };
 }
 
+export const REVIEW_STARS = [1, 2, 3, 4, 5] as const;
+
+export function buildReviewWhatsAppUrl(
+  phone: string,
+  author: string,
+  role: string,
+  rating: number,
+  quote: string,
+): string {
+  const lines = [
+    "Halo Livion Coffee! Saya mau kirim ulasan pelanggan:",
+    `- Nama: ${author}`,
+    role ? `- Peran / Kota: ${role}` : null,
+    `- Rating: ${rating}/5 bintang`,
+    `- Ulasan: "${quote}"`,
+  ].filter(Boolean);
+  return buildTextWhatsAppUrl(phone, lines.join("\n"));
+}
+
+export function initialsFromName(name: string): string {
+  const parts = name
+    .trim()
+    .split(/\s+/)
+    .map((p) => p.replace(/[^A-Za-z0-9]/g, ""))
+    .filter(Boolean);
+  if (parts.length === 0) return "LP";
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+  return `${parts[0][0] ?? ""}${parts[parts.length - 1][0] ?? ""}`.toUpperCase();
+}
+
+export function formatReviewScore(rating: number): string {
+  return `${rating}.0`;
+}
+
+export function reviewScoreSummary(rating: number): string {
+  return `${rating} / 5`;
+}
+
+export function starOptionAria(star: number): string {
+  return `Beri rating ${star} dari 5 bintang`;
+}
+
+export function removeReviewAria(author: string): string {
+  return `Hapus preview ulasan dari ${author}`;
+}
+
 export function readTestimonialsMeta(block: LandingBlock) {
   const ex = block.extra;
   return {
     sectionId: strVal(ex, "section_id", "testimonials"),
     headingId: "testimonials-heading",
-    ctaHref: strVal(ex, "cta_href", "#beans"),
+    modalTitleId: "review-modal-title",
+    ratingLabelId: "review-rating-label",
+    feedbackId: "review-form-feedback",
+    whatsappPhone: strVal(ex, "whatsapp_number", "6285159506662"),
+    closeAria: strVal(ex, "close_aria", "Tutup form ulasan"),
+    namePlaceholder: strVal(ex, "name_placeholder", "Nama kamu"),
+    rolePlaceholder: strVal(ex, "role_placeholder", "Contoh: Home Brewer, Bondowoso"),
+    roleDefault: strVal(ex, "role_default", "Pelanggan Livion Coffee"),
+    quotePlaceholder: strVal(
+      ex,
+      "quote_placeholder",
+      "Ceritakan varian favorit, aroma saat diseduh, atau kesan selama pesan di Livion...",
+    ),
   };
 }
 
@@ -697,6 +767,18 @@ export function testimonialAuthorClass(featured: boolean): string {
 
 export function testimonialRoleClass(featured: boolean): string {
   return featured ? "mt-0.5 text-[13.5px] text-[#D7C9BE]" : "mt-0.5 text-[13.5px] text-[#575049]";
+}
+
+export function reviewStarBtnClass(active: boolean): string {
+  return `inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-[12px] border transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B8421B] active:scale-95 ${
+    active
+      ? "border-[#B8421B] bg-[#FFF4EF] text-[#B8421B]"
+      : "border-[#3E2216]/16 bg-[#FFFFFF] text-[#7D6959] hover:border-[#B8421B]/55"
+  }`;
+}
+
+export function reviewStarIconClass(active: boolean): string {
+  return `h-5 w-5 transition-colors ${active ? "fill-[#B8421B] text-[#B8421B]" : "fill-transparent text-[#7D6959]"}`;
 }
 
 export function footerPillClass(index: number, isTopRow: boolean): string {
