@@ -20,22 +20,25 @@ export function ComingSoon({ block }: SectionComponentProps) {
     <section
       id={meta.sectionId}
       {...labelledByAttr(meta.headingId)}
-      className="relative overflow-x-clip bg-[#F5F0EA] pt-0 pb-14 text-[#14110F] sm:pt-2 sm:pb-18 lg:pt-0 lg:pb-24"
+      className="relative overflow-x-clip bg-[#F5F0EA] pt-12 pb-14 text-[#14110F] sm:pt-14 sm:pb-18 lg:pt-16 lg:pb-24"
     >
       <div className="mx-auto max-w-[1400px] px-5 sm:px-7 lg:px-12">
-        <div className="relative overflow-hidden rounded-[28px] bg-[#2C1810] p-6 shadow-[0_26px_54px_rgba(36,29,24,0.18)] sm:rounded-[34px] sm:p-9 lg:rounded-[40px] lg:p-12">
+        <div className="relative rounded-[28px] bg-[#2C1810] p-6 shadow-[0_26px_54px_rgba(36,29,24,0.18)] sm:rounded-[34px] sm:p-9 lg:rounded-[40px] lg:p-12">
+          <span className="pointer-events-none absolute -top-4 -left-3.5 z-30 inline-block -rotate-18 rounded-2xl bg-[#B8421B] px-5 py-2.5 font-hero text-[22px] leading-none font-extrabold tracking-tight whitespace-nowrap text-[#FFFFFF] shadow-[0_16px_30px_rgba(184,66,27,0.36)] sm:-top-[18px] sm:-left-6 sm:px-7 sm:py-3 sm:text-[28px] lg:-top-[22px] lg:-left-10 lg:px-8 lg:py-3.5 lg:text-[34px]">
+            <span>{bind(block, "extra.status_badge")}</span>
+          </span>
+
           <div
             aria-hidden="true"
-            className="about-dot-field pointer-events-none absolute top-0 right-0 z-0 h-52 w-52 opacity-60"
-          />
+            className="pointer-events-none absolute inset-0 z-0 overflow-hidden rounded-[inherit]"
+          >
+            <div className="about-dot-field absolute top-0 right-0 h-52 w-52 opacity-60" />
+          </div>
 
           <div className="relative z-10 grid grid-cols-1 gap-8 lg:grid-cols-12 lg:items-center lg:gap-12">
             {/* Left Mystery Drop Stage */}
             <div {...revealLeft(0)} className="lg:col-span-5">
-              <div className="relative flex min-h-[250px] items-end justify-center pt-7 pb-3 sm:min-h-[295px]">
-                <span className="pointer-events-none absolute top-0 left-0 z-30 inline-block -rotate-3 rounded-xl bg-[#B8421B] px-4 py-1.5 font-hero text-[14.5px] font-bold tracking-tight whitespace-nowrap text-[#FFFFFF] shadow-[0_10px_20px_rgba(184,66,27,0.3)] sm:text-[15.5px]">
-                  <span>{bind(block, "extra.status_badge")}</span>
-                </span>
+              <div className="relative flex min-h-[260px] items-end justify-center pt-8 pb-3 sm:min-h-[305px] sm:pt-10">
 
                 <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[58%] overflow-hidden rounded-[22px] border border-[#F5F0EA]/16">
                   <img
@@ -67,7 +70,7 @@ export function ComingSoon({ block }: SectionComponentProps) {
                   height={219}
                   {...imgPerfProps()}
                   style={rotateStyle(-18)}
-                  className="pointer-events-none absolute top-11 left-[10%] z-30 w-8 select-none drop-shadow-[0_10px_14px_rgba(20,17,15,0.4)] sm:w-10"
+                  className="pointer-events-none absolute bottom-8 left-[6%] z-30 w-8 select-none drop-shadow-[0_10px_14px_rgba(20,17,15,0.4)] sm:w-10"
                 />
                 <img
                   src={meta.beanBUrl}
