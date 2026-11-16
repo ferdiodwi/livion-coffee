@@ -36,8 +36,9 @@ export const site = {
                 { order: 1, title: "Produk", icon: "#beans" },
                 { order: 2, title: "Asal Biji", icon: "#origin" },
                 { order: 3, title: "Tentang", icon: "#about" },
-                { order: 4, title: "Pesan", icon: "#order-cta" },
-                { order: 5, title: "Kontak", icon: "#contact" },
+                { order: 4, title: "Testimoni", icon: "#testimonials" },
+                { order: 5, title: "Pesan", icon: "#order-cta" },
+                { order: 6, title: "Kontak", icon: "#contact" },
               ],
             },
           ],
@@ -404,8 +405,96 @@ export const site = {
           ],
         },
         {
-          type: "OrderCta",
+          type: "Testimonials",
           order: 7,
+          is_active: true,
+          blocks: [
+            {
+              order: 0,
+              title: "kata",
+              subtitle: "pelanggan",
+              extra: {
+                section_id: "testimonials",
+                cta_label: "Lihat Produk",
+                cta_href: "#beans",
+                empty_state: "Belum ada testimoni pelanggan yang ditambahkan.",
+              },
+            },
+            {
+              order: 1,
+              title: "Hendra Kusuma",
+              subtitle: "Jember, Kota",
+              description:
+                "Awalnya iseng nyoba Robusta Argopuro buat es kopi susu, eh malah keterusan stok tiap minggu. Begitu pouch dibuka aromanya langsung keluar, gik anget habis sangrai Selasa-Jumat. Kancah-kancah yang biasa ngopi malam di kedai langsung bilang nyaman ongghu, Cak.",
+              icon: "5.0",
+              image_url: null,
+              extra: {
+                featured: true,
+                initials: "HK",
+                rating_label: "Rating",
+              },
+            },
+            {
+              order: 2,
+              title: "Fajar Hidayat",
+              subtitle: "Bondowoso Kota",
+              description:
+                "Pesan Arabica Pilihan gilingan sedang buat V60 pagi, manis karamel sama sitrusnya bersih pol. Gak bikin sepet di tenggorokan.",
+              icon: "4.9",
+              image_url: null,
+              extra: {
+                featured: false,
+                initials: "FH",
+                rating_label: "Rating",
+              },
+            },
+            {
+              order: 3,
+              title: "Dian Kartika",
+              subtitle: "Curahdami, Bondowoso",
+              description:
+                "Buat yang doyan kopi pait tanpa gula, Robusta Argopuro ini cek nyamanna. Cremanya tebel buat moka pot, dicampur susu dingin juga tetep kerasa cokelatnya. Tanya takaran gilingan lewat WA juga langsung dibantu santai.",
+              icon: "5.0",
+              image_url: null,
+              extra: {
+                featured: false,
+                initials: "DK",
+                rating_label: "Rating",
+              },
+            },
+            {
+              order: 4,
+              title: "Rizky Maulana",
+              subtitle: "Tamanan, Bondowoso",
+              description:
+                "Biasa nyeduh tubruk pas baru mole kerja biar kepala enteng lagi. Robusta Temanggung yang 200g ini wanginya rempah kakao, sampe anak kantor sering minta dibikinin bareng pas jam istirahat, Tretan.",
+              icon: "4.9",
+              image_url: null,
+              extra: {
+                featured: false,
+                initials: "RM",
+                rating_label: "Rating",
+              },
+            },
+            {
+              order: 5,
+              title: "Bagas Prasetyo",
+              subtitle: "Jember",
+              description:
+                "Kirim ke Jember cepet, kemasan valve aman. Stok andalan pas lagi lembur malam, rasanya mantap tenan, Rek.",
+              icon: "4.8",
+              image_url: null,
+              extra: {
+                featured: false,
+                initials: "BP",
+                rating_label: "Rating",
+              },
+            },
+          ],
+        },
+        {
+          type: "OrderCta",
+          order: 8,
           is_active: true,
           blocks: [
             {
@@ -431,7 +520,7 @@ export const site = {
         },
         {
           type: "Contact",
-          order: 8,
+          order: 9,
           is_active: true,
           blocks: [
             {
@@ -504,7 +593,7 @@ export const site = {
         },
         {
           type: "Footer",
-          order: 9,
+          order: 10,
           is_active: true,
           blocks: [
             {

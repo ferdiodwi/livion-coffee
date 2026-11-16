@@ -45,13 +45,13 @@ export function Navbar({ block }: SectionComponentProps) {
           <span>{bind(block, "title")}</span>
         </a>
 
-        <div className="flex items-center gap-4 sm:gap-6 lg:gap-9">
-          <nav className="hidden items-center gap-5 md:flex lg:gap-7 xl:gap-8" {...labelledByAttr(meta.navAria)}>
+        <div className="flex items-center gap-4 sm:gap-6 lg:gap-8">
+          <nav className="hidden items-center gap-5 lg:flex xl:gap-8" {...labelledByAttr(meta.navAria)}>
             {links.map((item, idx) => (
               <a
                 key={idx}
                 href={navItemHref(item)}
-                className="inline-flex min-h-[48px] items-center whitespace-nowrap px-1 text-[14.5px] font-medium text-[#14110F]/80 transition-colors hover:text-[#A8401B] lg:text-[15.5px]"
+                className="inline-flex min-h-[48px] items-center whitespace-nowrap px-1 text-[14.5px] font-medium text-[#14110F]/80 transition-colors hover:text-[#A8401B] xl:text-[15.5px]"
               >
                 <span>{bind(item, "title")}</span>
               </a>
@@ -69,7 +69,7 @@ export function Navbar({ block }: SectionComponentProps) {
             type="button"
             onClick={() => setMobileMenuOpen((prev) => !prev)}
             {...menuBtnA11y(mobileMenuOpen, meta.openAria, meta.closeAria, meta.drawerId)}
-            className="inline-flex min-h-[48px] min-w-[48px] items-center justify-center gap-1.5 rounded-full border border-[#14110F]/20 px-3.5 text-sm font-semibold text-[#14110F] transition-colors hover:border-[#14110F] md:hidden"
+            className="inline-flex min-h-[48px] min-w-[48px] items-center justify-center gap-1.5 rounded-full border border-[#14110F]/20 px-3.5 text-sm font-semibold text-[#14110F] transition-colors hover:border-[#14110F] lg:hidden"
           >
             {mobileMenuOpen ? (
               <X className="h-4 w-4" aria-hidden="true" />

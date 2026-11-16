@@ -12,6 +12,7 @@ import { Hero } from "./components/Hero";
 import { Navbar } from "./components/Navbar";
 import { OrderCta } from "./components/OrderCta";
 import { OriginShowcase } from "./components/OriginShowcase";
+import { Testimonials } from "./components/Testimonials";
 import { site } from "./content/site";
 import { usePageMotion } from "./gsap/use-page-motion";
 import {
@@ -28,6 +29,7 @@ const views: Record<string, ComponentType<SectionComponentProps>> = {
   ComingSoon,
   OriginShowcase,
   About,
+  Testimonials,
   OrderCta,
   Contact,
   Footer,

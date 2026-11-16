@@ -399,6 +399,28 @@ export function readAboutMeta(block: LandingBlock) {
   };
 }
 
+export function readTestimonialsMeta(block: LandingBlock) {
+  const ex = block.extra;
+  return {
+    sectionId: strVal(ex, "section_id", "testimonials"),
+    headingId: "testimonials-heading",
+    ctaHref: strVal(ex, "cta_href", "#beans"),
+  };
+}
+
+export function readTestimonialCard(block: LandingBlock, index: number) {
+  const ex = block.extra;
+  const featuredFlag = ex && ex.featured === true;
+  const avatarUrl = typeof block.image_url === "string" ? block.image_url.trim() : "";
+  const ratingScore = typeof block.icon === "string" ? block.icon.trim() : "";
+  return {
+    featured: featuredFlag || index === 0,
+    hasAvatar: avatarUrl.length > 0,
+    avatarAlt: strVal(ex, "image_alt", typeof block.title === "string" ? block.title : "Pelanggan Livion Coffee"),
+    hasRating: ratingScore.length > 0,
+  };
+}
+
 export function readOrderCtaMeta(block: LandingBlock) {
   const ex = block.extra;
   const productName = strVal(ex, "product_name", "Livion Arabica Pilihan");
@@ -561,8 +583,8 @@ export function navHeaderClass(scrolled: boolean): string {
 }
 
 export function mobileDrawerClass(open: boolean): string {
-  return `overflow-hidden border-t border-[#14110F]/10 bg-[#F5F0EA] transition-[max-height,opacity] duration-300 ease-out md:hidden ${
-    open ? "max-h-80 opacity-100" : "max-h-0 opacity-0 border-t-0 pointer-events-none"
+  return `overflow-hidden border-t border-[#14110F]/10 bg-[#F5F0EA] transition-[max-height,opacity] duration-300 ease-out lg:hidden ${
+    open ? "max-h-[420px] opacity-100" : "max-h-0 opacity-0 border-t-0 pointer-events-none"
   }`;
 }
 
@@ -628,6 +650,53 @@ export function originOrbitClass(index: number): string {
 
 export function originCardClass(extraPos = ""): string {
   return `rounded-[20px] border border-[#FFFFFF]/80 bg-[#F4EEE8]/95 p-5 shadow-[0_14px_34px_rgba(62,34,22,0.08)] backdrop-blur-sm sm:rounded-[22px] sm:p-6 ${extraPos}`;
+}
+
+export function testimonialCardClass(index: number, featured: boolean): string {
+  if (featured) {
+    return "flex h-full flex-col rounded-[24px] border border-[#3E2216] bg-[#2C1810] p-6 text-[#F5F0EA] shadow-[0_24px_48px_rgba(36,29,24,0.16)] sm:col-span-2 sm:p-7 lg:col-span-1 lg:row-span-2";
+  }
+  const slot = (index - 1) % 4;
+  const spanClass = slot === 1 || slot === 2 ? "sm:col-span-1 lg:col-span-2" : "sm:col-span-1 lg:col-span-1";
+  return `flex h-full flex-col rounded-[24px] border border-[#3E2216]/10 bg-[#FFFFFF] p-6 text-[#14110F] shadow-[0_8px_22px_rgba(36,29,24,0.04)] sm:p-7 lg:min-h-[232px] ${spanClass}`;
+}
+
+export function testimonialAvatarClass(featured: boolean): string {
+  return featured
+    ? "flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[#F5F0EA]/20 bg-[#4E2716] font-hero text-[13.5px] font-bold tracking-tight text-[#F5F0EA]"
+    : "flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[#3E2216]/12 bg-[#EDE4DC] font-hero text-[13.5px] font-bold tracking-tight text-[#3E2216]";
+}
+
+export function testimonialAvatarImgClass(featured: boolean): string {
+  return featured
+    ? "h-11 w-11 shrink-0 rounded-full border border-[#F5F0EA]/25 object-cover"
+    : "h-11 w-11 shrink-0 rounded-full border border-[#3E2216]/12 object-cover";
+}
+
+export function testimonialStarClass(featured: boolean): string {
+  return featured
+    ? "h-4 w-4 shrink-0 fill-[#E8A889] text-[#E8A889]"
+    : "h-4 w-4 shrink-0 fill-[#B8421B] text-[#B8421B]";
+}
+
+export function testimonialRatingLabelClass(featured: boolean): string {
+  return featured ? "text-[13.5px] font-medium text-[#D7C9BE]" : "text-[13.5px] font-medium text-[#575049]";
+}
+
+export function testimonialQuoteClass(featured: boolean): string {
+  return featured
+    ? "mt-6 mb-8 font-hero text-[17.5px] leading-[1.48] font-bold tracking-[-0.015em] text-[#F5F0EA] sm:text-[18.5px]"
+    : "mt-5 mb-7 text-[15.5px] leading-[1.6] font-medium text-[#14110F] sm:text-[16px]";
+}
+
+export function testimonialAuthorClass(featured: boolean): string {
+  return featured
+    ? "font-hero text-[15.5px] font-bold tracking-tight text-[#F5F0EA]"
+    : "font-hero text-[15.5px] font-bold tracking-tight text-[#14110F]";
+}
+
+export function testimonialRoleClass(featured: boolean): string {
+  return featured ? "mt-0.5 text-[13.5px] text-[#D7C9BE]" : "mt-0.5 text-[13.5px] text-[#575049]";
 }
 
 export function footerPillClass(index: number, isTopRow: boolean): string {
