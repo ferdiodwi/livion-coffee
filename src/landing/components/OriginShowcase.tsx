@@ -1,11 +1,14 @@
 "use client";
 
 import { bind } from "../lib/bind";
+import { useLocale } from "../lib/i18n";
 import {
   imgPerfProps,
   labelledByAttr,
   originCardClass,
   originOrbitClass,
+  readBlockCopy,
+  readItemCopy,
   readOriginMeta,
   revealUp,
   sortedItems,
@@ -29,6 +32,9 @@ function OriginPillarCard({
   extraPos?: string;
 }) {
   void block;
+  const locale = useLocale();
+  const itemCopy = readItemCopy(item, locale);
+
   return (
     <article
       {...revealUp(Number((0.08 + index * 0.05).toFixed(2)))}
@@ -44,23 +50,25 @@ function OriginPillarCard({
 
         <div className="min-w-0">
           <h3 className="inline-flex items-center rounded-full bg-[#4E2716] px-3.5 py-1 font-display text-[14.5px] leading-tight font-bold tracking-[-0.01em] text-[#FBF8F4] sm:text-[15.5px]">
-            <span>{bind(item, "title")}</span>
+            {itemCopy.isEn ? <span>{itemCopy.labelText}</span> : <span>{bind(item, "title")}</span>}
           </h3>
           <p className="mt-1.5 pl-0.5 text-[12.5px] font-semibold tracking-[0.02em] text-[#5E4336] sm:text-[13px]">
-            <span>{bind(item, "icon")}</span>
+            {itemCopy.isEn ? <span>{itemCopy.metaTag}</span> : <span>{bind(item, "icon")}</span>}
           </p>
         </div>
       </div>
 
       <p className="mt-3.5 text-[15px] leading-[1.48] text-[#4A423C] sm:text-[15.5px]">
-        {bind(item, "description")}
+        {itemCopy.isEn ? <span>{itemCopy.bodyCopy}</span> : <span>{bind(item, "description")}</span>}
       </p>
     </article>
   );
 }
 
 export function OriginShowcase({ section, block }: SectionComponentProps) {
-  const meta = readOriginMeta(block);
+  const locale = useLocale();
+  const meta = readOriginMeta(block, locale);
+  const copy = readBlockCopy(block, locale);
   const pillars = sortedItems(block.items);
 
   return (
@@ -81,8 +89,12 @@ export function OriginShowcase({ section, block }: SectionComponentProps) {
             {...revealUp(0)}
             className="relative z-20 mx-auto max-w-[740px] text-center font-hero text-[clamp(2.2rem,4.4vw,4.15rem)] leading-[1.03] font-extrabold tracking-[-0.03em] text-[#3E2216]"
           >
-            <span className="block">{bind(block, "title")}</span>
-            <span className="block">{bind(block, "subtitle")}</span>
+            <span className="block">
+              {copy.isEn ? <span>{copy.headA}</span> : <span>{bind(block, "title")}</span>}
+            </span>
+            <span className="block">
+              {copy.isEn ? <span>{copy.headB}</span> : <span>{bind(block, "subtitle")}</span>}
+            </span>
           </h2>
 
           {/* Desktop orbital showcase */}

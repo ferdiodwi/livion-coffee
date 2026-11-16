@@ -1,10 +1,13 @@
   "use client";
 
 import { bind } from "../lib/bind";
+import { useLocale } from "../lib/i18n";
 import {
   imgPerfProps,
   labelledByAttr,
+  readBlockCopy,
   readComingSoonMeta,
+  readItemCopy,
   revealLeft,
   revealRight,
   rotateStyle,
@@ -13,7 +16,9 @@ import {
 } from "../lib/helpers";
 
 export function ComingSoon({ block }: SectionComponentProps) {
-  const meta = readComingSoonMeta(block);
+  const locale = useLocale();
+  const meta = readComingSoonMeta(block, locale);
+  const copy = readBlockCopy(block, locale);
   const teaserItems = sortedItems(block.items);
 
   return (
@@ -25,7 +30,7 @@ export function ComingSoon({ block }: SectionComponentProps) {
       <div className="mx-auto max-w-[1400px] px-5 sm:px-7 lg:px-12">
         <div className="relative rounded-[28px] bg-[#2C1810] p-6 shadow-[0_26px_54px_rgba(36,29,24,0.18)] sm:rounded-[34px] sm:p-9 lg:rounded-[40px] lg:p-12">
           <span className="pointer-events-none absolute -top-5 left-4 z-30 inline-block -rotate-3 rounded-2xl bg-[#B8421B] px-6 py-2.5 font-hero text-[24px] leading-none font-extrabold tracking-tight whitespace-nowrap text-[#FFFFFF] shadow-[0_12px_24px_rgba(184,66,27,0.32)] sm:-top-[18px] sm:-left-6 sm:-rotate-18 sm:px-7 sm:py-3 sm:text-[28px] sm:shadow-[0_16px_30px_rgba(184,66,27,0.36)] lg:-top-[22px] lg:-left-10 lg:px-8 lg:py-3.5 lg:text-[34px]">
-            <span>{bind(block, "extra.status_badge")}</span>
+            {meta.isEn ? <span>{meta.enStatusBadge}</span> : <span>{bind(block, "extra.status_badge")}</span>}
           </span>
 
           <div
@@ -88,39 +93,46 @@ export function ComingSoon({ block }: SectionComponentProps) {
             {/* Right Upcoming Release Info + Waitlist CTA */}
             <div {...revealRight(0.06)} className="lg:col-span-7">
               <p className="font-display text-[13px] font-bold tracking-[0.04em] text-[#E8A889] uppercase">
-                <span>{bind(block, "extra.eyebrow")}</span>
+                {meta.isEn ? <span>{meta.enEyebrow}</span> : <span>{bind(block, "extra.eyebrow")}</span>}
               </p>
 
               <h2
                 id="coming-soon-heading"
                 className="mt-2 font-hero text-[clamp(2rem,3.9vw,3.35rem)] leading-[1.04] font-extrabold tracking-[-0.03em] text-[#F5F0EA]"
               >
-                <span className="block">{bind(block, "title")}</span>
-                <span className="block">{bind(block, "subtitle")}</span>
+                <span className="block">
+                  {copy.isEn ? <span>{copy.headA}</span> : <span>{bind(block, "title")}</span>}
+                </span>
+                <span className="block">
+                  {copy.isEn ? <span>{copy.headB}</span> : <span>{bind(block, "subtitle")}</span>}
+                </span>
               </h2>
 
               <p className="mt-3.5 max-w-[600px] text-[15.5px] leading-[1.68] text-[#D7C9BE] sm:text-[16.5px]">
-                {bind(block, "description")}
+                {copy.isEn ? <span>{copy.bodyCopy}</span> : <span>{bind(block, "description")}</span>}
               </p>
 
               {teaserItems.length > 0 && (
                 <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-3">
-                  {teaserItems.map((item, idx) => (
-                    <div
-                      key={idx}
-                      className="rounded-[16px] border border-[#F5F0EA]/14 bg-[#3E2216]/85 p-4"
-                    >
-                      <p className="font-display text-[12px] font-bold tracking-[0.03em] text-[#E8A889]">
-                        <span>{bind(item, "icon")}</span>
-                      </p>
-                      <h3 className="mt-1 font-hero text-[16px] leading-snug font-extrabold text-[#F5F0EA]">
-                        <span>{bind(item, "title")}</span>
-                      </h3>
-                      <p className="mt-1 text-[13.5px] leading-[1.5] text-[#D7C9BE]">
-                        {bind(item, "description")}
-                      </p>
-                    </div>
-                  ))}
+                  {teaserItems.map((item, idx) => {
+                    const itemCopy = readItemCopy(item, locale);
+                    return (
+                      <div
+                        key={idx}
+                        className="rounded-[16px] border border-[#F5F0EA]/14 bg-[#3E2216]/85 p-4"
+                      >
+                        <p className="font-display text-[12px] font-bold tracking-[0.03em] text-[#E8A889]">
+                          {itemCopy.isEn ? <span>{itemCopy.metaTag}</span> : <span>{bind(item, "icon")}</span>}
+                        </p>
+                        <h3 className="mt-1 font-hero text-[16px] leading-snug font-extrabold text-[#F5F0EA]">
+                          {itemCopy.isEn ? <span>{itemCopy.labelText}</span> : <span>{bind(item, "title")}</span>}
+                        </h3>
+                        <p className="mt-1 text-[13.5px] leading-[1.5] text-[#D7C9BE]">
+                          {itemCopy.isEn ? <span>{itemCopy.bodyCopy}</span> : <span>{bind(item, "description")}</span>}
+                        </p>
+                      </div>
+                    );
+                  })}
                 </div>
               )}
             </div>

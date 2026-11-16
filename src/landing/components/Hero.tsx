@@ -2,6 +2,7 @@
 
 import { type KeyboardEvent, useState } from "react";
 import { bind } from "../lib/bind";
+import { useLocale } from "../lib/i18n";
 import {
   beanImageClass,
   beanParallaxAttr,
@@ -16,6 +17,7 @@ import {
   isArrowPrevKey,
   isMainBlock,
   livePoliteAttrs,
+  readBlockCopy,
   readHeroConfig,
   readHeroLot,
   ribbonStrokeAttrs,
@@ -39,22 +41,26 @@ function HeroActiveCopy({
   block: LandingBlock;
   originPrefix: string;
 }) {
+  const locale = useLocale();
+  const copy = readBlockCopy(block, locale);
+
   return (
     <div key={block.order ?? 0} className="livion-swap-copy max-w-[355px]">
       <p className="text-[17px] font-bold text-[#14110F] sm:text-lg">
         <span>{originPrefix}</span>
         <span> · </span>
-        <span>{bind(block, "subtitle")}</span>
+        {copy.isEn ? <span>{copy.headB}</span> : <span>{bind(block, "subtitle")}</span>}
       </p>
       <p className="mt-2 text-[15.5px] leading-relaxed text-[#575049] sm:text-[16.5px]">
-        <span>{bind(block, "description")}</span>
+        {copy.isEn ? <span>{copy.bodyCopy}</span> : <span>{bind(block, "description")}</span>}
       </p>
     </div>
   );
 }
 
 function HeroActivePouch({ block }: { section?: LandingSection; block: LandingBlock }) {
-  const lot = readHeroLot(block);
+  const locale = useLocale();
+  const lot = readHeroLot(block, locale);
   return (
     <div
       key={block.order ?? 0}
@@ -82,17 +88,20 @@ function HeroRightSpec({
   roastPrefix: string;
   bestForPrefix: string;
 }) {
+  const locale = useLocale();
+  const lot = readHeroLot(block, locale);
+
   return (
     <div className="relative z-30 order-3 hidden flex-col items-end pb-7 text-right lg:col-span-3 lg:flex">
       <p className="font-display text-xl font-bold uppercase text-[#14110F]">
         <span>{roastPrefix}</span>
         <span> </span>
-        <span>{bind(block, "extra.roast_level")}</span>
+        {lot.isEn ? <span>{lot.roastLevel}</span> : <span>{bind(block, "extra.roast_level")}</span>}
       </p>
       <p className="mt-0.5 text-[13.5px] text-[#575049]">
         <span>{bestForPrefix}</span>
         <span>: </span>
-        <span>{bind(block, "extra.best_for")}</span>
+        {lot.isEn ? <span>{lot.bestFor}</span> : <span>{bind(block, "extra.best_for")}</span>}
       </p>
     </div>
   );
@@ -108,6 +117,9 @@ function HeroTabButton({
   isActive: boolean;
   onSelect: () => void;
 }) {
+  const locale = useLocale();
+  const lot = readHeroLot(block, locale);
+
   return (
     <button
       type="button"
@@ -115,28 +127,31 @@ function HeroTabButton({
       onClick={onSelect}
       className={tabButtonClass(isActive)}
     >
-      <span>{bind(block, "extra.short_label")}</span>
+      {lot.isEn ? <span>{lot.shortLabel}</span> : <span>{bind(block, "extra.short_label")}</span>}
     </button>
   );
 }
 
 export function Hero({ section, block }: SectionComponentProps) {
   const [activeIndex, setActiveIndex] = useState(0);
+  const locale = useLocale();
 
   if (!isMainBlock(block)) return null;
 
-  const cfg = readHeroConfig(block);
+  const cfg = readHeroConfig(block, locale);
+  const copy = readBlockCopy(block, locale);
   const lots = childBlocks(section);
   const safeLots = lots.length > 0 ? lots : [block];
   const currentLot = safeLots[activeIndex % safeLots.length] ?? block;
-  const lotInfo = readHeroLot(currentLot);
+  const lotInfo = readHeroLot(currentLot, locale);
   const whatsappUrl = buildBeanWhatsAppUrl(
     cfg.whatsappPhone,
-    lotInfo.name,
+    lotInfo.beanName,
     cfg.defaultWeight,
     cfg.defaultGrind,
     1,
     lotInfo.price200g,
+    locale,
   );
 
   const handleStageKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
@@ -220,14 +235,14 @@ export function Hero({ section, block }: SectionComponentProps) {
           >
             <span className="flex flex-wrap items-baseline justify-center gap-x-3 sm:gap-x-5">
               <span className="text-[clamp(1.35rem,3.1vw,2.75rem)] leading-none font-bold tracking-[-0.03em] text-[#3E2216]">
-                {bind(block, "title")}
+                {copy.isEn ? <span>{copy.headA}</span> : <span>{bind(block, "title")}</span>}
               </span>
               <span className="text-[clamp(2.85rem,8.6vw,7.65rem)] leading-[0.88] font-extrabold text-[#3E2216]">
-                {bind(block, "subtitle")}
+                {copy.isEn ? <span>{copy.headB}</span> : <span>{bind(block, "subtitle")}</span>}
               </span>
             </span>
             <span className="mt-0.5 block whitespace-nowrap text-[clamp(3.05rem,11.8vw,10.2rem)] leading-[0.86] font-extrabold text-[#3E2216]">
-              {bind(block, "description")}
+              {copy.isEn ? <span>{copy.bodyCopy}</span> : <span>{bind(block, "description")}</span>}
             </span>
           </h1>
 
@@ -265,8 +280,8 @@ export function Hero({ section, block }: SectionComponentProps) {
                     href={whatsappUrl}
                     label={lotInfo.orderAria}
                     className="h-[106px] w-[106px] -rotate-12 sm:h-[124px] sm:w-[124px] lg:h-[136px] lg:w-[136px]"
-                    topSlot={<span>{bind(block, "extra.seal_top")}</span>}
-                    bottomSlot={<span>{bind(block, "extra.seal_bottom")}</span>}
+                    topSlot={cfg.isEn ? <span>{cfg.enSealTop}</span> : <span>{bind(block, "extra.seal_top")}</span>}
+                    bottomSlot={cfg.isEn ? <span>{cfg.enSealBottom}</span> : <span>{bind(block, "extra.seal_bottom")}</span>}
                   />
                 </div>
               </div>

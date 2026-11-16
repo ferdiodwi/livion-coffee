@@ -1,10 +1,13 @@
 "use client";
 
 import { bind } from "../lib/bind";
+import { useLocale } from "../lib/i18n";
 import {
   imgPerfProps,
   labelledByAttr,
   readAboutMeta,
+  readBlockCopy,
+  readItemCopy,
   revealLeft,
   revealRight,
   revealUp,
@@ -14,7 +17,9 @@ import {
 } from "../lib/helpers";
 
 export function About({ block }: SectionComponentProps) {
-  const meta = readAboutMeta(block);
+  const locale = useLocale();
+  const meta = readAboutMeta(block, locale);
+  const copy = readBlockCopy(block, locale);
   const highlights = sortedItems(block.items);
 
   return (
@@ -101,7 +106,7 @@ export function About({ block }: SectionComponentProps) {
               </div>
 
               <p className="relative z-20 mt-5 text-[14.5px] leading-relaxed text-[#F5F0EA]/85 sm:text-[15px]">
-                <span>{bind(block, "extra.card_caption")}</span>
+                {meta.isEn ? <span>{meta.enCardCaption}</span> : <span>{bind(block, "extra.card_caption")}</span>}
               </p>
             </div>
           </div>
@@ -110,45 +115,52 @@ export function About({ block }: SectionComponentProps) {
           <div className="lg:col-span-7">
             <div {...revealRight(0)}>
               <span className="inline-flex items-center rounded-full bg-[#4E2716] px-4 py-1.5 font-display text-[13.5px] font-bold tracking-[0.01em] text-[#FBF8F4]">
-                <span>{bind(block, "extra.badge_label")}</span>
+                {meta.isEn ? <span>{meta.enBadgeLabel}</span> : <span>{bind(block, "extra.badge_label")}</span>}
               </span>
 
               <h2
                 id="about-heading"
                 className="mt-4 font-hero text-[clamp(2.2rem,4.3vw,4rem)] leading-[1.03] font-extrabold tracking-[-0.03em] text-[#3E2216]"
               >
-                <span className="block">{bind(block, "title")}</span>
-                <span className="block">{bind(block, "subtitle")}</span>
+                <span className="block">
+                  {copy.isEn ? <span>{copy.headA}</span> : <span>{bind(block, "title")}</span>}
+                </span>
+                <span className="block">
+                  {copy.isEn ? <span>{copy.headB}</span> : <span>{bind(block, "subtitle")}</span>}
+                </span>
               </h2>
 
               <p className="mt-5 max-w-[640px] text-[16px] leading-[1.68] text-[#4A423C] sm:text-[17.5px]">
-                {bind(block, "description")}
+                {copy.isEn ? <span>{copy.bodyCopy}</span> : <span>{bind(block, "description")}</span>}
               </p>
 
               <p className="mt-4 max-w-[640px] text-[16px] leading-[1.68] text-[#4A423C] sm:text-[17.5px]">
-                {bind(block, "extra.story_secondary")}
+                {meta.isEn ? <span>{meta.enStorySecondary}</span> : <span>{bind(block, "extra.story_secondary")}</span>}
               </p>
             </div>
 
             {/* 3 Honest Operational Highlight Cards */}
             <div className="mt-8 grid grid-cols-1 gap-3.5 sm:grid-cols-3 sm:gap-4">
-              {highlights.map((item, idx) => (
-                <article
-                  key={idx}
-                  {...revealUp(Number((0.06 + idx * 0.06).toFixed(2)))}
-                  className="rounded-[18px] border border-[#3E2216]/8 bg-[#EDE4DC]/85 p-4 sm:p-5"
-                >
-                  <p className="font-display text-[12.5px] font-bold tracking-[0.02em] text-[#9C3513]">
-                    <span>{bind(item, "icon")}</span>
-                  </p>
-                  <h3 className="mt-1 font-hero text-[16.5px] leading-snug font-extrabold text-[#3E2216]">
-                    <span>{bind(item, "title")}</span>
-                  </h3>
-                  <p className="mt-1.5 text-[14px] leading-[1.52] text-[#4A423C]">
-                    {bind(item, "description")}
-                  </p>
-                </article>
-              ))}
+              {highlights.map((item, idx) => {
+                const itemCopy = readItemCopy(item, locale);
+                return (
+                  <article
+                    key={idx}
+                    {...revealUp(Number((0.06 + idx * 0.06).toFixed(2)))}
+                    className="rounded-[18px] border border-[#3E2216]/8 bg-[#EDE4DC]/85 p-4 sm:p-5"
+                  >
+                    <p className="font-display text-[12.5px] font-bold tracking-[0.02em] text-[#9C3513]">
+                      {itemCopy.isEn ? <span>{itemCopy.metaTag}</span> : <span>{bind(item, "icon")}</span>}
+                    </p>
+                    <h3 className="mt-1 font-hero text-[16.5px] leading-snug font-extrabold text-[#3E2216]">
+                      {itemCopy.isEn ? <span>{itemCopy.labelText}</span> : <span>{bind(item, "title")}</span>}
+                    </h3>
+                    <p className="mt-1.5 text-[14px] leading-[1.52] text-[#4A423C]">
+                      {itemCopy.isEn ? <span>{itemCopy.bodyCopy}</span> : <span>{bind(item, "description")}</span>}
+                    </p>
+                  </article>
+                );
+              })}
             </div>
           </div>
         </div>

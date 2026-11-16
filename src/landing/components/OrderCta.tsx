@@ -1,9 +1,11 @@
 "use client";
 
 import { bind } from "../lib/bind";
+import { useLocale } from "../lib/i18n";
 import {
   imgPerfProps,
   labelledByAttr,
+  readBlockCopy,
   readOrderCtaMeta,
   revealRight,
   revealUp,
@@ -15,7 +17,9 @@ import {
 import { SealBadge } from "../ui/SealBadge";
 
 export function OrderCta({ block }: SectionComponentProps) {
-  const meta = readOrderCtaMeta(block);
+  const locale = useLocale();
+  const meta = readOrderCtaMeta(block, locale);
+  const copy = readBlockCopy(block, locale);
 
   return (
     <section
@@ -45,9 +49,15 @@ export function OrderCta({ block }: SectionComponentProps) {
               {...revealUp(0)}
               className="font-hero text-[clamp(2.65rem,5.7vw,5.2rem)] leading-[0.98] font-extrabold tracking-[-0.03em] text-[#3E2216]"
             >
-              <span className="block">{bind(block, "title")}</span>
-              <span className="block">{bind(block, "subtitle")}</span>
-              <span className="block">{bind(block, "description")}</span>
+              <span className="block">
+                {copy.isEn ? <span>{copy.headA}</span> : <span>{bind(block, "title")}</span>}
+              </span>
+              <span className="block">
+                {copy.isEn ? <span>{copy.headB}</span> : <span>{bind(block, "subtitle")}</span>}
+              </span>
+              <span className="block">
+                {copy.isEn ? <span>{copy.bodyCopy}</span> : <span>{bind(block, "description")}</span>}
+              </span>
             </h2>
 
             <div className="mt-6 lg:mt-0 lg:self-end lg:translate-x-[16px] lg:-translate-y-[92px] xl:translate-x-[36px] xl:-translate-y-[108px]">
@@ -55,8 +65,8 @@ export function OrderCta({ block }: SectionComponentProps) {
                 href={meta.orderHref}
                 label={meta.ctaAria}
                 className="h-[114px] w-[114px] -rotate-12 sm:h-[128px] sm:w-[128px] lg:h-[138px] lg:w-[138px]"
-                topSlot={<span>{bind(block, "extra.seal_top")}</span>}
-                bottomSlot={<span>{bind(block, "extra.seal_bottom")}</span>}
+                topSlot={meta.isEn ? <span>{meta.enSealTop}</span> : <span>{bind(block, "extra.seal_top")}</span>}
+                bottomSlot={meta.isEn ? <span>{meta.enSealBottom}</span> : <span>{bind(block, "extra.seal_bottom")}</span>}
               />
             </div>
           </div>

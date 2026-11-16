@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Minus, Plus, X } from "lucide-react";
 import { bind } from "../lib/bind";
+import { useLocale } from "../lib/i18n";
 import {
   activeElementRef,
   ariaLabelAttr,
@@ -27,6 +28,7 @@ import {
   modalSelectVal,
   pressedAttr,
   qtyWeightText,
+  readBlockCopy,
   readCollectionConfig,
   readCollectionProduct,
   revealUp,
@@ -47,7 +49,8 @@ function CollectionCard({
   index: number;
   onSelect: (selected: LandingBlock) => void;
 }) {
-  const prod = readCollectionProduct(block, index);
+  const locale = useLocale();
+  const prod = readCollectionProduct(block, index, locale);
 
   return (
     <article
@@ -106,12 +109,16 @@ function CollectionCard({
         <div className="relative z-10 flex min-h-[104px] items-center justify-between gap-3 px-2 pt-5 pb-1">
           <div>
             <h3 className="font-hero text-[24px] leading-[1.08] font-extrabold tracking-tight text-[#14110F] sm:text-[26px] lg:text-[28px]">
-              <span className="block">{bind(block, "extra.title_top")}</span>
-              <span className="block">{bind(block, "extra.title_bottom")}</span>
+              <span className="block">
+                {prod.isEn ? <span>{prod.enTitleTop}</span> : <span>{bind(block, "extra.title_top")}</span>}
+              </span>
+              <span className="block">
+                {prod.isEn ? <span>{prod.enTitleBottom}</span> : <span>{bind(block, "extra.title_bottom")}</span>}
+              </span>
             </h3>
             {prod.cardNote && (
               <p className="mt-1 text-[13px] font-semibold leading-snug text-[#575049] sm:text-[13.5px]">
-                <span>{bind(block, "extra.card_note")}</span>
+                {prod.isEn ? <span>{prod.cardNote}</span> : <span>{bind(block, "extra.card_note")}</span>}
               </p>
             )}
           </div>
@@ -123,12 +130,16 @@ function CollectionCard({
       ) : (
         <div className="relative z-10 flex min-h-[104px] flex-col justify-center pt-5 pr-2 pb-1 pl-[48%]">
           <h3 className="font-hero text-[22px] leading-[1.08] font-extrabold tracking-tight text-[#14110F] sm:text-[24px] lg:text-[25px]">
-            <span className="block">{bind(block, "extra.title_top")}</span>
-            <span className="block">{bind(block, "extra.title_bottom")}</span>
+            <span className="block">
+              {prod.isEn ? <span>{prod.enTitleTop}</span> : <span>{bind(block, "extra.title_top")}</span>}
+            </span>
+            <span className="block">
+              {prod.isEn ? <span>{prod.enTitleBottom}</span> : <span>{bind(block, "extra.title_bottom")}</span>}
+            </span>
           </h3>
           {prod.cardNote && (
             <p className="mt-1 text-[13px] font-semibold leading-snug text-[#575049] sm:text-[13.5px]">
-              <span>{bind(block, "extra.card_note")}</span>
+              {prod.isEn ? <span>{prod.cardNote}</span> : <span>{bind(block, "extra.card_note")}</span>}
             </p>
           )}
         </div>
@@ -155,8 +166,9 @@ function BeanDetailModal({
   productIndex: number;
   onClose: () => void;
 }) {
-  const cfg = readCollectionConfig(configBlock);
-  const prod = readCollectionProduct(productBlock, productIndex);
+  const locale = useLocale();
+  const cfg = readCollectionConfig(configBlock, locale);
+  const prod = readCollectionProduct(productBlock, productIndex, locale);
   const firstWeight = cfg.weights[0]?.label ?? cfg.specRoast;
   const firstGrind = cfg.grinds[0] ?? cfg.specProcess;
 
@@ -165,15 +177,17 @@ function BeanDetailModal({
   const [quantity, setQuantity] = useState(1);
   const closeBtnRef = useRef<HTMLButtonElement>(null);
 
+  const activeGrind = cfg.grinds.includes(grind) ? grind : firstGrind;
   const unitPrice = calculateBeanPrice(prod.price200g, weight, cfg.weights);
   const totalPrice = unitPrice * quantity;
   const whatsappHref = buildBeanWhatsAppUrl(
     cfg.whatsappPhone,
     prod.beanName,
     weight,
-    grind,
+    activeGrind,
     quantity,
     totalPrice,
+    locale,
   );
 
   useEffect(() => {
@@ -296,9 +310,9 @@ function BeanDetailModal({
           <div className="flex flex-col justify-between p-6 sm:p-8 md:col-span-7 md:p-9">
             <div>
               <p className="font-display text-[13.5px] font-bold tracking-[0.01em] text-[#B8421B] capitalize sm:text-[14.5px]">
-                <span>{prod.category}</span>
+                <span>{prod.categoryLabel}</span>
                 <span> · </span>
-                <span>{prod.origin}</span>
+                <span>{prod.originText}</span>
               </p>
 
               <h3
@@ -309,7 +323,7 @@ function BeanDetailModal({
               </h3>
 
               <p className="mt-3 text-[15.5px] leading-[1.6] text-[#4A423C]">
-                {prod.desc}
+                {prod.bodyCopy}
               </p>
 
               <div className="mt-5 grid grid-cols-2 gap-2.5 sm:gap-3">
@@ -363,7 +377,7 @@ function BeanDetailModal({
                   </label>
                   <select
                     id={prod.modalSelectId}
-                    value={grind}
+                    value={activeGrind}
                     onChange={(e) => setGrind(modalSelectVal(e))}
                     className="mt-2 min-h-[48px] w-full rounded-[16px] border border-[#3E2216]/18 bg-[#FFFFFF] px-4 py-2.5 text-[15px] font-medium text-[#3E2216] transition-colors hover:border-[#3E2216]/45 focus:border-[#B8421B] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3E2216]"
                   >
@@ -441,10 +455,12 @@ export function Collection({ section, block }: SectionComponentProps) {
     block: LandingBlock;
     index: number;
   } | null>(null);
+  const locale = useLocale();
 
   if (!isMainBlock(block)) return null;
 
-  const cfg = readCollectionConfig(block);
+  const cfg = readCollectionConfig(block, locale);
+  const copy = readBlockCopy(block, locale);
   const products = childBlocks(section);
 
   return (
@@ -464,7 +480,7 @@ export function Collection({ section, block }: SectionComponentProps) {
             {...revealUp(0)}
             className="max-w-[360px] text-[15.5px] leading-[1.65] text-[#575049] sm:text-[17px] lg:col-span-5"
           >
-            {bind(block, "description")}
+            {copy.isEn ? <span>{copy.bodyCopy}</span> : <span>{bind(block, "description")}</span>}
           </p>
 
           <h2
@@ -472,8 +488,12 @@ export function Collection({ section, block }: SectionComponentProps) {
             {...revealUp(0.05)}
             className="font-hero text-[clamp(2.35rem,4.5vw,4.25rem)] leading-[1.02] font-extrabold tracking-[-0.03em] text-[#3E2216] lg:col-span-7 lg:text-right"
           >
-            <span className="block">{bind(block, "title")}</span>
-            <span className="block">{bind(block, "subtitle")}</span>
+            <span className="block">
+              {copy.isEn ? <span>{copy.headA}</span> : <span>{bind(block, "title")}</span>}
+            </span>
+            <span className="block">
+              {copy.isEn ? <span>{copy.headB}</span> : <span>{bind(block, "subtitle")}</span>}
+            </span>
           </h2>
         </div>
 

@@ -1,9 +1,11 @@
 "use client";
 
 import { bind } from "../lib/bind";
+import { useLocale } from "../lib/i18n";
 import {
   imgPerfProps,
   labelledByAttr,
+  readBlockCopy,
   readCraftedMeta,
   revealLeft,
   revealUp,
@@ -12,7 +14,9 @@ import {
 } from "../lib/helpers";
 
 export function Crafted({ block }: SectionComponentProps) {
-  const meta = readCraftedMeta(block);
+  const locale = useLocale();
+  const meta = readCraftedMeta(block, locale);
+  const copy = readBlockCopy(block, locale);
 
   return (
     <section
@@ -66,15 +70,19 @@ export function Crafted({ block }: SectionComponentProps) {
               {...revealUp(0)}
               className="font-hero text-[clamp(2.45rem,4.9vw,4.45rem)] leading-[1.04] font-extrabold tracking-[-0.03em] text-[#FFFFFF]"
             >
-              <span className="block">{bind(block, "title")}</span>
-              <span className="block">{bind(block, "subtitle")}</span>
+              <span className="block">
+                {copy.isEn ? <span>{copy.headA}</span> : <span>{bind(block, "title")}</span>}
+              </span>
+              <span className="block">
+                {copy.isEn ? <span>{copy.headB}</span> : <span>{bind(block, "subtitle")}</span>}
+              </span>
             </h2>
 
             <p
               {...revealUp(0.08)}
               className="mt-7 max-w-[460px] text-[16.5px] leading-[1.68] text-[#FFFFFF]/92 sm:text-[18px] lg:mt-16 lg:mr-6 lg:ml-auto"
             >
-              {bind(block, "description")}
+              {copy.isEn ? <span>{copy.bodyCopy}</span> : <span>{bind(block, "description")}</span>}
             </p>
           </div>
         </div>

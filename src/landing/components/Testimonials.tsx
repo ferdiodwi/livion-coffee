@@ -9,6 +9,7 @@ import {
   X,
 } from "lucide-react";
 import { bind } from "../lib/bind";
+import { useLocale } from "../lib/i18n";
 import {
   REVIEW_STARS,
   activeElementRef,
@@ -32,6 +33,7 @@ import {
   lockDocumentScroll,
   openExternalUrl,
   pressedAttr,
+  readBlockCopy,
   readTestimonialCard,
   readTestimonialsMeta,
   removeReviewAria,
@@ -63,7 +65,9 @@ function TestimonialCard({
   block: LandingBlock;
   index: number;
 }) {
-  const card = readTestimonialCard(block, index);
+  const locale = useLocale();
+  const card = readTestimonialCard(block, index, locale);
+  const copy = readBlockCopy(block, locale);
 
   return (
     <article
@@ -94,22 +98,22 @@ function TestimonialCard({
               </span>
               <Star className={testimonialStarClass(card.featured)} aria-hidden="true" />
               <span className={testimonialRatingLabelClass(card.featured)}>
-                <span>{bind(block, "extra.rating_label")}</span>
+                {card.isEn ? <span>{card.enRatingLabel}</span> : <span>{bind(block, "extra.rating_label")}</span>}
               </span>
             </div>
           )}
         </div>
 
         <blockquote className={testimonialQuoteClass(card.featured)}>
-          “<span>{bind(block, "description")}</span>”
+          “{copy.isEn ? <span>{copy.bodyCopy}</span> : <span>{bind(block, "description")}</span>}”
         </blockquote>
 
         <figcaption className="mt-auto pt-3">
           <p className={testimonialAuthorClass(card.featured)}>
-            <span>{bind(block, "title")}</span>
+            {copy.isEn ? <span>{copy.headA}</span> : <span>{bind(block, "title")}</span>}
           </p>
           <p className={testimonialRoleClass(card.featured)}>
-            <span>{bind(block, "subtitle")}</span>
+            {copy.isEn ? <span>{copy.headB}</span> : <span>{bind(block, "subtitle")}</span>}
           </p>
         </figcaption>
       </figure>
@@ -127,6 +131,9 @@ function PreviewReviewCard({
   review: SubmittedReview;
   onRemove: (id: string) => void;
 }) {
+  const locale = useLocale();
+  const meta = readTestimonialsMeta(block, locale);
+
   return (
     <article className="flex h-full flex-col rounded-[24px] border border-[#B8421B]/25 bg-[#FFFFFF] p-6 text-[#14110F] shadow-[0_8px_22px_rgba(36,29,24,0.05)] sm:p-7">
       <figure className="flex h-full flex-col">
@@ -142,13 +149,13 @@ function PreviewReviewCard({
               </span>
               <Star className={testimonialStarClass(false)} aria-hidden="true" />
               <span className={testimonialRatingLabelClass(false)}>
-                <span>{bind(block, "extra.rating_unit")}</span>
+                {meta.isEn ? <span>{meta.enRatingUnit}</span> : <span>{bind(block, "extra.rating_unit")}</span>}
               </span>
             </div>
           </div>
 
           <span className="inline-flex items-center rounded-full border border-[#B8421B]/25 bg-[#FFF4EF] px-3 py-1 text-[12px] font-bold text-[#9C3513]">
-            <span>{bind(block, "extra.preview_section_badge")}</span>
+            {meta.isEn ? <span>{meta.enPreviewBadge}</span> : <span>{bind(block, "extra.preview_section_badge")}</span>}
           </span>
         </div>
 
@@ -165,10 +172,10 @@ function PreviewReviewCard({
           <button
             type="button"
             onClick={() => onRemove(review.id)}
-            {...ariaLabelAttr(removeReviewAria(review.author))}
+            {...ariaLabelAttr(removeReviewAria(review.author, locale))}
             className="inline-flex min-h-[44px] shrink-0 items-center rounded-full border border-[#3E2216]/16 px-3.5 py-1.5 text-[12.5px] font-semibold text-[#575049] transition-colors hover:border-[#B8421B] hover:text-[#9C3513] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B8421B]"
           >
-            <span>{bind(block, "extra.preview_remove_label")}</span>
+            {meta.isEn ? <span>{meta.enPreviewRemove}</span> : <span>{bind(block, "extra.preview_remove_label")}</span>}
           </button>
         </figcaption>
       </figure>
@@ -199,7 +206,8 @@ function ReviewModal({
   const nameRef = useRef<HTMLInputElement>(null);
   const quoteRef = useRef<HTMLTextAreaElement>(null);
 
-  const meta = readTestimonialsMeta(block);
+  const locale = useLocale();
+  const meta = readTestimonialsMeta(block, locale);
 
   useEffect(() => {
     const previous = activeElementRef();
@@ -250,6 +258,7 @@ function ReviewModal({
       cleanRole,
       rating,
       cleanQuote,
+      locale,
     );
 
     onSubmitted(created);
@@ -291,18 +300,18 @@ function ReviewModal({
 
         <div className="pr-12">
           <span className="inline-flex items-center rounded-full bg-[#4E2716] px-3.5 py-1.5 font-display text-[13px] font-bold tracking-[-0.01em] text-[#FBF8F4]">
-            <span>{bind(block, "extra.form_badge")}</span>
+            {meta.isEn ? <span>{meta.enFormBadge}</span> : <span>{bind(block, "extra.form_badge")}</span>}
           </span>
 
           <h3
             id={meta.modalTitleId}
             className="mt-3 font-hero text-[clamp(1.65rem,3vw,2.2rem)] leading-[1.08] font-extrabold tracking-[-0.03em] text-[#3E2216]"
           >
-            <span>{bind(block, "extra.form_title")}</span>
+            {meta.isEn ? <span>{meta.enFormTitle}</span> : <span>{bind(block, "extra.form_title")}</span>}
           </h3>
 
           <p className="mt-2 text-[14.5px] leading-[1.6] text-[#4A423C] sm:text-[15.5px]">
-            {bind(block, "extra.form_subtitle")}
+            {meta.isEn ? <span>{meta.enFormSubtitle}</span> : <span>{bind(block, "extra.form_subtitle")}</span>}
           </p>
         </div>
 
@@ -313,7 +322,7 @@ function ReviewModal({
                 htmlFor="review-author-name"
                 className="block text-[13.5px] font-semibold text-[#3E2216]"
               >
-                <span>{bind(block, "extra.name_label")}</span>
+                {meta.isEn ? <span>{meta.enNameLabel}</span> : <span>{bind(block, "extra.name_label")}</span>}
               </label>
               <input
                 ref={nameRef}
@@ -336,7 +345,7 @@ function ReviewModal({
                 htmlFor="review-author-role"
                 className="block text-[13.5px] font-semibold text-[#3E2216]"
               >
-                <span>{bind(block, "extra.role_label")}</span>
+                {meta.isEn ? <span>{meta.enRoleLabel}</span> : <span>{bind(block, "extra.role_label")}</span>}
               </label>
               <input
                 id="review-author-role"
@@ -354,7 +363,7 @@ function ReviewModal({
               id={meta.ratingLabelId}
               className="block text-[13.5px] font-semibold text-[#3E2216]"
             >
-              <span>{bind(block, "extra.rating_label")}</span>
+              {meta.isEn ? <span>{meta.enRatingLabel}</span> : <span>{bind(block, "extra.rating_label")}</span>}
             </span>
 
             <div className="mt-2 flex flex-wrap items-center gap-2">
@@ -366,7 +375,7 @@ function ReviewModal({
                     type="button"
                     onClick={() => setRating(star)}
                     {...pressedAttr(active)}
-                    {...ariaLabelAttr(starOptionAria(star))}
+                    {...ariaLabelAttr(starOptionAria(star, locale))}
                     className={reviewStarBtnClass(active)}
                   >
                     <Star className={reviewStarIconClass(active)} aria-hidden="true" />
@@ -385,7 +394,7 @@ function ReviewModal({
               htmlFor="review-quote"
               className="block text-[13.5px] font-semibold text-[#3E2216]"
             >
-              <span>{bind(block, "extra.quote_label")}</span>
+              {meta.isEn ? <span>{meta.enQuoteLabel}</span> : <span>{bind(block, "extra.quote_label")}</span>}
             </label>
             <textarea
               ref={quoteRef}
@@ -407,7 +416,7 @@ function ReviewModal({
             {hasError && (
               <div className="flex items-start gap-2.5 rounded-[12px] border border-[#B8421B] bg-[#FFF4EF] px-4 py-3 text-[14px] font-medium text-[#9C3513]">
                 <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
-                <span>{bind(block, "extra.error_text")}</span>
+                {meta.isEn ? <span>{meta.enErrorText}</span> : <span>{bind(block, "extra.error_text")}</span>}
               </div>
             )}
 
@@ -415,7 +424,7 @@ function ReviewModal({
               <div className="rounded-[12px] border border-[#234B35]/30 bg-[#EFF6F1] px-4 py-3.5 text-[14px] text-[#234B35]">
                 <div className="flex items-start gap-2.5 font-medium">
                   <Check className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
-                  <span>{bind(block, "extra.success_text")}</span>
+                  {meta.isEn ? <span>{meta.enSuccessText}</span> : <span>{bind(block, "extra.success_text")}</span>}
                 </div>
 
                 <div className="mt-3 flex flex-wrap items-center gap-2.5 pl-6">
@@ -424,21 +433,21 @@ function ReviewModal({
                     {...linkTargetProps(true)}
                     className="inline-flex min-h-[44px] items-center rounded-[10px] bg-[#234B35] px-4 py-2 text-[13.5px] font-bold text-[#FFFFFF] transition-colors hover:bg-[#3E2216] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#234B35]"
                   >
-                    <span>{bind(block, "extra.open_wa_fallback_label")}</span>
+                    {meta.isEn ? <span>{meta.enOpenWaLabel}</span> : <span>{bind(block, "extra.open_wa_fallback_label")}</span>}
                   </a>
                   <button
                     type="button"
                     onClick={onClose}
                     className="inline-flex min-h-[44px] items-center rounded-[10px] border border-[#234B35]/35 bg-[#FFFFFF] px-4 py-2 text-[13.5px] font-bold text-[#234B35] transition-colors hover:bg-[#EFF6F1] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#234B35]"
                   >
-                    <span>{bind(block, "extra.close_form_label")}</span>
+                    {meta.isEn ? <span>{meta.enCloseFormLabel}</span> : <span>{bind(block, "extra.close_form_label")}</span>}
                   </button>
                   <button
                     type="button"
                     onClick={handleReset}
                     className="inline-flex min-h-[44px] items-center rounded-[10px] border border-[#3E2216]/20 bg-[#FFFFFF] px-4 py-2 text-[13.5px] font-bold text-[#3E2216] transition-colors hover:border-[#3E2216] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3E2216]"
                   >
-                    <span>{bind(block, "extra.reset_label")}</span>
+                    {meta.isEn ? <span>{meta.enResetLabel}</span> : <span>{bind(block, "extra.reset_label")}</span>}
                   </button>
                 </div>
               </div>
@@ -450,11 +459,11 @@ function ReviewModal({
               type="submit"
               className="inline-flex min-h-[48px] items-center justify-center rounded-full bg-[#B8421B] px-7 py-2.5 font-hero text-[15px] font-bold text-[#FFFFFF] shadow-[0_8px_20px_rgba(184,66,27,0.26)] transition-[background-color,transform] hover:bg-[#3E2216] focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[#3E2216] active:scale-[0.98]"
             >
-              <span>{bind(block, "extra.submit_label")}</span>
+              {meta.isEn ? <span>{meta.enSubmitLabel}</span> : <span>{bind(block, "extra.submit_label")}</span>}
             </button>
 
             <p className="text-[13px] text-[#575049]">
-              <span>{bind(block, "extra.form_note")}</span>
+              {meta.isEn ? <span>{meta.enFormNote}</span> : <span>{bind(block, "extra.form_note")}</span>}
             </p>
           </div>
         </form>
@@ -467,10 +476,12 @@ export function Testimonials({ section, block }: SectionComponentProps) {
   const [modalOpen, setModalOpen] = useState(false);
   const [submittedReviews, setSubmittedReviews] = useState<SubmittedReview[]>([]);
   const nextIdRef = useRef(0);
+  const locale = useLocale();
 
   if (!isMainBlock(block)) return null;
 
-  const meta = readTestimonialsMeta(block);
+  const meta = readTestimonialsMeta(block, locale);
+  const copy = readBlockCopy(block, locale);
   const cards = childBlocks(section);
 
   const handleSubmitted = (review: SubmittedReviewDraft) => {
@@ -496,8 +507,12 @@ export function Testimonials({ section, block }: SectionComponentProps) {
               id="testimonials-heading"
               className="font-hero text-[clamp(2.2rem,4.3vw,3.9rem)] leading-[1.03] font-extrabold tracking-[-0.03em]"
             >
-              <span className="text-[#7A6252]">{bind(block, "title")}</span>{" "}
-              <span className="text-[#3E2216]">{bind(block, "subtitle")}</span>
+              <span className="text-[#7A6252]">
+                {copy.isEn ? <span>{copy.headA}</span> : <span>{bind(block, "title")}</span>}
+              </span>{" "}
+              <span className="text-[#3E2216]">
+                {copy.isEn ? <span>{copy.headB}</span> : <span>{bind(block, "subtitle")}</span>}
+              </span>
             </h2>
           </div>
 
@@ -508,7 +523,7 @@ export function Testimonials({ section, block }: SectionComponentProps) {
             className="inline-flex min-h-[48px] shrink-0 self-start items-center gap-2 rounded-full bg-[#B8421B] px-5 py-2.5 text-[14.5px] font-bold text-[#FFFFFF] shadow-[0_8px_20px_rgba(184,66,27,0.22)] transition-[background-color,transform] hover:bg-[#3E2216] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3E2216] active:scale-[0.98] sm:self-auto"
           >
             <MessageSquarePlus className="h-4 w-4 shrink-0" aria-hidden="true" />
-            <span>{bind(block, "extra.write_cta_label")}</span>
+            {meta.isEn ? <span>{meta.enWriteCta}</span> : <span>{bind(block, "extra.write_cta_label")}</span>}
           </button>
         </div>
 
@@ -525,7 +540,7 @@ export function Testimonials({ section, block }: SectionComponentProps) {
         ) : (
           <div className="mt-8 rounded-[24px] border border-[#3E2216]/12 bg-[#EDE4DC]/70 p-8 text-center">
             <p className="text-[15px] text-[#575049]">
-              <span>{bind(block, "extra.empty_state")}</span>
+              {meta.isEn ? <span>{meta.enEmptyState}</span> : <span>{bind(block, "extra.empty_state")}</span>}
             </p>
           </div>
         )}
@@ -533,7 +548,7 @@ export function Testimonials({ section, block }: SectionComponentProps) {
         {submittedReviews.length > 0 && (
           <div className="mt-6">
             <p className="text-[14px] font-semibold text-[#575049]">
-              <span>{bind(block, "extra.preview_section_note")}</span>
+              {meta.isEn ? <span>{meta.enPreviewNote}</span> : <span>{bind(block, "extra.preview_section_note")}</span>}
             </p>
 
             <div className="mt-3 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">

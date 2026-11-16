@@ -1,18 +1,24 @@
 "use client";
 
 import { bind } from "../lib/bind";
+import { useLocale } from "../lib/i18n";
+import { SocialIcon } from "../ui/SocialIcon";
 import {
   ariaLabelAttr,
   footerPillClass,
   footerPillLinkProps,
   linkTargetProps,
+  readBlockCopy,
   readFooterMeta,
+  readItemCopy,
   svgPreserveAttr,
   type SectionComponentProps,
 } from "../lib/helpers";
 
 export function Footer({ block }: SectionComponentProps) {
-  const meta = readFooterMeta(block);
+  const locale = useLocale();
+  const meta = readFooterMeta(block, locale);
+  const copy = readBlockCopy(block, locale);
 
   return (
     <>
@@ -47,7 +53,7 @@ export function Footer({ block }: SectionComponentProps) {
                     href={meta.colNav0Href}
                     className="inline-flex min-h-[44px] items-center text-[15px] text-[#D7C9BE] transition-colors hover:text-[#F5F0EA] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F5F0EA]"
                   >
-                    <span>{bind(block, "extra.col_nav_0_label")}</span>
+                    {meta.isEn ? <span>{meta.enColNav0}</span> : <span>{bind(block, "extra.col_nav_0_label")}</span>}
                   </a>
                 </li>
                 <li>
@@ -55,7 +61,7 @@ export function Footer({ block }: SectionComponentProps) {
                     href={meta.colNav1Href}
                     className="inline-flex min-h-[44px] items-center text-[15px] text-[#D7C9BE] transition-colors hover:text-[#F5F0EA] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F5F0EA]"
                   >
-                    <span>{bind(block, "extra.col_nav_1_label")}</span>
+                    {meta.isEn ? <span>{meta.enColNav1}</span> : <span>{bind(block, "extra.col_nav_1_label")}</span>}
                   </a>
                 </li>
                 <li>
@@ -63,7 +69,7 @@ export function Footer({ block }: SectionComponentProps) {
                     href={meta.colNav2Href}
                     className="inline-flex min-h-[44px] items-center text-[15px] text-[#D7C9BE] transition-colors hover:text-[#F5F0EA] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F5F0EA]"
                   >
-                    <span>{bind(block, "extra.col_nav_2_label")}</span>
+                    {meta.isEn ? <span>{meta.enColNav2}</span> : <span>{bind(block, "extra.col_nav_2_label")}</span>}
                   </a>
                 </li>
                 <li>
@@ -71,7 +77,7 @@ export function Footer({ block }: SectionComponentProps) {
                     href={meta.colNav3Href}
                     className="inline-flex min-h-[44px] items-center text-[15px] text-[#D7C9BE] transition-colors hover:text-[#F5F0EA] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F5F0EA]"
                   >
-                    <span>{bind(block, "extra.col_nav_3_label")}</span>
+                    {meta.isEn ? <span>{meta.enColNav3}</span> : <span>{bind(block, "extra.col_nav_3_label")}</span>}
                   </a>
                 </li>
                 <li>
@@ -79,7 +85,7 @@ export function Footer({ block }: SectionComponentProps) {
                     href={meta.colNav4Href}
                     className="inline-flex min-h-[44px] items-center text-[15px] text-[#D7C9BE] transition-colors hover:text-[#F5F0EA] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F5F0EA]"
                   >
-                    <span>{bind(block, "extra.col_nav_4_label")}</span>
+                    {meta.isEn ? <span>{meta.enColNav4}</span> : <span>{bind(block, "extra.col_nav_4_label")}</span>}
                   </a>
                 </li>
               </ul>
@@ -93,7 +99,7 @@ export function Footer({ block }: SectionComponentProps) {
                     {...linkTargetProps(true)}
                     className="inline-flex min-h-[44px] items-center text-[15px] text-[#D7C9BE] transition-colors hover:text-[#F5F0EA] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F5F0EA]"
                   >
-                    <span>{bind(block, "extra.action_order_label")}</span>
+                    {meta.isEn ? <span>{meta.enActionOrder}</span> : <span>{bind(block, "extra.action_order_label")}</span>}
                   </a>
                 </li>
                 <li>
@@ -102,7 +108,7 @@ export function Footer({ block }: SectionComponentProps) {
                     {...linkTargetProps(true)}
                     className="inline-flex min-h-[44px] items-center text-[15px] text-[#D7C9BE] transition-colors hover:text-[#F5F0EA] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F5F0EA]"
                   >
-                    <span>{bind(block, "extra.action_wholesale_label")}</span>
+                    {meta.isEn ? <span>{meta.enActionWholesale}</span> : <span>{bind(block, "extra.action_wholesale_label")}</span>}
                   </a>
                 </li>
               </ul>
@@ -110,35 +116,26 @@ export function Footer({ block }: SectionComponentProps) {
 
             <div className="flex flex-col justify-between gap-8 md:col-span-6 lg:col-span-6 lg:items-end">
               <p className="text-[14px] text-[#D7C9BE] md:text-right">
-                {bind(block, "description")}
+                {copy.isEn ? <span>{copy.bodyCopy}</span> : <span>{bind(block, "description")}</span>}
               </p>
 
               <div
                 {...ariaLabelAttr(meta.shortcutsAria)}
-                className="flex flex-col items-start gap-2.5 pt-2 sm:items-center lg:items-end"
+                className="flex flex-wrap items-center gap-3 pt-2 md:justify-end"
               >
-                <div className="flex flex-wrap items-center gap-3 sm:mr-10 sm:gap-4">
-                  {meta.topPills.map((item, idx) => (
+                {meta.socialItems.map((item, idx) => {
+                  const itemCopy = readItemCopy(item, locale);
+                  return (
                     <a
                       key={idx}
-                      {...footerPillLinkProps(item, meta.phone, meta.orderWaHref)}
-                      className={footerPillClass(idx, true)}
+                      {...footerPillLinkProps(item, meta.phone, meta.orderWaHref, locale)}
+                      className={footerPillClass()}
                     >
-                      <span>{bind(item, "title")}</span>
+                      <SocialIcon item={item} />
+                      {itemCopy.isEn ? <span>{itemCopy.labelText}</span> : <span>{bind(item, "title")}</span>}
                     </a>
-                  ))}
-                </div>
-                <div className="flex flex-wrap items-center gap-3 sm:gap-3.5">
-                  {meta.bottomPills.map((item, idx) => (
-                    <a
-                      key={idx}
-                      {...footerPillLinkProps(item, meta.phone, meta.orderWaHref)}
-                      className={footerPillClass(idx, false)}
-                    >
-                      <span>{bind(item, "title")}</span>
-                    </a>
-                  ))}
-                </div>
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -166,7 +163,7 @@ export function Footer({ block }: SectionComponentProps) {
         <span className="grid grid-cols-[0fr] transition-[grid-template-columns] duration-300 ease-out group-hover:grid-cols-[1fr] group-focus-visible:grid-cols-[1fr] motion-reduce:transition-none">
           <span className="overflow-hidden">
             <span className="inline-block pr-2 pl-2.5 font-sans text-[15px] font-bold tracking-tight whitespace-nowrap opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100 motion-reduce:transition-none">
-              {bind(block, "extra.floating_cta_label")}
+              {meta.isEn ? <span>{meta.enFloatingLabel}</span> : <span>{bind(block, "extra.floating_cta_label")}</span>}
             </span>
           </span>
         </span>

@@ -11,6 +11,7 @@ import {
   Phone,
 } from "lucide-react";
 import { bind } from "../lib/bind";
+import { useLocale } from "../lib/i18n";
 import {
   ariaInvalidAttrs,
   ariaLabelAttr,
@@ -25,7 +26,9 @@ import {
   linkTargetProps,
   livePoliteAttrs,
   openExternalUrl,
+  readBlockCopy,
   readContactMeta,
+  readItemCopy,
   revealUp,
   sortedItems,
   type SectionComponentProps,
@@ -47,7 +50,9 @@ export function Contact({ block }: SectionComponentProps) {
   const messageRef = useRef<HTMLTextAreaElement>(null);
   const copyTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const meta = readContactMeta(block);
+  const locale = useLocale();
+  const meta = readContactMeta(block, locale);
+  const copy = readBlockCopy(block, locale);
   const channels = sortedItems(block.items);
 
   useEffect(() => {
@@ -89,6 +94,7 @@ export function Contact({ block }: SectionComponentProps) {
       contactInfo.trim(),
       senderPhone.trim(),
       cleanMessage,
+      locale,
     );
 
     setHasError(false);
@@ -121,94 +127,101 @@ export function Contact({ block }: SectionComponentProps) {
           <div {...revealUp(0)} className="lg:col-span-5 lg:pt-2">
             <span className="inline-flex items-center gap-2 rounded-[10px] border border-[#3E2216]/14 bg-[#FFFFFF] px-3.5 py-1.5 text-[13.5px] font-semibold text-[#3E2216] shadow-[0_2px_8px_rgba(36,29,24,0.04)]">
               <Mail className="h-3.5 w-3.5 text-[#B8421B]" aria-hidden="true" />
-              <span>{bind(block, "extra.badge_label")}</span>
+              {meta.isEn ? <span>{meta.enBadgeLabel}</span> : <span>{bind(block, "extra.badge_label")}</span>}
             </span>
 
             <h2
               id="contact-heading"
               className="mt-4 font-hero text-[clamp(2.2rem,4.3vw,3.55rem)] leading-[1.06] font-extrabold tracking-[-0.03em] text-[#3E2216]"
             >
-              <span className="block">{bind(block, "title")}</span>
-              <span className="block">{bind(block, "subtitle")}</span>
+              <span className="block">
+                {copy.isEn ? <span>{copy.headA}</span> : <span>{bind(block, "title")}</span>}
+              </span>
+              <span className="block">
+                {copy.isEn ? <span>{copy.headB}</span> : <span>{bind(block, "subtitle")}</span>}
+              </span>
             </h2>
 
             <p className="mt-3.5 max-w-[440px] text-[15.5px] leading-[1.65] text-[#4A423C] sm:text-[16px]">
-              {bind(block, "description")}
+              {copy.isEn ? <span>{copy.bodyCopy}</span> : <span>{bind(block, "description")}</span>}
             </p>
 
             <ul className="mt-8 space-y-5">
-              {channels.map((item, idx) => (
-                <li key={idx} className="flex items-start gap-4">
-                  <span
-                    aria-hidden="true"
-                    className="flex h-11 w-11 shrink-0 items-center justify-center rounded-[12px] border border-[#3E2216]/10 bg-[#FFFFFF] text-[#B8421B] shadow-[0_6px_16px_rgba(36,29,24,0.05)]"
-                  >
-                    {idx === 0 ? (
-                      <Phone className="h-5 w-5" />
-                    ) : idx === 1 ? (
-                      <Clock className="h-5 w-5" />
-                    ) : (
-                      <MapPin className="h-5 w-5" />
-                    )}
-                  </span>
-
-                  <div className="min-w-0">
-                    <p className="text-[13px] font-medium text-[#5E4336]">
-                      <span>{bind(item, "icon")}</span>
-                    </p>
-
-                    <div className="mt-0.5 flex flex-wrap items-center gap-x-3 gap-y-1">
+              {channels.map((item, idx) => {
+                const itemCopy = readItemCopy(item, locale);
+                return (
+                  <li key={idx} className="flex items-start gap-4">
+                    <span
+                      aria-hidden="true"
+                      className="flex h-11 w-11 shrink-0 items-center justify-center rounded-[12px] border border-[#3E2216]/10 bg-[#FFFFFF] text-[#B8421B] shadow-[0_6px_16px_rgba(36,29,24,0.05)]"
+                    >
                       {idx === 0 ? (
-                        <>
+                        <Phone className="h-5 w-5" />
+                      ) : idx === 1 ? (
+                        <Clock className="h-5 w-5" />
+                      ) : (
+                        <MapPin className="h-5 w-5" />
+                      )}
+                    </span>
+
+                    <div className="min-w-0">
+                      <p className="text-[13px] font-medium text-[#5E4336]">
+                        {itemCopy.isEn ? <span>{itemCopy.metaTag}</span> : <span>{bind(item, "icon")}</span>}
+                      </p>
+
+                      <div className="mt-0.5 flex flex-wrap items-center gap-x-3 gap-y-1">
+                        {idx === 0 ? (
+                          <>
+                            <a
+                              href={meta.waDirectHref}
+                              {...linkTargetProps(true)}
+                              className="font-hero text-[16px] leading-snug font-bold text-[#14110F] underline decoration-[#3E2216]/25 underline-offset-4 transition-colors hover:text-[#B8421B] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B8421B]"
+                            >
+                              {itemCopy.isEn ? <span>{itemCopy.labelText}</span> : <span>{bind(item, "title")}</span>}
+                            </a>
+
+                            <button
+                              type="button"
+                              onClick={handleCopyPhone}
+                              {...ariaLabelAttr(meta.copyAria)}
+                              className="inline-flex min-h-[44px] items-center gap-1 text-[13px] font-semibold text-[#9C3513] underline-offset-2 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B8421B]"
+                            >
+                              {copyStatus === 1 && (
+                                <Check className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+                              )}
+                              {copyStatus === 2 && (
+                                <AlertCircle className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+                              )}
+                              {copyStatus === 1 ? (
+                                meta.isEn ? <span>{meta.enCopiedLabel}</span> : <span>{bind(block, "extra.copied_label")}</span>
+                              ) : copyStatus === 2 ? (
+                                meta.isEn ? <span>{meta.enCopyFallback}</span> : <span>{bind(block, "extra.copy_fallback_label")}</span>
+                              ) : (
+                                meta.isEn ? <span>{meta.enCopyLabel}</span> : <span>{bind(block, "extra.copy_label")}</span>
+                              )}
+                            </button>
+                          </>
+                        ) : idx >= 2 ? (
                           <a
-                            href={meta.waDirectHref}
-                            {...linkTargetProps(true)}
+                            href="#contact-map"
                             className="font-hero text-[16px] leading-snug font-bold text-[#14110F] underline decoration-[#3E2216]/25 underline-offset-4 transition-colors hover:text-[#B8421B] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B8421B]"
                           >
-                            <span>{bind(item, "title")}</span>
+                            {itemCopy.isEn ? <span>{itemCopy.labelText}</span> : <span>{bind(item, "title")}</span>}
                           </a>
+                        ) : (
+                          <p className="font-hero text-[16px] leading-snug font-bold text-[#14110F]">
+                            {itemCopy.isEn ? <span>{itemCopy.labelText}</span> : <span>{bind(item, "title")}</span>}
+                          </p>
+                        )}
+                      </div>
 
-                          <button
-                            type="button"
-                            onClick={handleCopyPhone}
-                            {...ariaLabelAttr(meta.copyAria)}
-                            className="inline-flex min-h-[44px] items-center gap-1 text-[13px] font-semibold text-[#9C3513] underline-offset-2 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B8421B]"
-                          >
-                            {copyStatus === 1 && (
-                              <Check className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-                            )}
-                            {copyStatus === 2 && (
-                              <AlertCircle className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-                            )}
-                            {copyStatus === 1 ? (
-                              <span>{bind(block, "extra.copied_label")}</span>
-                            ) : copyStatus === 2 ? (
-                              <span>{bind(block, "extra.copy_fallback_label")}</span>
-                            ) : (
-                              <span>{bind(block, "extra.copy_label")}</span>
-                            )}
-                          </button>
-                        </>
-                      ) : idx >= 2 ? (
-                        <a
-                          href="#contact-map"
-                          className="font-hero text-[16px] leading-snug font-bold text-[#14110F] underline decoration-[#3E2216]/25 underline-offset-4 transition-colors hover:text-[#B8421B] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B8421B]"
-                        >
-                          <span>{bind(item, "title")}</span>
-                        </a>
-                      ) : (
-                        <p className="font-hero text-[16px] leading-snug font-bold text-[#14110F]">
-                          <span>{bind(item, "title")}</span>
-                        </p>
-                      )}
+                      <p className="mt-0.5 text-[13.5px] leading-relaxed text-[#5E4336]">
+                        {itemCopy.isEn ? <span>{itemCopy.bodyCopy}</span> : <span>{bind(item, "description")}</span>}
+                      </p>
                     </div>
-
-                    <p className="mt-0.5 text-[13.5px] leading-relaxed text-[#5E4336]">
-                      {bind(item, "description")}
-                    </p>
-                  </div>
-                </li>
-              ))}
+                  </li>
+                );
+              })}
             </ul>
           </div>
 
@@ -224,7 +237,7 @@ export function Contact({ block }: SectionComponentProps) {
                     htmlFor="contact-first-name"
                     className="block text-[13.5px] font-semibold text-[#3E2216]"
                   >
-                    <span>{bind(block, "extra.first_name_label")}</span>
+                    {meta.isEn ? <span>{meta.enFirstNameLabel}</span> : <span>{bind(block, "extra.first_name_label")}</span>}
                   </label>
                   <input
                     ref={firstNameRef}
@@ -247,7 +260,7 @@ export function Contact({ block }: SectionComponentProps) {
                     htmlFor="contact-last-name"
                     className="block text-[13.5px] font-semibold text-[#3E2216]"
                   >
-                    <span>{bind(block, "extra.last_name_label")}</span>
+                    {meta.isEn ? <span>{meta.enLastNameLabel}</span> : <span>{bind(block, "extra.last_name_label")}</span>}
                   </label>
                   <input
                     id="contact-last-name"
@@ -265,7 +278,7 @@ export function Contact({ block }: SectionComponentProps) {
                   htmlFor="contact-email"
                   className="block text-[13.5px] font-semibold text-[#3E2216]"
                 >
-                  <span>{bind(block, "extra.email_label")}</span>
+                  {meta.isEn ? <span>{meta.enEmailLabel}</span> : <span>{bind(block, "extra.email_label")}</span>}
                 </label>
                 <input
                   id="contact-email"
@@ -282,7 +295,7 @@ export function Contact({ block }: SectionComponentProps) {
                   htmlFor="contact-phone"
                   className="block text-[13.5px] font-semibold text-[#3E2216]"
                 >
-                  <span>{bind(block, "extra.phone_label")}</span>
+                  {meta.isEn ? <span>{meta.enPhoneLabel}</span> : <span>{bind(block, "extra.phone_label")}</span>}
                 </label>
                 <div className={contactPhoneGroupClass()}>
                   <span className="inline-flex shrink-0 items-center border-r border-[#9E8E82]/45 bg-[#FAF6F1] px-3.5 text-[14.5px] font-semibold text-[#4A423C] select-none">
@@ -304,7 +317,7 @@ export function Contact({ block }: SectionComponentProps) {
                   htmlFor="contact-message"
                   className="block text-[13.5px] font-semibold text-[#3E2216]"
                 >
-                  <span>{bind(block, "extra.message_label")}</span>
+                  {meta.isEn ? <span>{meta.enMessageLabel}</span> : <span>{bind(block, "extra.message_label")}</span>}
                 </label>
                 <textarea
                   ref={messageRef}
@@ -326,7 +339,7 @@ export function Contact({ block }: SectionComponentProps) {
                 {hasError && (
                   <div className="flex items-start gap-2.5 rounded-[10px] border border-[#B8421B] bg-[#FFF4EF] px-4 py-3 text-[14px] font-medium text-[#9C3513]">
                     <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
-                    <span>{bind(block, "extra.error_text")}</span>
+                    {meta.isEn ? <span>{meta.enErrorText}</span> : <span>{bind(block, "extra.error_text")}</span>}
                   </div>
                 )}
 
@@ -334,7 +347,7 @@ export function Contact({ block }: SectionComponentProps) {
                   <div className="rounded-[10px] border border-[#234B35]/30 bg-[#EFF6F1] px-4 py-3.5 text-[14px] text-[#234B35]">
                     <div className="flex items-start gap-2.5 font-medium">
                       <Check className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
-                      <span>{bind(block, "extra.success_text")}</span>
+                      {meta.isEn ? <span>{meta.enSuccessText}</span> : <span>{bind(block, "extra.success_text")}</span>}
                     </div>
                     <div className="mt-3 flex flex-wrap items-center gap-3 pl-6">
                       <a
@@ -342,14 +355,14 @@ export function Contact({ block }: SectionComponentProps) {
                         {...linkTargetProps(true)}
                         className="inline-flex min-h-[44px] items-center rounded-[10px] bg-[#234B35] px-4 py-2 text-[13.5px] font-bold text-[#FFFFFF] transition-colors hover:bg-[#3E2216] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#234B35]"
                       >
-                        <span>{bind(block, "extra.open_wa_fallback_label")}</span>
+                        {meta.isEn ? <span>{meta.enOpenWaLabel}</span> : <span>{bind(block, "extra.open_wa_fallback_label")}</span>}
                       </a>
                       <button
                         type="button"
                         onClick={handleReset}
                         className="inline-flex min-h-[44px] items-center rounded-[10px] border border-[#234B35]/35 bg-[#FFFFFF] px-4 py-2 text-[13.5px] font-bold text-[#234B35] transition-colors hover:bg-[#EFF6F1] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#234B35]"
                       >
-                        <span>{bind(block, "extra.reset_label")}</span>
+                        {meta.isEn ? <span>{meta.enResetLabel}</span> : <span>{bind(block, "extra.reset_label")}</span>}
                       </button>
                     </div>
                   </div>
@@ -361,11 +374,11 @@ export function Contact({ block }: SectionComponentProps) {
                   type="submit"
                   className="inline-flex min-h-[48px] items-center justify-center rounded-[10px] bg-[#B8421B] px-7 py-2.5 font-hero text-[15px] font-bold text-[#FFFFFF] shadow-[0_6px_16px_rgba(184,66,27,0.22)] transition-[background-color,transform] hover:bg-[#3E2216] focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[#3E2216] active:scale-[0.98]"
                 >
-                  <span>{bind(block, "extra.submit_label")}</span>
+                  {meta.isEn ? <span>{meta.enSubmitLabel}</span> : <span>{bind(block, "extra.submit_label")}</span>}
                 </button>
 
                 <p className="text-[13px] text-[#5E4336]">
-                  {bind(block, "extra.form_note")}
+                  {meta.isEn ? <span>{meta.enFormNote}</span> : <span>{bind(block, "extra.form_note")}</span>}
                 </p>
               </div>
             </form>
@@ -382,7 +395,7 @@ export function Contact({ block }: SectionComponentProps) {
             <div className="flex items-center gap-2.5">
               <MapPin className="h-4 w-4 shrink-0 text-[#B8421B]" aria-hidden="true" />
               <p className="font-hero text-[15.5px] font-bold text-[#3E2216] sm:text-[16.5px]">
-                <span>{bind(block, "extra.map_title")}</span>
+                {meta.isEn ? <span>{meta.enMapTitle}</span> : <span>{bind(block, "extra.map_title")}</span>}
               </p>
             </div>
 
@@ -391,7 +404,7 @@ export function Contact({ block }: SectionComponentProps) {
               {...linkTargetProps(true)}
               className="inline-flex min-h-[44px] items-center gap-1.5 rounded-[10px] border border-[#3E2216]/15 px-3.5 py-2 text-[13.5px] font-semibold text-[#3E2216] transition-colors hover:border-[#B8421B] hover:text-[#B8421B] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B8421B]"
             >
-              <span>{bind(block, "extra.map_link_label")}</span>
+              {meta.isEn ? <span>{meta.enMapLinkLabel}</span> : <span>{bind(block, "extra.map_link_label")}</span>}
               <ExternalLink className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
             </a>
           </div>

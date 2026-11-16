@@ -1,3 +1,7 @@
+import { tr, type Locale } from "./i18n";
+
+export type { Locale };
+
 export type LandingItem = {
   id?: string;
   title?: string;
@@ -176,6 +180,25 @@ export function sanitizePhone(phone: string): string {
   return digits || "6285159506662";
 }
 
+export function readBlockCopy(block: LandingBlock | undefined, locale: Locale = "id") {
+  return {
+    isEn: locale === "en",
+    headA: tr(typeof block?.title === "string" ? block.title : "", locale),
+    headB: tr(typeof block?.subtitle === "string" ? block.subtitle : "", locale),
+    bodyCopy: tr(typeof block?.description === "string" ? block.description : "", locale),
+    badgeIcon: tr(typeof block?.icon === "string" ? block.icon : "", locale),
+  };
+}
+
+export function readItemCopy(item: LandingItem | undefined, locale: Locale = "id") {
+  return {
+    isEn: locale === "en",
+    labelText: tr(typeof item?.title === "string" ? item.title : "", locale),
+    bodyCopy: tr(typeof item?.description === "string" ? item.description : "", locale),
+    metaTag: tr(typeof item?.icon === "string" ? item.icon : "", locale),
+  };
+}
+
 export function buildBeanWhatsAppUrl(
   phone: string,
   productName: string,
@@ -183,17 +206,23 @@ export function buildBeanWhatsAppUrl(
   grind: string,
   quantity: number,
   totalPrice: number,
+  locale: Locale = "id",
 ): string {
+  const isEn = locale === "en";
   const message = [
-    "Halo Livion Coffee! Saya mau pesan biji kopi:",
+    isEn
+      ? "Hello Livion Coffee! I'd like to order coffee beans:"
+      : "Halo Livion Coffee! Saya mau pesan biji kopi:",
     "",
-    `Produk: ${productName}`,
-    `Berat: ${weight}`,
-    `Gilingan: ${grind}`,
-    `Jumlah: ${quantity}x`,
+    `${isEn ? "Product" : "Produk"}: ${productName}`,
+    `${isEn ? "Weight" : "Berat"}: ${weight}`,
+    `${isEn ? "Grind" : "Gilingan"}: ${grind}`,
+    `${isEn ? "Quantity" : "Jumlah"}: ${quantity}x`,
     `Total: ${formatIDR(totalPrice)}`,
     "",
-    "Mohon info ketersediaan dan ongkirnya ya. Terima kasih!",
+    isEn
+      ? "Could you let me know availability and shipping options? Thank you!"
+      : "Mohon info ketersediaan dan ongkirnya ya. Terima kasih!",
   ].join("\n");
   return `https://wa.me/${sanitizePhone(phone)}?text=${encodeURIComponent(message)}`;
 }
@@ -208,29 +237,38 @@ export function buildContactWhatsAppUrl(
   contactInfo: string,
   senderPhone: string,
   detailMessage: string,
+  locale: Locale = "id",
 ): string {
+  const isEn = locale === "en";
   const lines = [
-    "Halo Livion Coffee! Saya mau menghubungi lewat form website:",
+    isEn
+      ? "Hello Livion Coffee! I'm reaching out via the website form:"
+      : "Halo Livion Coffee! Saya mau menghubungi lewat form website:",
     "",
-    `Nama: ${fullName}`,
-    contactInfo ? `Email / Usaha: ${contactInfo}` : null,
+    `${isEn ? "Name" : "Nama"}: ${fullName}`,
+    contactInfo ? `${isEn ? "Email / Business" : "Email / Usaha"}: ${contactInfo}` : null,
     senderPhone ? `WhatsApp: +62 ${senderPhone}` : null,
-    `Pesan: ${detailMessage}`,
+    `${isEn ? "Message" : "Pesan"}: ${detailMessage}`,
   ]
     .filter((line) => line !== null)
     .join("\n");
   return `https://wa.me/${sanitizePhone(phone)}?text=${encodeURIComponent(lines)}`;
 }
 
-export function readNavbarMeta(block: LandingBlock) {
+export function readNavbarMeta(block: LandingBlock, locale: Locale = "id") {
   const ex = block.extra;
+  const isEn = locale === "en";
   return {
+    isEn,
     homeHref: strVal(ex, "home_href", "#top"),
-    ctaHref: strVal(ex, "cta_href", "#beans"),
-    openAria: strVal(ex, "menu_open_aria", "Buka menu navigasi"),
-    closeAria: strVal(ex, "menu_close_aria", "Tutup menu navigasi"),
-    navAria: "Navigasi utama",
-    mobileNavAria: "Navigasi mobile",
+    openAria: tr(strVal(ex, "menu_open_aria", "Buka menu navigasi"), locale),
+    closeAria: tr(strVal(ex, "menu_close_aria", "Tutup menu navigasi"), locale),
+    navAria: isEn ? "Primary navigation" : "Navigasi utama",
+    mobileNavAria: isEn ? "Mobile navigation" : "Navigasi mobile",
+    enMenuLabel: tr(strVal(ex, "menu_label", "Menu"), locale),
+    langSwitchAria: isEn
+      ? "Switch language to Bahasa Indonesia (currently English)"
+      : "Ganti bahasa ke English (saat ini Bahasa Indonesia)",
     drawerId: "mobile-nav-drawer",
   };
 }
@@ -240,17 +278,33 @@ export function navItemHref(item: LandingItem): string {
   return raw || "#beans";
 }
 
-export function readHeroConfig(block: LandingBlock) {
+export function flagGlyphSpec(clipId: string) {
+  return {
+    clipUrl: `url(#${clipId})`,
+    wavePath:
+      "M 1.5 3.6 Q 7.5 1.1 14 3.4 Q 20.5 5.7 26.5 3.0 L 26.5 16.4 Q 20.5 19.1 14 16.8 Q 7.5 14.5 1.5 17.0 Z",
+    horizonPath: "M -1 10.3 Q 7.5 7.8 14 10.1 Q 20.5 12.4 29 9.7",
+    diagPath: "M -2 -1 L 30 21 M 30 -1 L -2 21",
+    verticalPath: "M 14 -1 L 14 21",
+    idRedPath:
+      "M 0 0 L 28 0 L 28 9.7 Q 20.5 12.4 14 10.1 Q 7.5 7.8 0 10.3 Z",
+  };
+}
+
+export function readHeroConfig(block: LandingBlock, locale: Locale = "id") {
   const ex = block.extra;
   return {
+    isEn: locale === "en",
     sectionId: strVal(ex, "section_id", "top"),
-    originPrefix: strVal(ex, "origin_prefix", "Asal Kebun"),
-    roastPrefix: strVal(ex, "roast_prefix", "Sangrai"),
-    bestForPrefix: strVal(ex, "best_for_prefix", "Cocok buat"),
-    tablistAria: strVal(ex, "tablist_aria", "Pilih varian kopi Livion"),
+    originPrefix: tr(strVal(ex, "origin_prefix", "Asal Kebun"), locale),
+    roastPrefix: tr(strVal(ex, "roast_prefix", "Sangrai"), locale),
+    bestForPrefix: tr(strVal(ex, "best_for_prefix", "Cocok buat"), locale),
+    enSealTop: tr(strVal(ex, "seal_top", "Pesan"), locale),
+    enSealBottom: tr(strVal(ex, "seal_bottom", "yuk"), locale),
+    tablistAria: tr(strVal(ex, "tablist_aria", "Pilih varian kopi Livion"), locale),
     whatsappPhone: strVal(ex, "whatsapp_number", "6285159506662"),
     defaultWeight: strVal(ex, "default_weight", "200g"),
-    defaultGrind: strVal(ex, "default_grind", "Biji Utuh (Whole Bean)"),
+    defaultGrind: tr(strVal(ex, "default_grind", "Biji Utuh (Whole Bean)"), locale),
     desktopBackRibbon:
       "M -20 385 C 200 385, 445 388, 505 460 C 545 508, 530 625, 610 658 C 695 688, 915 655, 915 535 C 915 445, 675 415, 615 495 C 590 528, 595 555, 635 575",
     desktopFrontRibbon:
@@ -260,31 +314,43 @@ export function readHeroConfig(block: LandingBlock) {
   };
 }
 
-export function readHeroLot(block: LandingBlock | undefined) {
+export function readHeroLot(block: LandingBlock | undefined, locale: Locale = "id") {
   const ex = block?.extra;
-  const name = typeof block?.title === "string" ? block.title : "Livion Coffee";
-  const origin = typeof block?.subtitle === "string" ? block.subtitle : "";
+  const rawName = typeof block?.title === "string" ? block.title : "Livion Coffee";
+  const rawOrigin = typeof block?.subtitle === "string" ? block.subtitle : "";
+  const beanName = tr(rawName, locale);
+  const originText = tr(rawOrigin, locale);
   const price200g = numVal(ex, "price_200g", 25000);
+  const isEn = locale === "en";
   return {
-    name,
-    origin,
-    roastLevel: strVal(ex, "roast_level", "Medium"),
-    bestFor: strVal(ex, "best_for", ""),
+    isEn,
+    beanName,
+    originText,
+    roastLevel: tr(strVal(ex, "roast_level", "Medium"), locale),
+    bestFor: tr(strVal(ex, "best_for", ""), locale),
+    shortLabel: tr(strVal(ex, "short_label", rawName), locale),
     pouchWidth: numVal(ex, "pouch_width", 480),
     pouchHeight: numVal(ex, "pouch_height", 790),
-    imageAlt: strVal(ex, "image_alt", name),
+    imageAlt: tr(strVal(ex, "image_alt", rawName), locale),
     price200g,
-    orderAria: `Pesan ${name} 200g via WhatsApp`,
-    srAnnouncement: `Menampilkan ${name}, ${origin}.`,
+    orderAria: isEn
+      ? `Order ${beanName} 200g via WhatsApp`
+      : `Pesan ${beanName} 200g via WhatsApp`,
+    srAnnouncement: isEn
+      ? `Showing ${beanName}, ${originText}.`
+      : `Menampilkan ${beanName}, ${originText}.`,
   };
 }
 
-export function readCraftedMeta(block: LandingBlock) {
+export function readCraftedMeta(block: LandingBlock, locale: Locale = "id") {
   const ex = block.extra;
   return {
     sectionId: strVal(ex, "section_id", "craft"),
     headingId: "crafted-heading",
-    imageAlt: strVal(ex, "image_alt", "Telapak tangan terbuka memegang biji kopi sangrai"),
+    imageAlt: tr(
+      strVal(ex, "image_alt", "Telapak tangan terbuka memegang biji kopi sangrai"),
+      locale,
+    ),
     desktopWavePath:
       "M 0 118 C 155 152, 295 215, 430 180 C 555 148, 635 52, 780 52 C 955 52, 1085 186, 1255 168 C 1340 160, 1400 138, 1440 118 L 1440 622 C 1315 656, 1165 668, 1020 598 C 890 536, 745 516, 625 572 C 495 632, 305 688, 0 638 Z",
     mobileWavePath:
@@ -293,7 +359,7 @@ export function readCraftedMeta(block: LandingBlock) {
   };
 }
 
-export function readCollectionConfig(block: LandingBlock) {
+export function readCollectionConfig(block: LandingBlock, locale: Locale = "id") {
   const ex = block.extra;
   const weights: WeightPreset[] = Array.isArray(ex?.weights)
     ? (ex.weights as unknown[])
@@ -307,65 +373,78 @@ export function readCollectionConfig(block: LandingBlock) {
         { label: "500g", multiplier: 2.35 },
         { label: "1kg", multiplier: 4.5 },
       ];
-  const grinds = strArrVal(ex, "grinds", [
+  const rawGrinds = strArrVal(ex, "grinds", [
     "Biji Utuh (Whole Bean)",
     "Halus (Espresso)",
     "Sedang (V60 / Pour Over)",
     "Kasar (French Press / Tubruk)",
   ]);
   return {
+    isEn: locale === "en",
     sectionId: strVal(ex, "section_id", "beans"),
     headingId: "collection-heading",
     whatsappPhone: strVal(ex, "whatsapp_number", "6285159506662"),
-    specAltitude: strVal(ex, "spec_altitude", "Ketinggian"),
-    specProcess: strVal(ex, "spec_process", "Proses"),
-    specRoast: strVal(ex, "spec_roast", "Sangrai"),
-    specBestFor: strVal(ex, "spec_best_for", "Cocok Buat"),
-    weightLabel: strVal(ex, "weight_label", "Pilih Berat Kemasan"),
-    grindLabel: strVal(ex, "grind_label", "Pilih Gilingan"),
-    qtyLabel: strVal(ex, "qty_label", "Jumlah"),
-    qtyMinusAria: strVal(ex, "qty_minus_aria", "Kurangi jumlah"),
-    qtyPlusAria: strVal(ex, "qty_plus_aria", "Tambah jumlah"),
-    totalLabel: strVal(ex, "total_label", "Total"),
-    ctaLabel: strVal(ex, "cta_label", "Pesan via WhatsApp"),
-    closeAria: strVal(ex, "close_aria", "Tutup detail produk"),
-    lotPrefix: strVal(ex, "lot_prefix", "Lot"),
+    specAltitude: tr(strVal(ex, "spec_altitude", "Ketinggian"), locale),
+    specProcess: tr(strVal(ex, "spec_process", "Proses"), locale),
+    specRoast: tr(strVal(ex, "spec_roast", "Sangrai"), locale),
+    specBestFor: tr(strVal(ex, "spec_best_for", "Cocok Buat"), locale),
+    weightLabel: tr(strVal(ex, "weight_label", "Pilih Berat Kemasan"), locale),
+    grindLabel: tr(strVal(ex, "grind_label", "Pilih Gilingan"), locale),
+    qtyLabel: tr(strVal(ex, "qty_label", "Jumlah"), locale),
+    qtyMinusAria: tr(strVal(ex, "qty_minus_aria", "Kurangi jumlah"), locale),
+    qtyPlusAria: tr(strVal(ex, "qty_plus_aria", "Tambah jumlah"), locale),
+    totalLabel: tr(strVal(ex, "total_label", "Total"), locale),
+    ctaLabel: tr(strVal(ex, "cta_label", "Pesan via WhatsApp"), locale),
+    closeAria: tr(strVal(ex, "close_aria", "Tutup detail produk"), locale),
+    lotPrefix: tr(strVal(ex, "lot_prefix", "Lot"), locale),
     weights,
-    grinds,
+    grinds: rawGrinds.map((g) => tr(g, locale)),
   };
 }
 
-export function readCollectionProduct(block: LandingBlock, index: number) {
+export function readCollectionProduct(
+  block: LandingBlock,
+  index: number,
+  locale: Locale = "id",
+) {
   const ex = block.extra;
   const variant = strVal(ex, "variant", "corner-badge");
-  const title = typeof block.title === "string" ? block.title : "";
-  const origin = typeof block.subtitle === "string" ? block.subtitle : "";
-  const desc = typeof block.description === "string" ? block.description : "";
+  const rawTitle = typeof block.title === "string" ? block.title : "";
+  const rawOrigin = typeof block.subtitle === "string" ? block.subtitle : "";
+  const rawDesc = typeof block.description === "string" ? block.description : "";
+  const beanName = tr(rawTitle, locale);
   const price200g = numVal(ex, "price_200g", 35000);
+  const priceDisplay = strVal(ex, "price_display", formatIDR(price200g));
   const beanSet = COLLECTION_BEAN_SETS[index % COLLECTION_BEAN_SETS.length] ?? COLLECTION_BEAN_SETS[0];
   return {
+    isEn: locale === "en",
     featured: variant === "center-featured",
-    beanName: title,
-    origin,
-    desc,
-    category: strVal(ex, "category", "kopi"),
-    cardNote: strVal(ex, "card_note", ""),
+    beanName,
+    originText: tr(rawOrigin, locale),
+    bodyCopy: tr(rawDesc, locale),
+    categoryLabel: tr(strVal(ex, "category", "kopi"), locale),
+    enTitleTop: tr(strVal(ex, "title_top", rawTitle), locale),
+    enTitleBottom: tr(strVal(ex, "title_bottom", ""), locale),
+    cardNote: tr(strVal(ex, "card_note", ""), locale),
     indexLabel: strVal(ex, "index_label", twoDigitStep(block.order, index)),
     price200g,
-    priceDisplay: strVal(ex, "price_display", formatIDR(price200g)),
-    altitude: strVal(ex, "altitude", "-"),
-    process: strVal(ex, "process", "-"),
-    roastLevel: strVal(ex, "roast_level", "Medium"),
-    bestFor: strVal(ex, "best_for", "-"),
-    tastingNotes: strArrVal(ex, "tasting_notes", []),
+    priceDisplay,
+    altitude: tr(strVal(ex, "altitude", "-"), locale),
+    process: tr(strVal(ex, "process", "-"), locale),
+    roastLevel: tr(strVal(ex, "roast_level", "Medium"), locale),
+    bestFor: tr(strVal(ex, "best_for", "-"), locale),
+    tastingNotes: strArrVal(ex, "tasting_notes", []).map((note) => tr(note, locale)),
     textureUrl: strVal(ex, "texture_url", "assets/textures/arabica-crema.jpg"),
-    textureAlt: strVal(ex, "texture_alt", ""),
+    textureAlt: tr(strVal(ex, "texture_alt", ""), locale),
     pouchUrl: typeof block.image_url === "string" ? block.image_url : "assets/cutouts/arabica-pouch.png",
-    imageAlt: strVal(ex, "image_alt", title),
+    imageAlt: tr(strVal(ex, "image_alt", rawTitle), locale),
     pouchWidth: numVal(ex, "pouch_width", 460),
     pouchHeight: numVal(ex, "pouch_height", 780),
     beanSet,
-    cardAria: `Pilih varian dan pesan ${title}, mulai ${strVal(ex, "price_display", formatIDR(price200g))}`,
+    cardAria:
+      locale === "en"
+        ? `View details and order ${beanName}, starting at ${priceDisplay}`
+        : `Pilih varian dan pesan ${beanName}, mulai ${priceDisplay}`,
     modalSelectId: `modal-grind-${block.order ?? index}`,
     modalTitleId: `modal-title-${block.order ?? index}`,
     modalWeightId: `modal-weight-${block.order ?? index}`,
@@ -373,40 +452,59 @@ export function readCollectionProduct(block: LandingBlock, index: number) {
   };
 }
 
-export function readComingSoonMeta(block: LandingBlock) {
+export function readComingSoonMeta(block: LandingBlock, locale: Locale = "id") {
   const ex = block.extra;
   return {
+    isEn: locale === "en",
     sectionId: strVal(ex, "section_id", "coming-soon"),
     headingId: "coming-soon-heading",
-    imageAlt: strVal(
-      ex,
-      "image_alt",
-      "Kemasan kopi putih Livion dengan simbol tanda tanya untuk varian yang segera hadir",
+    enStatusBadge: tr(strVal(ex, "status_badge", "Segera Hadir"), locale),
+    enEyebrow: tr(strVal(ex, "eyebrow", "Rilis Berikutnya"), locale),
+    imageAlt: tr(
+      strVal(
+        ex,
+        "image_alt",
+        "Kemasan kopi putih Livion dengan simbol tanda tanya untuk varian yang segera hadir",
+      ),
+      locale,
     ),
-    textureAlt: strVal(ex, "texture_alt", "Tekstur crema espresso kopi sangrai"),
+    textureAlt: tr(strVal(ex, "texture_alt", "Tekstur crema espresso kopi sangrai"), locale),
     beanAUrl: "assets/cutouts/bean-1.png",
     beanBUrl: "assets/cutouts/bean-5.png",
   };
 }
 
-export function readOriginMeta(block: LandingBlock) {
+export function readOriginMeta(block: LandingBlock, locale: Locale = "id") {
   const ex = block.extra;
   return {
     sectionId: strVal(ex, "section_id", "origin"),
     headingId: "origin-showcase-heading",
-    imageAlt: strVal(ex, "image_alt", "Kemasan biji kopi Livion Coffee Robusta Argopuro 200g"),
+    imageAlt: tr(
+      strVal(ex, "image_alt", "Kemasan biji kopi Livion Coffee Robusta Argopuro 200g"),
+      locale,
+    ),
   };
 }
 
-export function readAboutMeta(block: LandingBlock) {
+export function readAboutMeta(block: LandingBlock, locale: Locale = "id") {
   const ex = block.extra;
   return {
+    isEn: locale === "en",
     sectionId: strVal(ex, "section_id", "about"),
     headingId: "about-heading",
-    imageAlt: strVal(ex, "image_alt", "Kemasan biji kopi Robusta Temanggung Livion"),
-    secondaryAlt: strVal(ex, "secondary_pouch_alt", "Kemasan biji kopi Arabica Argopuro Livion"),
-    tertiaryAlt: strVal(ex, "tertiary_pouch_alt", "Kemasan biji kopi Robusta Argopuro Livion"),
-    textureAlt: strVal(ex, "texture_alt", "Tekstur crema espresso cokelat keemasan"),
+    enBadgeLabel: tr(strVal(ex, "badge_label", "Tentang Kami"), locale),
+    enStorySecondary: tr(strVal(ex, "story_secondary", ""), locale),
+    enCardCaption: tr(strVal(ex, "card_caption", ""), locale),
+    imageAlt: tr(strVal(ex, "image_alt", "Kemasan biji kopi Robusta Temanggung Livion"), locale),
+    secondaryAlt: tr(
+      strVal(ex, "secondary_pouch_alt", "Kemasan biji kopi Arabica Argopuro Livion"),
+      locale,
+    ),
+    tertiaryAlt: tr(
+      strVal(ex, "tertiary_pouch_alt", "Kemasan biji kopi Robusta Argopuro Livion"),
+      locale,
+    ),
+    textureAlt: tr(strVal(ex, "texture_alt", "Tekstur crema espresso cokelat keemasan"), locale),
     beanAUrl: "assets/cutouts/bean-3.png",
     beanBUrl: "assets/cutouts/bean-5.png",
   };
@@ -420,13 +518,17 @@ export function buildReviewWhatsAppUrl(
   role: string,
   rating: number,
   quote: string,
+  locale: Locale = "id",
 ): string {
+  const isEn = locale === "en";
   const lines = [
-    "Halo Livion Coffee! Saya mau kirim ulasan pelanggan:",
-    `- Nama: ${author}`,
-    role ? `- Peran / Kota: ${role}` : null,
-    `- Rating: ${rating}/5 bintang`,
-    `- Ulasan: "${quote}"`,
+    isEn
+      ? "Hello Livion Coffee! Here is my customer review:"
+      : "Halo Livion Coffee! Saya mau kirim ulasan pelanggan:",
+    `- ${isEn ? "Name" : "Nama"}: ${author}`,
+    role ? `- ${isEn ? "Role / City" : "Peran / Kota"}: ${role}` : null,
+    `- Rating: ${rating}/5 ${isEn ? "stars" : "bintang"}`,
+    `- ${isEn ? "Review" : "Ulasan"}: "${quote}"`,
   ].filter(Boolean);
   return buildTextWhatsAppUrl(phone, lines.join("\n"));
 }
@@ -450,74 +552,138 @@ export function reviewScoreSummary(rating: number): string {
   return `${rating} / 5`;
 }
 
-export function starOptionAria(star: number): string {
-  return `Beri rating ${star} dari 5 bintang`;
+export function starOptionAria(star: number, locale: Locale = "id"): string {
+  return locale === "en"
+    ? `Rate ${star} out of 5 stars`
+    : `Beri rating ${star} dari 5 bintang`;
 }
 
-export function removeReviewAria(author: string): string {
-  return `Hapus preview ulasan dari ${author}`;
+export function removeReviewAria(author: string, locale: Locale = "id"): string {
+  return locale === "en"
+    ? `Remove session review preview from ${author}`
+    : `Hapus preview ulasan dari ${author}`;
 }
 
-export function readTestimonialsMeta(block: LandingBlock) {
+export function readTestimonialsMeta(block: LandingBlock, locale: Locale = "id") {
   const ex = block.extra;
   return {
+    isEn: locale === "en",
     sectionId: strVal(ex, "section_id", "testimonials"),
     headingId: "testimonials-heading",
     modalTitleId: "review-modal-title",
     ratingLabelId: "review-rating-label",
     feedbackId: "review-form-feedback",
     whatsappPhone: strVal(ex, "whatsapp_number", "6285159506662"),
-    closeAria: strVal(ex, "close_aria", "Tutup form ulasan"),
-    namePlaceholder: strVal(ex, "name_placeholder", "Nama kamu"),
-    rolePlaceholder: strVal(ex, "role_placeholder", "Contoh: Home Brewer, Bondowoso"),
-    roleDefault: strVal(ex, "role_default", "Pelanggan Livion Coffee"),
-    quotePlaceholder: strVal(
-      ex,
-      "quote_placeholder",
-      "Ceritakan varian favorit, aroma saat diseduh, atau kesan selama pesan di Livion...",
+    closeAria: tr(strVal(ex, "close_aria", "Tutup form ulasan"), locale),
+    namePlaceholder: tr(strVal(ex, "name_placeholder", "Nama kamu"), locale),
+    rolePlaceholder: tr(
+      strVal(ex, "role_placeholder", "Contoh: Home Brewer, Bondowoso"),
+      locale,
     ),
+    roleDefault: tr(strVal(ex, "role_default", "Pelanggan Livion Coffee"), locale),
+    quotePlaceholder: tr(
+      strVal(
+        ex,
+        "quote_placeholder",
+        "Ceritakan varian favorit, aroma saat diseduh, atau kesan pesan di Livion...",
+      ),
+      locale,
+    ),
+    enWriteCta: tr(strVal(ex, "write_cta_label", "Tulis Ulasan"), locale),
+    enEmptyState: tr(
+      strVal(ex, "empty_state", "Belum ada testimoni pelanggan yang ditambahkan."),
+      locale,
+    ),
+    enFormBadge: tr(strVal(ex, "form_badge", "Ulasan Pelanggan"), locale),
+    enFormTitle: tr(strVal(ex, "form_title", "Bagikan Pengalaman Ngopimu"), locale),
+    enFormSubtitle: tr(strVal(ex, "form_subtitle", ""), locale),
+    enNameLabel: tr(strVal(ex, "name_label", "Nama lengkap *"), locale),
+    enRoleLabel: tr(strVal(ex, "role_label", "Peran / Kota (opsional)"), locale),
+    enRatingLabel: tr(strVal(ex, "rating_label", "Rating kepuasan *"), locale),
+    enRatingUnit: tr(strVal(ex, "rating_unit", "Rating"), locale),
+    enQuoteLabel: tr(strVal(ex, "quote_label", "Ulasanmu *"), locale),
+    enErrorText: tr(strVal(ex, "error_text", ""), locale),
+    enSuccessText: tr(strVal(ex, "success_text", ""), locale),
+    enOpenWaLabel: tr(strVal(ex, "open_wa_fallback_label", "Buka WhatsApp"), locale),
+    enResetLabel: tr(strVal(ex, "reset_label", "Tulis Ulasan Lagi"), locale),
+    enSubmitLabel: tr(strVal(ex, "submit_label", "Kirim Ulasan"), locale),
+    enCloseFormLabel: tr(strVal(ex, "close_form_label", "Lihat di Halaman"), locale),
+    enFormNote: tr(strVal(ex, "form_note", ""), locale),
+    enPreviewBadge: tr(strVal(ex, "preview_section_badge", "Preview Sementara"), locale),
+    enPreviewNote: tr(strVal(ex, "preview_section_note", ""), locale),
+    enPreviewRemove: tr(strVal(ex, "preview_remove_label", "Hapus"), locale),
   };
 }
 
-export function readTestimonialCard(block: LandingBlock, index: number) {
+export function readTestimonialCard(
+  block: LandingBlock,
+  index: number,
+  locale: Locale = "id",
+) {
   const ex = block.extra;
   const featuredFlag = ex && ex.featured === true;
   const avatarUrl = typeof block.image_url === "string" ? block.image_url.trim() : "";
   const ratingScore = typeof block.icon === "string" ? block.icon.trim() : "";
   return {
+    isEn: locale === "en",
     featured: featuredFlag || index === 0,
     hasAvatar: avatarUrl.length > 0,
-    avatarAlt: strVal(ex, "image_alt", typeof block.title === "string" ? block.title : "Pelanggan Livion Coffee"),
+    avatarAlt: tr(
+      strVal(
+        ex,
+        "image_alt",
+        typeof block.title === "string" ? block.title : "Pelanggan Livion Coffee",
+      ),
+      locale,
+    ),
     hasRating: ratingScore.length > 0,
+    enRatingLabel: tr(strVal(ex, "rating_label", "Rating"), locale),
+    enInitials: strVal(ex, "initials", ""),
   };
 }
 
-export function readOrderCtaMeta(block: LandingBlock) {
+export function readOrderCtaMeta(block: LandingBlock, locale: Locale = "id") {
   const ex = block.extra;
-  const productName = strVal(ex, "product_name", "Arabica Argopuro (Sortir Grade 4)");
+  const productName = tr(
+    strVal(ex, "product_name", "Arabica Argopuro (Sortir Grade 4)"),
+    locale,
+  );
   const unitPrice = numVal(ex, "unit_price", 25000);
   const weight = strVal(ex, "weight", "200g");
-  const grind = strVal(ex, "grind", "Biji Utuh (Whole Bean)");
+  const grind = tr(strVal(ex, "grind", "Biji Utuh (Whole Bean)"), locale);
   const phone = strVal(ex, "whatsapp_number", "6285159506662");
   return {
+    isEn: locale === "en",
     sectionId: strVal(ex, "section_id", "order-cta"),
     headingId: "order-cta-heading",
     ribbonPath: "M -20 135 C 235 8, 635 12, 920 128 C 1105 204, 1285 215, 1460 155",
-    imageAlt: strVal(ex, "image_alt", "Tangan memegang kemasan biji kopi Livion Arabica Argopuro"),
-    ctaAria: strVal(ex, "cta_aria", `Pesan ${productName} ${weight} lewat WhatsApp`),
-    orderHref: buildBeanWhatsAppUrl(phone, productName, weight, grind, 1, unitPrice),
+    imageAlt: tr(
+      strVal(ex, "image_alt", "Tangan memegang kemasan biji kopi Livion Arabica Argopuro"),
+      locale,
+    ),
+    enSealTop: tr(strVal(ex, "seal_top", "Pesan"), locale),
+    enSealBottom: tr(strVal(ex, "seal_bottom", "yuk"), locale),
+    ctaAria: tr(
+      strVal(ex, "cta_aria", `Pesan ${productName} ${weight} lewat WhatsApp`),
+      locale,
+    ),
+    orderHref: buildBeanWhatsAppUrl(phone, productName, weight, grind, 1, unitPrice, locale),
   };
 }
 
-export function readContactMeta(block: LandingBlock) {
+export function readContactMeta(block: LandingBlock, locale: Locale = "id") {
   const ex = block.extra;
   const phone = strVal(ex, "whatsapp_number", "6285159506662");
-  const directText = strVal(
-    ex,
-    "wa_direct_text",
-    "Halo Livion Coffee! Mau tanya-tanya soal biji kopi dan layanan roastery.",
+  const directText = tr(
+    strVal(
+      ex,
+      "wa_direct_text",
+      "Halo Livion Coffee! Mau tanya-tanya soal biji kopi dan layanan roastery.",
+    ),
+    locale,
   );
   return {
+    isEn: locale === "en",
     sectionId: strVal(ex, "section_id", "contact"),
     headingId: "contact-heading",
     feedbackId: "contact-feedback",
@@ -534,43 +700,78 @@ export function readContactMeta(block: LandingBlock) {
       "map_external_url",
       "https://maps.google.com/?q=-7.986094103135859,113.79277103946625",
     ),
-    mapTitle: strVal(ex, "map_title", "Peta Lokasi Livion Coffee"),
-    firstNamePlaceholder: strVal(ex, "first_name_placeholder", "Nama depan"),
-    lastNamePlaceholder: strVal(ex, "last_name_placeholder", "Nama belakang"),
-    emailPlaceholder: strVal(ex, "email_placeholder", "nama@usaha.com atau nama kedai"),
-    phonePlaceholder: strVal(ex, "phone_placeholder", "812 3456 7890"),
-    messagePlaceholder: strVal(
-      ex,
-      "message_placeholder",
-      "Tulis pertanyaan, permintaan sample, atau pesananmu di sini...",
+    mapTitle: tr(strVal(ex, "map_title", "Peta Lokasi Livion Coffee"), locale),
+    firstNamePlaceholder: tr(strVal(ex, "first_name_placeholder", "Nama depan"), locale),
+    lastNamePlaceholder: tr(strVal(ex, "last_name_placeholder", "Nama belakang"), locale),
+    emailPlaceholder: tr(
+      strVal(ex, "email_placeholder", "nama@usaha.com atau nama kedai"),
+      locale,
     ),
-    copyAria: strVal(ex, "copy_aria", "Salin nomor WhatsApp Livion Coffee"),
+    phonePlaceholder: strVal(ex, "phone_placeholder", "812 3456 7890"),
+    messagePlaceholder: tr(
+      strVal(
+        ex,
+        "message_placeholder",
+        "Tulis pertanyaan, permintaan sample, atau pesananmu di sini...",
+      ),
+      locale,
+    ),
+    copyAria: tr(strVal(ex, "copy_aria", "Salin nomor WhatsApp Livion Coffee"), locale),
     countryPrefix: "+62",
+    enBadgeLabel: tr(strVal(ex, "badge_label", "Kontak"), locale),
+    enCopyLabel: tr(strVal(ex, "copy_label", "Salin nomor"), locale),
+    enCopiedLabel: tr(strVal(ex, "copied_label", "Tersalin"), locale),
+    enCopyFallback: tr(strVal(ex, "copy_fallback_label", "Salin manual nomor ini"), locale),
+    enFirstNameLabel: tr(strVal(ex, "first_name_label", "Nama depan *"), locale),
+    enLastNameLabel: tr(strVal(ex, "last_name_label", "Nama belakang"), locale),
+    enEmailLabel: tr(strVal(ex, "email_label", "Email atau Nama Usaha"), locale),
+    enPhoneLabel: tr(strVal(ex, "phone_label", "Nomor WhatsApp"), locale),
+    enMessageLabel: tr(strVal(ex, "message_label", "Pesan *"), locale),
+    enErrorText: tr(strVal(ex, "error_text", ""), locale),
+    enSuccessText: tr(strVal(ex, "success_text", ""), locale),
+    enOpenWaLabel: tr(strVal(ex, "open_wa_fallback_label", "Buka WhatsApp"), locale),
+    enResetLabel: tr(strVal(ex, "reset_label", "Tulis Ulang"), locale),
+    enFormNote: tr(strVal(ex, "form_note", ""), locale),
+    enSubmitLabel: tr(strVal(ex, "submit_label", "Kirim Pesan"), locale),
+    enMapTitle: tr(strVal(ex, "map_title", "Lokasi di Google Maps"), locale),
+    enMapLinkLabel: tr(strVal(ex, "map_link_label", "Buka di Google Maps"), locale),
   };
 }
 
-export function readFooterMeta(block: LandingBlock) {
+export function readFooterMeta(block: LandingBlock, locale: Locale = "id") {
   const ex = block.extra;
+  const isEn = locale === "en";
   const phone = strVal(ex, "whatsapp_number", "6285159506662");
-  const productName = strVal(ex, "default_product", "Arabica Argopuro (Sortir Grade 4)");
+  const productName = tr(
+    strVal(ex, "default_product", "Arabica Argopuro (Sortir Grade 4)"),
+    locale,
+  );
   const unitPrice = numVal(ex, "default_price", 25000);
   const weight = strVal(ex, "default_weight", "200g");
-  const grind = strVal(ex, "default_grind", "Biji Utuh (Whole Bean)");
-  const wholesaleText = strVal(
-    ex,
-    "wholesale_text",
-    "Halo Livion Coffee! Mau tanya-tanya soal suplai grosir & sample pack biji kopinya nih.",
+  const grind = tr(strVal(ex, "default_grind", "Biji Utuh (Whole Bean)"), locale);
+  const wholesaleText = tr(
+    strVal(
+      ex,
+      "wholesale_text",
+      "Halo Livion Coffee! Mau tanya-tanya soal suplai grosir & sample pack biji kopinya nih.",
+    ),
+    locale,
   );
-  const floatingText = strVal(
-    ex,
-    "floating_cta_text",
-    "Halo Livion Coffee! Saya mau pesan biji kopinya.",
+  const floatingText = tr(
+    strVal(ex, "floating_cta_text", "Halo Livion Coffee! Saya mau pesan biji kopinya."),
+    locale,
   );
   const allItems = sortedItems(block.items);
   return {
-    footerNavAria: "Navigasi footer",
-    shortcutsAria: "Shortcut katalog dan pemesanan Livion Coffee",
-    floatingWaAria: strVal(ex, "floating_cta_aria", "Pesan kopi Livion lewat WhatsApp"),
+    isEn,
+    footerNavAria: isEn ? "Footer navigation" : "Navigasi footer",
+    shortcutsAria: isEn
+      ? "Livion Coffee social media"
+      : "Media sosial Livion Coffee",
+    floatingWaAria: tr(
+      strVal(ex, "floating_cta_aria", "Pesan kopi Livion lewat WhatsApp"),
+      locale,
+    ),
     wavePath:
       "M 0 84 C 155 18, 340 -8, 550 56 C 745 115, 965 112, 1175 44 C 1285 10, 1375 2, 1440 8 L 1440 122 L 0 122 Z",
     colNav0Href: strVal(ex, "col_nav_0_href", "#top"),
@@ -578,20 +779,47 @@ export function readFooterMeta(block: LandingBlock) {
     colNav2Href: strVal(ex, "col_nav_2_href", "#beans"),
     colNav3Href: strVal(ex, "col_nav_3_href", "#origin"),
     colNav4Href: strVal(ex, "col_nav_4_href", "#contact"),
-    orderWaHref: buildBeanWhatsAppUrl(phone, productName, weight, grind, 1, unitPrice),
+    enColNav0: tr(strVal(ex, "col_nav_0_label", "Beranda"), locale),
+    enColNav1: tr(strVal(ex, "col_nav_1_label", "Katalog"), locale),
+    enColNav2: tr(strVal(ex, "col_nav_2_label", "Asal Biji"), locale),
+    enColNav3: tr(strVal(ex, "col_nav_3_label", "Tentang Kami"), locale),
+    enColNav4: tr(strVal(ex, "col_nav_4_label", "Kontak"), locale),
+    enActionOrder: tr(strVal(ex, "action_order_label", "Pesan Biji"), locale),
+    enActionWholesale: tr(strVal(ex, "action_wholesale_label", "Grosir & Sample"), locale),
+    enFloatingLabel: tr(strVal(ex, "floating_cta_label", "Pesan Sekarang"), locale),
+    orderWaHref: buildBeanWhatsAppUrl(phone, productName, weight, grind, 1, unitPrice, locale),
     wholesaleWaHref: buildTextWhatsAppUrl(phone, wholesaleText),
     floatingWaHref: buildTextWhatsAppUrl(phone, floatingText),
-    topPills: allItems.slice(0, 2),
-    bottomPills: allItems.slice(2),
+    socialItems: allItems,
     phone,
   };
 }
 
-export function footerPillLinkProps(item: LandingItem, phone: string, defaultOrderHref: string) {
+export function socialItemMeta(item: LandingItem) {
+  const titleLower = (item.title ?? "").toLowerCase();
+  const iconLower = (item.icon ?? "").toLowerCase();
+  const isTikTok = titleLower.includes("tiktok") || iconLower.includes("tiktok.com");
+  return {
+    isTikTok,
+    tiktokPath:
+      "M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z",
+  };
+}
+
+export function footerPillLinkProps(
+  item: LandingItem,
+  phone: string,
+  defaultOrderHref: string,
+  locale: Locale = "id",
+) {
   const raw = (item.icon ?? "").trim();
   const external = raw === "wa" || raw.startsWith("https://");
   const href = external ? (raw.startsWith("https://") ? raw : defaultOrderHref) : raw || "#beans";
-  const label = typeof item.description === "string" && item.description ? item.description : item.title ?? "";
+  const rawLabel =
+    typeof item.description === "string" && item.description
+      ? item.description
+      : item.title ?? "";
+  const label = tr(rawLabel, locale);
   return {
     href,
     ...(external ? { target: "_blank", rel: "noopener noreferrer" } : {}),
@@ -789,12 +1017,8 @@ export function reviewStarIconClass(active: boolean): string {
   return `h-5 w-5 transition-colors ${active ? "fill-[#B8421B] text-[#B8421B]" : "fill-transparent text-[#7D6959]"}`;
 }
 
-export function footerPillClass(index: number, isTopRow: boolean): string {
-  const tilts = isTopRow
-    ? ["-rotate-[14deg] sm:-rotate-[34deg] sm:translate-y-2", "rotate-[10deg] sm:rotate-[22deg] sm:translate-y-3"]
-    : ["-rotate-[8deg] sm:-rotate-[12deg]", "rotate-[1deg]", "-rotate-[10deg] sm:-rotate-[14deg]"];
-  const tilt = tilts[index % tilts.length] ?? "";
-  return `inline-flex min-h-[48px] items-center justify-center rounded-[999px] border-[3.5px] border-[#8D6A57] bg-[#2C1810] px-6 py-3 font-sans text-[14.5px] leading-none font-medium text-[#F5F0EA] transition-[background-color,border-color,transform] duration-200 hover:-translate-y-0.5 hover:border-[#B05D44] hover:bg-[#4E2716] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#F5F0EA] sm:px-7 sm:py-3.5 sm:text-[15.5px] ${tilt}`;
+export function footerPillClass(): string {
+  return "inline-flex min-h-[48px] items-center justify-center gap-2.5 rounded-full border-[1.5px] border-[#8D6A57] bg-[#2C1810] px-5 py-2.5 font-sans text-[14.5px] leading-none font-semibold text-[#F5F0EA] transition-[background-color,border-color,transform] duration-200 hover:-translate-y-0.5 hover:border-[#B8421B] hover:bg-[#3E2216] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#F5F0EA] active:scale-[0.97]";
 }
 
 export function sealRootClass(sizeClass: string): string {
