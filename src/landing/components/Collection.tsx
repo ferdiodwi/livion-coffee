@@ -180,7 +180,7 @@ function BeanDetailModal({
   const closeBtnRef = useRef<HTMLButtonElement>(null);
 
   const activeGrind = cfg.grinds.includes(grind) ? grind : firstGrind;
-  const unitPrice = calculateBeanPrice(prod.price200g, weight, cfg.weights);
+  const unitPrice = calculateBeanPrice(prod.price200g, weight, cfg.weights, prod.price100g);
   const totalPrice = unitPrice * quantity;
   const whatsappHref = buildBeanWhatsAppUrl(
     cfg.whatsappPhone,

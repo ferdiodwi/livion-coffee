@@ -4,21 +4,23 @@ export type { Locale };
 
 export type LandingItem = {
   id?: string;
-  title?: string;
-  description?: string;
-  icon?: string;
+  title?: any;
+  description?: any;
+  icon?: any;
+  image_url?: any;
   order?: number;
+  extra?: Record<string, any> | null;
 };
 
 export type LandingBlock = {
   id?: string;
-  title?: string;
-  subtitle?: string;
-  description?: string;
-  image_url?: string | null;
-  icon?: string;
+  title?: any;
+  subtitle?: any;
+  description?: any;
+  image_url?: any;
+  icon?: any;
   order?: number;
-  extra?: Record<string, unknown> | null;
+  extra?: Record<string, any> | null;
   items?: LandingItem[];
 };
 
@@ -69,6 +71,26 @@ export type SubmittedReview = {
 };
 
 export type SubmittedReviewDraft = Omit<SubmittedReview, "id">;
+
+export function cleanAsset(url?: unknown, fallback = ""): string {
+  if (typeof url === "string" && url.length > 0) {
+    if (url.startsWith("/")) return url;
+    return `/${url.replace(/^\.\//, "")}`;
+  }
+  return fallback;
+}
+
+export function readHeroBeanUrls(block: LandingBlock): Record<string, string> {
+  const ex = block?.extra || {};
+  return {
+    "assets/cutouts/bean-1.png": cleanAsset(ex.bean_1_url, "/assets/cutouts/bean-1.png"),
+    "assets/cutouts/bean-2.png": cleanAsset(ex.bean_2_url, "/assets/cutouts/bean-2.png"),
+    "assets/cutouts/bean-3.png": cleanAsset(ex.bean_3_url, "/assets/cutouts/bean-3.png"),
+    "assets/cutouts/bean-4.png": cleanAsset(ex.bean_4_url, "/assets/cutouts/bean-4.png"),
+    "assets/cutouts/bean-5.png": cleanAsset(ex.bean_5_url, "/assets/cutouts/bean-5.png"),
+    "assets/cutouts/bean-6.png": cleanAsset(ex.bean_6_url, "/assets/cutouts/bean-6.png"),
+  };
+}
 
 export type HeroBeanSpec = {
   src: string;
@@ -169,7 +191,15 @@ export function formatIDR(amount: number): string {
   }).format(amount);
 }
 
-export function calculateBeanPrice(basePrice: number, weightLabel: string, weights: WeightPreset[]): number {
+export function calculateBeanPrice(
+  basePrice: number,
+  weightLabel: string,
+  weights: WeightPreset[],
+  price100g?: number,
+): number {
+  if (weightLabel === "100g" && typeof price100g === "number" && price100g > 0) {
+    return price100g;
+  }
   const matched = weights.find((item) => item.label === weightLabel);
   if (!matched) return basePrice;
   return Math.round((basePrice * matched.multiplier) / 1000) * 1000;
@@ -321,6 +351,7 @@ export function readHeroLot(block: LandingBlock | undefined, locale: Locale = "i
   const beanName = tr(rawName, locale);
   const originText = tr(rawOrigin, locale);
   const price200g = numVal(ex, "price_200g", 25000);
+  const price100g = numVal(ex, "price_100g", 15000);
   const isEn = locale === "en";
   return {
     isEn,
@@ -333,6 +364,7 @@ export function readHeroLot(block: LandingBlock | undefined, locale: Locale = "i
     pouchHeight: numVal(ex, "pouch_height", 790),
     imageAlt: tr(strVal(ex, "image_alt", rawName), locale),
     price200g,
+    price100g,
     orderAria: isEn
       ? `Order ${beanName} 200g via WhatsApp`
       : `Pesan ${beanName} 200g via WhatsApp`,
@@ -369,6 +401,7 @@ export function readCollectionConfig(block: LandingBlock, locale: Locale = "id")
           multiplier: typeof e.multiplier === "number" ? e.multiplier : 1,
         }))
     : [
+        { label: "100g", multiplier: 0.6 },
         { label: "200g", multiplier: 1 },
         { label: "500g", multiplier: 2.35 },
         { label: "1kg", multiplier: 4.5 },
@@ -422,7 +455,8 @@ export function readCollectionProduct(
   const rawDesc = typeof block.description === "string" ? block.description : "";
   const beanName = tr(rawTitle, locale);
   const price200g = numVal(ex, "price_200g", 35000);
-  const priceDisplay = strVal(ex, "price_display", formatIDR(price200g));
+  const price100g = numVal(ex, "price_100g", 0);
+  const priceDisplay = strVal(ex, "price_display", formatIDR(price100g > 0 ? price100g : price200g));
   const beanSet = COLLECTION_BEAN_SETS[index % COLLECTION_BEAN_SETS.length] ?? COLLECTION_BEAN_SETS[0];
   return {
     isEn: locale === "en",
@@ -436,6 +470,7 @@ export function readCollectionProduct(
     cardNote: tr(strVal(ex, "card_note", ""), locale),
     indexLabel: strVal(ex, "index_label", twoDigitStep(block.order, index)),
     price200g,
+    price100g,
     priceDisplay,
     shopeeUrl: strVal(ex, "shopee_url", "").trim(),
     tokopediaUrl: strVal(ex, "tokopedia_url", "").trim(),
@@ -479,8 +514,8 @@ export function readComingSoonMeta(block: LandingBlock, locale: Locale = "id") {
       locale,
     ),
     textureAlt: tr(strVal(ex, "texture_alt", "Tekstur crema espresso kopi sangrai"), locale),
-    beanAUrl: "assets/cutouts/bean-1.png",
-    beanBUrl: "assets/cutouts/bean-5.png",
+    beanAUrl: cleanAsset(ex?.bean_1_url, "/assets/cutouts/bean-1.png"),
+    beanBUrl: cleanAsset(ex?.bean_5_url, "/assets/cutouts/bean-5.png"),
   };
 }
 
@@ -515,8 +550,8 @@ export function readAboutMeta(block: LandingBlock, locale: Locale = "id") {
       locale,
     ),
     textureAlt: tr(strVal(ex, "texture_alt", "Tekstur crema espresso cokelat keemasan"), locale),
-    beanAUrl: "assets/cutouts/bean-3.png",
-    beanBUrl: "assets/cutouts/bean-5.png",
+    beanAUrl: cleanAsset(ex?.bean_3_url, "/assets/cutouts/bean-3.png"),
+    beanBUrl: cleanAsset(ex?.bean_5_url, "/assets/cutouts/bean-5.png"),
   };
 }
 

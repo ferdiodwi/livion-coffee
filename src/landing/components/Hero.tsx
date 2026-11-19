@@ -19,6 +19,7 @@ import {
   livePoliteAttrs,
   readBlockCopy,
   readHeroConfig,
+  readHeroBeanUrls,
   readHeroLot,
   ribbonStrokeAttrs,
   rotateStyle,
@@ -139,6 +140,7 @@ export function Hero({ section, block }: SectionComponentProps) {
   if (!isMainBlock(block)) return null;
 
   const cfg = readHeroConfig(block, locale);
+  const beanUrls = readHeroBeanUrls(block);
   const copy = readBlockCopy(block, locale);
   const lots = childBlocks(section);
   const safeLots = lots.length > 0 ? lots : [block];
@@ -213,11 +215,12 @@ export function Hero({ section, block }: SectionComponentProps) {
             <div
               key={idx}
               aria-hidden="true"
+              data-cms-ignore="true"
               {...beanParallaxAttr(spec.depth)}
               className={beanWrapperClass(spec)}
             >
               <img
-                src={spec.src}
+                src={beanUrls[spec.src] || spec.src}
                 alt=""
                 width={spec.width}
                 height={spec.height}
